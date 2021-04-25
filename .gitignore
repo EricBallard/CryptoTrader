@@ -1,1 +1,2 @@
-/account.py
+server/account.py
+server/__pycache__
