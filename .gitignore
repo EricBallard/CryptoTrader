@@ -1,2 +1,6 @@
-server/account.py
+node_modules/
 __pycache__/
+config/**
+account.py
+.env
+db.js

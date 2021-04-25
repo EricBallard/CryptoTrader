@@ -1,0 +1,17 @@
+{
+  "name": "DogeTrader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "server": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crpyto": "0.0.1-security",
+    "hat": "0.0.3"
+  }
+}
