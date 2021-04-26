@@ -31,12 +31,13 @@ body {
 }
 
 .form-group input {
-
   width: 100%;
   margin-bottom: 0.5rem;
+  border-radius: 1rem;
 }
 
 .form-group label {
+  margin-left: 1rem;
   font-size: 0.8rem;
 }
 
@@ -67,6 +68,7 @@ body {
 
 .btn-primary {
   background-color: #f5c800;
+  border-radius: 1rem;
   color: #000;
 }
 

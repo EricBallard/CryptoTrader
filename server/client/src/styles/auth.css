@@ -36,7 +36,7 @@
 
 .auth-form {
   max-width: 400px;
-  min-height: 40vh;
+  min-height: 30vh;
   margin-top: 2rem;
   border-radius: 2rem;
   padding: 1.5rem;
@@ -76,6 +76,7 @@
 
 /* Ala-carte */
 .login-reset {
+  margin-left: 1rem;
   display: block;
   font-weight: bold;
   font-size: 0.85rem;

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Navbar from '../components/navbar'
 import axios from 'axios'
 
 const PrivateScreen = ({ history, page, selected }) => {
@@ -8,7 +9,6 @@ const PrivateScreen = ({ history, page, selected }) => {
     useEffect(() => {
         if (!localStorage.getItem('authToken'))
             history.push('/login')
-
 
         fetchPrivateData()
     }, [history])
@@ -26,7 +26,6 @@ const PrivateScreen = ({ history, page, selected }) => {
             }
         }
 
-
         try {
             const { data } = await axios.get('/api/private', config)
             setPrivateData(data.data)
@@ -43,7 +42,7 @@ const PrivateScreen = ({ history, page, selected }) => {
     return (
         error ? <span className="error-message">{error}</span> : <>
             <div>
-            
+                <Navbar/>
 
                 {privateData}
 
