@@ -1,0 +1,9 @@
+.dashboard-body {
+    background-color: #707070;
+    height: 80vh;
+    top: 80px;
+}
+
+.dashboard-body.inactive {
+    filter: blur(5px);
+}
