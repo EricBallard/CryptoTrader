@@ -6,7 +6,7 @@ import axios from 'axios'
 import '../styles/auth.css'
 
 /* Component */
-const LoginScreen = ({ history }) => {
+const Login = ({ history }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -35,6 +35,11 @@ const LoginScreen = ({ history }) => {
 
     return (
         <div className='auth-screen'>
+            <div className='wrap'>
+                <div className='tri'>
+                    
+                </div>
+            </div>
             <div className='header'>
                 {/* Logo stored in aws s3 bucket */}
                 <img className='brand-logo' draggable='false' alt=''
@@ -84,4 +89,4 @@ const LoginScreen = ({ history }) => {
     )
 }
 
-export default LoginScreen
+export default Login

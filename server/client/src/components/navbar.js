@@ -3,7 +3,7 @@ import { FiMenu, FiX } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import '../styles/navbar.css'
 
-const Navbar = ({ nav, sendDataToParent}) => {
+const Navbar = ({ nav, sendDataToParent }) => {
 	const [open, setOpen] = useState(false)
 
 	const handleClick = () => {
@@ -11,7 +11,7 @@ const Navbar = ({ nav, sendDataToParent}) => {
 		sendDataToParent(nav = !open)
 	}
 
-	const closeMenu = () =>{
+	const closeMenu = () => {
 		setOpen(false)
 		sendDataToParent(false)
 	}
@@ -31,13 +31,11 @@ const Navbar = ({ nav, sendDataToParent}) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-
 	return (
 		<nav className='navbar'>
-
-			<Link to='/' className='nav-logo'>
-				DogeTrader
-			</Link>
+			{/* Logo stored in aws s3 bucket */}
+			<img className='nav-logo' draggable='false' alt=''
+				src='https://dogetrader.s3.us-east-2.amazonaws.com/dash_icon.png' />
 
 			<div onClick={handleClick} className='nav-icon'>
 				{open ? <FiX /> : <FiMenu />}
@@ -46,30 +44,30 @@ const Navbar = ({ nav, sendDataToParent}) => {
 			<ul className={open ? 'nav-links active' : 'nav-links'}>
 
 				<li className={open ? 'nav-item active' : 'nav-item'}>
-					<Link to='/' className={open ? 'nav-link' : 'nav-link inactive'}
-						onClick={closeMenu}>
+					<Link to='/' onClick={closeMenu}
+						className={() => open ? (window.location.pathname.equals('/') ? 'nav-link selected' : 'nav-link') : 'nav-link inactive'} >
 						Dashboard
 					</Link>
 				</li>
 
 				<li className={open ? 'nav-item active' : 'nav-item'}>
-					<Link to='/about' className={open ? 'nav-link' : 'nav-link inactive'}
+					<Link to='/triggers' className={open ? 'nav-link' : 'nav-link inactive'}
 						onClick={closeMenu}>
 						Triggers
 					</Link>
 				</li>
 
 				<li className={open ? 'nav-item active' : 'nav-item'}>
-					<Link to='/shop' className={open ? 'nav-link' : 'nav-link inactive'}
+					<Link to='/stats' className={open ? 'nav-link' : 'nav-link inactive'}
 						onClick={closeMenu}>
 						Stats
 					</Link>
 				</li>
 
 				<li className={open ? 'nav-item active' : 'nav-item'}>
-					<Link to='/contact' className={open ? 'nav-link' : 'nav-link inactive'}
-						onClick={closeMenu}>
-						About
+					<Link to='/' className={open ? 'nav-link' : 'nav-link inactive'}
+						onClick={() => localStorage.removeItem('authToken')}>
+						Logout
 					</Link>
 				</li>
 

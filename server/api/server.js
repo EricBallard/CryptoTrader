@@ -14,7 +14,7 @@ app.use('/api/private', require('./routes/private'))
 
 app.use(ErrorHandler)
 
-// Listen on port
+// Handles API request
 const server = app.listen(5000, () => {
     console.log('Server running on port 5000')
 })

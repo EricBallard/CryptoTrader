@@ -4,11 +4,11 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import PrivateRoute from './components/routing/PrivateRoute'
 
 // Screens
-import PrivateScreen from './screens/PrivateScreen'
-import LoginScreen from './screens/LoginScreen'
-import RegisterScreen from './screens/RegisterScreen'
-import ForgotScreen from './screens/ForgotScreen'
-import ResetScreen from './screens/ResetScreen'
+import Dashboard from './screens/Dashboard'
+import Login from './screens/Login'
+import Register from './screens/Register'
+import Forgot from './screens/Forgot'
+import Reset from './screens/Reset'
 
 const App = () => {
   return (
@@ -16,12 +16,13 @@ const App = () => {
       <div className='app'>
 
         <Switch>
-          <PrivateRoute exact path='/' component={PrivateScreen} />
+          <PrivateRoute exact path='/' component={Dashboard} />
           
-          <Route exact path='/login' component={LoginScreen} />
-          <Route exact path='/register' component={RegisterScreen} />
-          <Route exact path='/forgot' component={ForgotScreen} />
-          <Route exact path='/reset/:resetToken' component={ResetScreen} />
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/register' component={Register} />
+          
+          <Route exact path='/forgot' component={Forgot} />
+          <Route exact path='/reset/:resetToken' component={Reset} />
         </Switch>
 
       </div>

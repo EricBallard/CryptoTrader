@@ -6,7 +6,7 @@ import axios from 'axios';
 import '../styles/auth.css';
 
 /* Component */
-const ResetScreen = ({ history, match }) => {
+const Reset = ({ history, match }) => {
     const [password, setPassword] = useState('');
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
@@ -70,4 +70,4 @@ const ResetScreen = ({ history, match }) => {
     )
 }
 
-export default ResetScreen;
+export default Reset;

@@ -6,7 +6,7 @@ import axios from 'axios'
 import '../styles/auth.css'
 
 /* Component */
-const RegisterScreen = ({ history }) => {
+const Register = ({ history }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,7 +17,7 @@ const RegisterScreen = ({ history }) => {
             history.push('/')
     }, [history])
 
-    const registerHandler = async (e) => {
+    const handler = async (e) => {
         e.preventDefault()
         const config = { header: { 'Content-Type': 'applications.json' } }
 
@@ -45,7 +45,7 @@ const RegisterScreen = ({ history }) => {
                 <h1 className='brand-name'>DogeTrader</h1>
              </div>
 
-            <form className='auth-form' onSubmit={registerHandler}>
+            <form className='auth-form' onSubmit={handler}>
 
                 <h3 className='form-title'>Register</h3>
                 {error && <span className='error-message'>{error}</span>}
@@ -81,4 +81,4 @@ const RegisterScreen = ({ history }) => {
     )
 }
 
-export default RegisterScreen
+export default Register

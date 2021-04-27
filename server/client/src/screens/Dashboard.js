@@ -1,21 +1,25 @@
-import { useState, useEffect, useParams  } from 'react'
-import Navbar from '../components/navbar'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
+
+/* Components */
+import Navbar from '../components/navbar'
+import PriceChart from '../components/PriceChart'
 
 /* Style */
 import '../styles/dashboard.css'
 
 /* Component */
-const PrivateScreen = ({ history, navBarOpen }) => {
+const Dashboard = ({ history }) => {
+    const [data, setData] = useState([]);
     const [nav, setNav] = useState(null)
 
     const [error, setError] = useState('')
     const [privateData, setPrivateData] = useState('')
 
     const sendDataToParent = (index) => { // the callback. Use a better name
-        console.log(index);
-        setNav(index);
-      };
+        console.log(index)
+        setNav(index)
+    }
 
     const fetchPrivateData = async () => {
         const config = {
@@ -40,28 +44,28 @@ const PrivateScreen = ({ history, navBarOpen }) => {
             history.push('/login')
 
         fetchPrivateData()
-        
+
         /* Ignore react warrning 'missing dependancy' */
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [history])
 
-    const logoutHandler = () => {
-        localStorage.removeItem('authToken')
-        history.push('/login')
-    }
-
     return (
         error ? <span className='error-message'>{error}</span> : <>
-            <Navbar nav={nav} sendDataToParent={sendDataToParent}/>
-            
-            <div className={nav ? 'dashboard-body inactive' : 'dashboard-body'}>
-                {privateData}
+            {/* Navbar */}
+            <Navbar nav={nav} sendDataToParent={sendDataToParent} />
 
-                <button onClick={logoutHandler}>Logout</button>
+            {/* Body */}
+            <div className={nav ? 'dashboard-body inactive' : 'dashboard-body'}>
+                {/* Live graph */}
+                <div className='live-graph'>
+                    <PriceChart />
+                </div>
+
+                {privateData}
             </div>
 
         </>
     )
 }
 
-export default PrivateScreen
+export default Dashboard

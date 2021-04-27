@@ -1,3 +1,4 @@
+
 * {
   margin: 0;
   padding: 0;
@@ -14,9 +15,12 @@ a {
   background-color: #6c0f2c;
 }
 
+/* Import font from google - Thanks Daniel Johnson, cool font :) */
+@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
+
 /* Body */
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Didact Gothic', sans-serif;
   line-height: 1.7;
   background: #000;
   color: #000;
@@ -27,7 +31,6 @@ body {
 .form-group label {
   width: 100%;
   margin-bottom: 0.5rem;
-  
 }
 
 .form-group input {
@@ -76,7 +79,7 @@ body {
   width: 100%;
   display: inline-block;
   padding: 5px;
-  background: red;
+  background: #6c0f2c;
   color: #fff;
   text-align: center;
   margin: 0.5rem 0;
@@ -86,7 +89,7 @@ body {
   width: 100%;
   display: inline-block;
   padding: 5px;
-  background: green;
+  background: #248232;
   color: #fff;
   text-align: center;
   margin: 0.5rem 0;

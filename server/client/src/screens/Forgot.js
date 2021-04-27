@@ -5,7 +5,7 @@ import axios from 'axios'
 import '../styles/auth.css';
 
 /* Component */
-const ForgotScreen = ({ history }) => {
+const Forgot = ({ history }) => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -73,4 +73,4 @@ const ForgotScreen = ({ history }) => {
     )
 }
 
-export default ForgotScreen;
+export default Forgot;
