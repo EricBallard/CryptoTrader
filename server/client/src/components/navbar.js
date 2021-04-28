@@ -3,29 +3,37 @@ import { FiMenu, FiX } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import '../styles/navbar.css'
 
-const Navbar = ({ nav, sendDataToParent }) => {
+//TODO rename, nav = isOpen
+const Navbar = ({ sendDataToParent }) => {
 	const [open, setOpen] = useState(false)
+	const [path, setPath] = useState('/')
 
-	const handleClick = () => {
+	const toggleMenu = () => {
+		sendDataToParent(!open)
 		setOpen(!open)
-		sendDataToParent(nav = !open)
 	}
 
-	const closeMenu = () => {
-		setOpen(false)
+	const selectLink = (path) => {
 		sendDataToParent(false)
+		setOpen(false)
+		setPath(path)
 	}
 
-	//TODO: Need to reset as not open when screen width > 600px
 	useEffect(() => {
 		const resetMenu = () => {
 			// Set menu to closed if screen width > 600px
-			if ({ open } && window.innerWidth > 600)
-				closeMenu()
+			if ({ open } && window.innerWidth > 600) {
+				setOpen(false)
+				sendDataToParent(false)
+			}
 		}
 
+		/* Initiaze path state to our current directory */
+		setPath(window.location.pathname)
+
+		/* Listen to resize to reset menu  */
 		window.addEventListener('resize', resetMenu)
-		return () => window.removeEventListener('scroll', resetMenu)
+		return () => window.removeEventListener('resize', resetMenu)
 
 		/* Ignore react warrning 'missing dependancy' */
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -34,39 +42,42 @@ const Navbar = ({ nav, sendDataToParent }) => {
 	return (
 		<nav className='navbar'>
 			{/* Logo stored in aws s3 bucket */}
-			<img className='nav-logo' draggable='false' alt=''
+			<img className='nav-logo' draggable='false' alt='' rel='prefetch'
 				src='https://dogetrader.s3.us-east-2.amazonaws.com/dash_icon.png' />
 
-			<div onClick={handleClick} className='nav-icon'>
+			<div onClick={toggleMenu} className='nav-icon'>
 				{open ? <FiX /> : <FiMenu />}
 			</div>
 
 			<ul className={open ? 'nav-links active' : 'nav-links'}>
 
 				<li className={open ? 'nav-item active' : 'nav-item'}>
-					<Link to='/' onClick={closeMenu}
-						className={() => open ? (window.location.pathname.equals('/') ? 'nav-link selected' : 'nav-link') : 'nav-link inactive'} >
+					<Link to='/' onClick={() => selectLink('/')}
+						className={path === '/' ? 'nav-link selected' : 'nav-link'} >
+
 						Dashboard
 					</Link>
 				</li>
 
 				<li className={open ? 'nav-item active' : 'nav-item'}>
-					<Link to='/triggers' className={open ? 'nav-link' : 'nav-link inactive'}
-						onClick={closeMenu}>
+					<Link to='/triggers' onClick={() => selectLink('/triggers')}
+						className={path === '/triggers' ? 'nav-link selected' : 'nav-link'} >
+
 						Triggers
 					</Link>
 				</li>
 
 				<li className={open ? 'nav-item active' : 'nav-item'}>
-					<Link to='/stats' className={open ? 'nav-link' : 'nav-link inactive'}
-						onClick={closeMenu}>
+					<Link to='/stats' onClick={() => selectLink('/stats')}
+						className={path === '/stats' ? 'nav-link selected' : 'nav-link'} >
+
 						Stats
 					</Link>
 				</li>
 
 				<li className={open ? 'nav-item active' : 'nav-item'}>
-					<Link to='/' className={open ? 'nav-link' : 'nav-link inactive'}
-						onClick={() => localStorage.removeItem('authToken')}>
+					<Link to='/' className='nav-link' onClick={() => localStorage.removeItem('authToken')}>
+
 						Logout
 					</Link>
 				</li>

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 /* Components */
-import Navbar from '../components/navbar'
+import Navbar from '../components/NavBar'
 import PriceChart from '../components/PriceChart'
 
 /* Style */
@@ -10,16 +10,17 @@ import '../styles/dashboard.css'
 
 /* Component */
 const Dashboard = ({ history }) => {
-    const [data, setData] = useState([]);
-    const [nav, setNav] = useState(null)
+    /* Dynamic menu state - opened/closed */
+    const [isNavOpen, setNavStatus] = useState(false)
 
+    const syncNavStatus = (index) => {
+        console.log(index)
+        setNavStatus(index)
+    }
+
+    /* Error message */
     const [error, setError] = useState('')
     const [privateData, setPrivateData] = useState('')
-
-    const sendDataToParent = (index) => { // the callback. Use a better name
-        console.log(index)
-        setNav(index)
-    }
 
     const fetchPrivateData = async () => {
         const config = {
@@ -40,10 +41,11 @@ const Dashboard = ({ history }) => {
     }
 
     useEffect(() => {
+        /* Require authentication to access */
         if (!localStorage.getItem('authToken'))
             history.push('/login')
-
-        fetchPrivateData()
+        else
+            fetchPrivateData()
 
         /* Ignore react warrning 'missing dependancy' */
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,10 +54,10 @@ const Dashboard = ({ history }) => {
     return (
         error ? <span className='error-message'>{error}</span> : <>
             {/* Navbar */}
-            <Navbar nav={nav} sendDataToParent={sendDataToParent} />
+            <Navbar isOpen={isNavOpen} sendDataToParent={syncNavStatus} />
 
             {/* Body */}
-            <div className={nav ? 'dashboard-body inactive' : 'dashboard-body'}>
+            <div className={isNavOpen ? 'dashboard-body inactive' : 'dashboard-body'}>
                 {/* Live graph */}
                 <div className='live-graph'>
                     <PriceChart />

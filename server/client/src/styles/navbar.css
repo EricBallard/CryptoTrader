@@ -27,7 +27,6 @@
 }
 
 /* Un-selected*/
-
 .nav-link {
 	color: #d9d9d9;
 	text-decoration: none;
@@ -35,9 +34,11 @@
 
 /* Selected */
 
-a {
+.nav-link.selected {
 	color: #000;
 }
+
+/* Container */
 
 .nav-links {
 	display: grid;
@@ -70,15 +71,14 @@ a {
 		z-index: 2;
 		position: relative;
 	}
+	
 	/* Hyperlinks aka nav links */
-	/* Un-selected */
-	.nav-link.inactive {
-		color: #707070;
-	}
+
 	/* Selected */
-	a {
+	.nav-link.selected {
 		color: #6c0f2c;
 	}
+	
 	/* Menu cell - CLOSED */
 	.nav-links {
 		position: absolute;

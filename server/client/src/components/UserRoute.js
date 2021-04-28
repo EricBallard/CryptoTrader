@@ -1,6 +1,7 @@
 import { Redirect, Route } from 'react-router-dom'
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+/* Authenticate client before routing */
+const UserRoute = ({ component: Component, ...rest }) => {
     return (
         <Route
             {...rest}
@@ -15,4 +16,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     )
 }
 
-export default PrivateRoute
+export default UserRoute

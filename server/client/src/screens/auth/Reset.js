@@ -1,27 +1,27 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 /* Style */
-import '../styles/auth.css';
+import '../../styles/auth.css'
 
 /* Component */
 const Reset = ({ history, match }) => {
-    const [password, setPassword] = useState('');
-    const [success, setSuccess] = useState('');
-    const [error, setError] = useState('');
+    const [password, setPassword] = useState('')
+    const [success, setSuccess] = useState('')
+    const [error, setError] = useState('')
 
     const resetHandler = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        const config = { header: { 'Content-Type': 'application/json', }, };
+        const config = { header: { 'Content-Type': 'application/json', }, }
 
         try {
-            const { data } = await axios.put(`/api/auth/reset/${match.params.resetToken}`, { password, }, config);
-            setSuccess(data.data);
+            const { data } = await axios.put(`/api/auth/reset/${match.params.resetToken}`, { password, }, config)
+            setSuccess(data.data)
         } catch (error) {
-            setError(error.response.data.error);
-            setTimeout(() => setError(''), 5000);
+            setError(error.response.data.error)
+            setTimeout(() => setError(''), 5000)
         }
     }
 
@@ -30,7 +30,7 @@ const Reset = ({ history, match }) => {
 
             <div className='header'>
                 {/* Logo stored in aws s3 bucket */}
-                <img className='brand-logo' draggable='false' alt=''
+                <img className='brand-logo' draggable='false' alt='' rel='prefetch'
                     src='https://dogetrader.s3.us-east-2.amazonaws.com/logo512.png' />
                 
                 {/* Name */}
@@ -61,7 +61,7 @@ const Reset = ({ history, match }) => {
                 <button type='submit' className='form-btn btn btn-primary'>Reset Password</button>
 
                 {/* Back */}
-                <img className='form-back' draggable='false' alt=''
+                <img className='form-back' draggable='false' alt='' rel='prefetch'
                     src='https://dogetrader.s3.us-east-2.amazonaws.com/undo.png'
                     onClick={() =>  history.push('/')} />
 
@@ -70,4 +70,4 @@ const Reset = ({ history, match }) => {
     )
 }
 
-export default Reset;
+export default Reset

@@ -2,26 +2,26 @@ import { useState } from 'react'
 import axios from 'axios'
 
 /* Styles */
-import '../styles/auth.css';
+import '../../styles/auth.css'
 
 /* Component */
 const Forgot = ({ history }) => {
-    const [email, setEmail] = useState('');
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
+    const [email, setEmail] = useState('')
+    const [error, setError] = useState('')
+    const [success, setSuccess] = useState('')
 
     const forgotHandler = async (e) => {
         e.preventDefault()
-        const config = { header: { 'Content-Type': 'application/json', }, };
+        const config = { header: { 'Content-Type': 'application/json', }, }
 
         try {
-            const { data } = await axios.post('/api/auth/forgot', { email }, config);
-            setSuccess(data.data);
+            const { data } = await axios.post('/api/auth/forgot', { email }, config)
+            setSuccess(data.data)
         } catch (error) {
-            setEmail('');
+            setEmail('')
 
-            setError(error.response.data.error);
-            setTimeout(() => setError(''), 5000);
+            setError(error.response.data.error)
+            setTimeout(() => setError(''), 5000)
         }
     }
 
@@ -30,7 +30,7 @@ const Forgot = ({ history }) => {
 
             <div className='header'>
                 {/* Logo stored in aws s3 bucket */}
-                <img className='brand-logo' draggable='false' alt=''
+                <img className='brand-logo' draggable='false' alt='' rel='prefetch'
                     src='https://dogetrader.s3.us-east-2.amazonaws.com/logo512.png' />
 
                 {/* Name */}
@@ -73,4 +73,4 @@ const Forgot = ({ history }) => {
     )
 }
 
-export default Forgot;
+export default Forgot

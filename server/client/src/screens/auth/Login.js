@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 /* Style */
-import '../styles/auth.css'
+import '../../styles/auth.css'
 
 /* Component */
 const Login = ({ history }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
 
     useEffect(() => {
         if (localStorage.getItem('authToken'))
@@ -42,7 +42,7 @@ const Login = ({ history }) => {
             </div>
             <div className='header'>
                 {/* Logo stored in aws s3 bucket */}
-                <img className='brand-logo' draggable='false' alt=''
+                <img className='brand-logo' draggable='false' alt='' rel='prefetch'
                     src='https://dogetrader.s3.us-east-2.amazonaws.com/logo512.png' />
 
                 {/* Name */}
