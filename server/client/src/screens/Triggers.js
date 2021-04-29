@@ -9,25 +9,24 @@ import '../styles/dashboard.css'
 /* Component */
 const Triggers = (props, { history }) => {
     /* Retain menu open if clicking from link, allows to animte close */
-    const navFromMenu = props.location.open
+    const navFromMenu = (props.location.isOpen === true)
 
     /* Dynamic menu state - opened/closed */
-    const [isNavOpen, setNavStatus] = useState(navFromMenu === true)
-
-    const syncNavStatus = (index) => {
-        console.log(index)
-        setNavStatus(index)
-    }
+    const [isNavOpen, setNavStatus] = useState(navFromMenu)
+    const syncNavStatus = (index) => setNavStatus(index)
 
     useEffect(() => {
         /* Require authentication to access */
         if (!localStorage.getItem('authToken'))
             history.push('/login')
-
+        else {
+            /* Navigated from dynamic menu click - animate close menu */
+            if (navFromMenu)
+                setNavStatus(false)
+        }
         /* Ignore react warrning 'missing dependancy' */
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [history])
-
 
     return (
         <>

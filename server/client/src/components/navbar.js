@@ -4,13 +4,11 @@ import { Link } from 'react-router-dom'
 import '../styles/navbar.css'
 
 //TODO rename, nav = isOpen
-const Navbar = (props) => {
-	const [open, setOpen] = useState(props.isOpen)
+const Navbar = ({ isOpen, syncStatus }) => {
 	const [path, setPath] = useState('/')
 
 	const toggleMenu = () => {
-		props.syncStatus(!open)
-		setOpen(!open)
+		syncStatus(!isOpen)
 	}
 
 	const selectLink = (path) => {
@@ -20,9 +18,8 @@ const Navbar = (props) => {
 	useEffect(() => {
 		const resetMenu = () => {
 			// Set menu to closed if screen width > 600px
-			if ({ open } && window.innerWidth > 600) {
-				setOpen(false)
-				props.syncStatus(false)
+			if ({ isOpen } === true && window.innerWidth > 600) {
+				syncStatus(false)
 			}
 		}
 
@@ -47,23 +44,22 @@ const Navbar = (props) => {
 				src={process.env.REACT_APP_CLOUDFRONT_URL + 'dash_icon.png'} />
 
 			<div onClick={toggleMenu} className='nav-icon'>
-				{open ? <FiX /> : <FiMenu />}
+				{isOpen ? <FiX /> : <FiMenu />}
 			</div>
 
-			<ul className={open ? 'nav-links active' : 'nav-links'}>
+			<ul className={isOpen ? 'nav-links active' : 'nav-links'}>
 
-				<li className={open ? 'nav-item active' : 'nav-item'}>
-					<Link to={{ pathname: '/', open }}
+				<li className={isOpen ? 'nav-item active' : 'nav-item'}>
+					<Link to={{ pathname: '/', isOpen }}
 						onClick={() => selectLink('/')}
-						className={path === '/' ? 'nav-link selected' : 'nav-link'}
-						>
+						className={path === '/' ? 'nav-link selected' : 'nav-link'} >
 
 						Dashboard
 					</Link>
 				</li>
 
-				<li className={open ? 'nav-item active' : 'nav-item'}>
-					<Link to={{ pathname: '/triggers', open }}
+				<li className={isOpen ? 'nav-item active' : 'nav-item'}>
+					<Link to={{ pathname: '/triggers', isOpen }}
 						onClick={() => selectLink('/triggers')}
 						className={path === '/triggers' ? 'nav-link selected' : 'nav-link'} >
 
@@ -71,8 +67,8 @@ const Navbar = (props) => {
 					</Link>
 				</li>
 
-				<li className={open ? 'nav-item active' : 'nav-item'}>
-					<Link to={{ pathname: '/stats', open }}
+				<li className={isOpen ? 'nav-item active' : 'nav-item'}>
+					<Link to={{ pathname: '/stats', isOpen }}
 						onClick={() => selectLink('/stats')}
 						className={path === '/stats' ? 'nav-link selected' : 'nav-link'} >
 
@@ -80,8 +76,8 @@ const Navbar = (props) => {
 					</Link>
 				</li>
 
-				<li className={open ? 'nav-item active' : 'nav-item'}>
-					<Link to='/' className='nav-link' onClick={() => localStorage.removeItem('authToken')}>
+				<li className={isOpen ? 'nav-item active' : 'nav-item'}>
+					<Link to='/' className='nav-link' onClick={() => localStorage.removeItem('authToken')} >
 
 						Logout
 					</Link>
