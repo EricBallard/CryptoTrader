@@ -4,18 +4,16 @@ import { Link } from 'react-router-dom'
 import '../styles/navbar.css'
 
 //TODO rename, nav = isOpen
-const Navbar = ({ sendDataToParent }) => {
-	const [open, setOpen] = useState(false)
+const Navbar = (props) => {
+	const [open, setOpen] = useState(props.isOpen)
 	const [path, setPath] = useState('/')
 
 	const toggleMenu = () => {
-		sendDataToParent(!open)
+		props.syncStatus(!open)
 		setOpen(!open)
 	}
 
 	const selectLink = (path) => {
-		sendDataToParent(false)
-		setOpen(false)
 		setPath(path)
 	}
 
@@ -24,9 +22,12 @@ const Navbar = ({ sendDataToParent }) => {
 			// Set menu to closed if screen width > 600px
 			if ({ open } && window.innerWidth > 600) {
 				setOpen(false)
-				sendDataToParent(false)
+				props.syncStatus(false)
 			}
 		}
+
+
+		//TODO fix a nicer solution
 
 		/* Initiaze path state to our current directory */
 		setPath(window.location.pathname)
@@ -43,7 +44,7 @@ const Navbar = ({ sendDataToParent }) => {
 		<nav className='navbar'>
 			{/* Logo stored in aws s3 bucket */}
 			<img className='nav-logo' draggable='false' alt='' rel='prefetch'
-				src='https://dogetrader.s3.us-east-2.amazonaws.com/dash_icon.png' />
+				src={process.env.REACT_APP_CLOUDFRONT_URL + 'dash_icon.png'} />
 
 			<div onClick={toggleMenu} className='nav-icon'>
 				{open ? <FiX /> : <FiMenu />}
@@ -52,15 +53,18 @@ const Navbar = ({ sendDataToParent }) => {
 			<ul className={open ? 'nav-links active' : 'nav-links'}>
 
 				<li className={open ? 'nav-item active' : 'nav-item'}>
-					<Link to='/' onClick={() => selectLink('/')}
-						className={path === '/' ? 'nav-link selected' : 'nav-link'} >
+					<Link to={{ pathname: '/', open }}
+						onClick={() => selectLink('/')}
+						className={path === '/' ? 'nav-link selected' : 'nav-link'}
+						>
 
 						Dashboard
 					</Link>
 				</li>
 
 				<li className={open ? 'nav-item active' : 'nav-item'}>
-					<Link to='/triggers' onClick={() => selectLink('/triggers')}
+					<Link to={{ pathname: '/triggers', open }}
+						onClick={() => selectLink('/triggers')}
 						className={path === '/triggers' ? 'nav-link selected' : 'nav-link'} >
 
 						Triggers
@@ -68,7 +72,8 @@ const Navbar = ({ sendDataToParent }) => {
 				</li>
 
 				<li className={open ? 'nav-item active' : 'nav-item'}>
-					<Link to='/stats' onClick={() => selectLink('/stats')}
+					<Link to={{ pathname: '/stats', open }}
+						onClick={() => selectLink('/stats')}
 						className={path === '/stats' ? 'nav-link selected' : 'nav-link'} >
 
 						Stats

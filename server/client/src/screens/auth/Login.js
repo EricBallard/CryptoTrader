@@ -16,7 +16,7 @@ const Login = ({ history }) => {
             history.push('/')
     }, [history])
 
-    const loginHandler = async (e) => {
+    const handler = async (e) => {
         e.preventDefault()
         const config = { header: { 'Content-Type': 'application/json' } }
 
@@ -43,14 +43,14 @@ const Login = ({ history }) => {
             <div className='header'>
                 {/* Logo stored in aws s3 bucket */}
                 <img className='brand-logo' draggable='false' alt='' rel='prefetch'
-                    src='https://dogetrader.s3.us-east-2.amazonaws.com/logo512.png' />
+                    src={process.env.REACT_APP_CLOUDFRONT_URL + 'logo512.png'} />
 
                 {/* Name */}
                 <h1 className='brand-name'>DogeTrader</h1>
             </div>
 
 
-            <form className='auth-form' onSubmit={loginHandler}>
+            <form className='auth-form' onSubmit={handler}>
 
                 <h3 className='form-title'>Login</h3>
 

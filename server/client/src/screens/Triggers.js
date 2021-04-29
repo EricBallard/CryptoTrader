@@ -7,12 +7,16 @@ import Navbar from '../components/NavBar'
 import '../styles/dashboard.css'
 
 /* Component */
-const Triggers = ({ history }) => {
-    const [nav, setNav] = useState(null)
+const Triggers = (props, { history }) => {
+    /* Retain menu open if clicking from link, allows to animte close */
+    const navFromMenu = props.location.open
 
-    const sendDataToParent = (index) => { // the callback. Use a better name
+    /* Dynamic menu state - opened/closed */
+    const [isNavOpen, setNavStatus] = useState(navFromMenu === true)
+
+    const syncNavStatus = (index) => {
         console.log(index)
-        setNav(index)
+        setNavStatus(index)
     }
 
     useEffect(() => {
@@ -28,10 +32,10 @@ const Triggers = ({ history }) => {
     return (
         <>
             {/* Navbar */}
-            <Navbar nav={nav} sendDataToParent={sendDataToParent} />
+            <Navbar isOpen={isNavOpen} syncStatus={syncNavStatus} />
 
             {/* Body */}
-            <div className={nav ? 'dashboard-body inactive' : 'dashboard-body'}>
+            <div className={isNavOpen ? 'dashboard-body inactive' : 'dashboard-body'}>
                 {/* Live graph */}
                 <div className='live-graph'>
                     <p>TRIGGERS</p>

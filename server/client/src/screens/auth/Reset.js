@@ -31,7 +31,7 @@ const Reset = ({ history, match }) => {
             <div className='header'>
                 {/* Logo stored in aws s3 bucket */}
                 <img className='brand-logo' draggable='false' alt='' rel='prefetch'
-                    src='https://dogetrader.s3.us-east-2.amazonaws.com/logo512.png' />
+                    src={process.env.REACT_APP_CLOUDFRONT_URL + 'logo512.png'} />
                 
                 {/* Name */}
                 <h1 className='brand-name'>DogeTrader</h1>

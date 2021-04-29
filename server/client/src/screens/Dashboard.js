@@ -9,9 +9,12 @@ import PriceChart from '../components/PriceChart'
 import '../styles/dashboard.css'
 
 /* Component */
-const Dashboard = ({ history }) => {
+const Dashboard = (props, { history }) => {
+    /* Retain menu open if clicking from link, allows to animte close */
+    const navFromMenu = props.location.open
+
     /* Dynamic menu state - opened/closed */
-    const [isNavOpen, setNavStatus] = useState(false)
+    const [isNavOpen, setNavStatus] = useState(navFromMenu === true)
 
     const syncNavStatus = (index) => {
         console.log(index)
@@ -54,7 +57,7 @@ const Dashboard = ({ history }) => {
     return (
         error ? <span className='error-message'>{error}</span> : <>
             {/* Navbar */}
-            <Navbar isOpen={isNavOpen} sendDataToParent={syncNavStatus} />
+            <Navbar isOpen={isNavOpen} syncStatus={syncNavStatus} />
 
             {/* Body */}
             <div className={isNavOpen ? 'dashboard-body inactive' : 'dashboard-body'}>
