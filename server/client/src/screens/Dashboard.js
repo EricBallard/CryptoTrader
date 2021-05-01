@@ -12,6 +12,7 @@ import '../styles/dashboard.css'
 const Dashboard = (props, { history }) => {
     /* Retain menu open if clicking from link, allows to animte close */
     const navFromMenu = (props.location.isOpen === true)
+    
 
     /* Dynamic menu state - opened/closed */
     const [isNavOpen, setNavStatus] = useState(navFromMenu)
@@ -36,6 +37,7 @@ const Dashboard = (props, { history }) => {
             localStorage.removeItem('authToken')
             setError('Please login before you continue.')
             setTimeout(() => history.push('/'), 5000)
+            return;
         }
     }
 
@@ -69,7 +71,6 @@ const Dashboard = (props, { history }) => {
 
                 {privateData}
             </div>
-
         </>
     )
 }

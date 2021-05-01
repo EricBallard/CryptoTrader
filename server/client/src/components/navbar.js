@@ -3,6 +3,9 @@ import { FiMenu, FiX } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import '../styles/navbar.css'
 
+/* Components */
+import CachedImage from './CachedImage'
+
 //TODO rename, nav = isOpen
 const Navbar = ({ isOpen, syncStatus }) => {
 	const [path, setPath] = useState('/')
@@ -18,17 +21,15 @@ const Navbar = ({ isOpen, syncStatus }) => {
 	useEffect(() => {
 		const resetMenu = () => {
 			// Set menu to closed if screen width > 600px
-			if ({ isOpen } === true && window.innerWidth > 600) {
+			if ({ isOpen }  && window.innerWidth > 600) {
 				syncStatus(false)
 			}
 		}
 
-
-		//TODO fix a nicer solution
-
 		/* Initiaze path state to our current directory */
 		setPath(window.location.pathname)
 
+		//TODO fix a nicer solution
 		/* Listen to resize to reset menu  */
 		window.addEventListener('resize', resetMenu)
 		return () => window.removeEventListener('resize', resetMenu)
@@ -39,9 +40,7 @@ const Navbar = ({ isOpen, syncStatus }) => {
 
 	return (
 		<nav className='navbar'>
-			{/* Logo stored in aws s3 bucket */}
-			<img className='nav-logo' draggable='false' alt='' rel='prefetch'
-				src={process.env.REACT_APP_CLOUDFRONT_URL + 'dash_icon.png'} />
+			<CachedImage name='nav-logo'url={process.env.REACT_APP_CLOUDFRONT_URL + 'dash_icon.png'} />
 
 			<div onClick={toggleMenu} className='nav-icon'>
 				{isOpen ? <FiX /> : <FiMenu />}

@@ -8,6 +8,7 @@ import '../styles/dashboard.css'
 
 /* Component */
 const Stats = (props, { history }) => {
+
     /* Retain menu open if clicking from link, allows to animte close */
     const navFromMenu = (props.location.isOpen === true)
 
@@ -16,6 +17,7 @@ const Stats = (props, { history }) => {
     const syncNavStatus = (index) => setNavStatus(index)
 
     useEffect(() => {
+        
         /* Require authentication to access */
         if (!localStorage.getItem('authToken'))
             history.push('/login')
