@@ -21,7 +21,7 @@ const Navbar = ({ isOpen, syncStatus }) => {
 	useEffect(() => {
 		const resetMenu = () => {
 			// Set menu to closed if screen width > 600px
-			if ({ isOpen }  && window.innerWidth > 600) {
+			if ({ isOpen } && window.innerWidth > 600) {
 				syncStatus(false)
 			}
 		}
@@ -36,11 +36,11 @@ const Navbar = ({ isOpen, syncStatus }) => {
 
 		/* Ignore react warrning 'missing dependancy' */
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [isOpen, syncStatus])
 
 	return (
 		<nav className='navbar'>
-			<CachedImage name='nav-logo'url={process.env.REACT_APP_CLOUDFRONT_URL + 'dash_icon.png'} />
+			<CachedImage name='nav-logo' url={process.env.REACT_APP_CLOUDFRONT_URL + 'dash_icon.png'} />
 
 			<div onClick={toggleMenu} className='nav-icon'>
 				{isOpen ? <FiX /> : <FiMenu />}

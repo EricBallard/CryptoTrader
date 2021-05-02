@@ -7,13 +7,15 @@ import Navbar from '../components/NavBar'
 import '../styles/dashboard.css'
 
 /* Component */
-const Triggers = (props, { history }) => {
+const Triggers = (props) => {
     /* Retain menu open if clicking from link, allows to animte close */
     const navFromMenu = (props.location.isOpen === true)
 
     /* Dynamic menu state - opened/closed */
     const [isNavOpen, setNavStatus] = useState(navFromMenu)
     const syncNavStatus = (index) => setNavStatus(index)
+
+    const history = props.history;
 
     useEffect(() => {
         /* Require authentication to access */

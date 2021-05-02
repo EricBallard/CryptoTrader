@@ -7,7 +7,7 @@ import Navbar from '../components/NavBar'
 import '../styles/dashboard.css'
 
 /* Component */
-const Stats = (props, { history }) => {
+const Stats = (props) => {
 
     /* Retain menu open if clicking from link, allows to animte close */
     const navFromMenu = (props.location.isOpen === true)
@@ -16,6 +16,8 @@ const Stats = (props, { history }) => {
     const [isNavOpen, setNavStatus] = useState(navFromMenu)
     const syncNavStatus = (index) => setNavStatus(index)
 
+    const history = props.history;
+    
     useEffect(() => {
         
         /* Require authentication to access */

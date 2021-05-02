@@ -9,7 +9,7 @@ import PriceChart from '../components/PriceChart'
 import '../styles/dashboard.css'
 
 /* Component */
-const Dashboard = (props, { history }) => {
+const Dashboard = (props) => {
     /* Retain menu open if clicking from link, allows to animte close */
     const navFromMenu = (props.location.isOpen === true)
     
@@ -21,6 +21,8 @@ const Dashboard = (props, { history }) => {
     /* Error message */
     const [error, setError] = useState('')
     const [privateData, setPrivateData] = useState('')
+
+    const history = props.history;
 
     const fetchPrivateData = async () => {
         const config = {
@@ -36,7 +38,7 @@ const Dashboard = (props, { history }) => {
         } catch (error) {
             localStorage.removeItem('authToken')
             setError('Please login before you continue.')
-            setTimeout(() => history.push('/'), 5000)
+            setTimeout(() => history.push('/login'), 5000)
             return;
         }
     }
