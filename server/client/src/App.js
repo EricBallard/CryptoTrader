@@ -1,9 +1,9 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
-/* Routing * */
-import UserRoute from './components/UserRoute'
+import { useState } from 'react'
+import Navbar from './components/NavBar'
 
-/* Screen */
+/* Screens */
 import Dashboard from './screens/Dashboard'
 import Triggers from './screens/Triggers'
 import Stats from './screens/Stats'
@@ -15,45 +15,49 @@ import Reset from './screens/auth/Reset'
 
 /*
     TODO
-
     + modularize auth header in component
+
     + cache components, and js?
     https://scotch.io/tutorials/how-to-optimize-node-requests-with-simple-caching-strategies
 
     + Serve resources from s3 bucket + cloudfront
-
     ~ Test; https://gtmetrix.com/
-
 */
 
 
 const App = () => {
+  /* Dynamic menu state - opened/closed */
+  const [isNavOpen, setNavStatus] = useState(false)
+  const syncNavStatus = (index) => setNavStatus(index)
+
   return (
-    <Router>
-      <div className='app'>
-        <Switch>
+    <div className='app'>
 
-          {/* Wildcard route to require auth*/}
-          <UserRoute exact path='/' component={Dashboard} />
+      <Router><Switch>
 
-          {/* User authentication* */}
-          <Route exact path='/login' component={Login} />
-          
-          <Route exact path='/register' component={Register} />
+        {/* User authentication* */}
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/register' component={Register} />
 
-          <Route exact path='/forgot' component={Forgot} />
-          <Route exact path='/reset/:resetToken' component={Reset} />
+        <Route exact path='/forgot' component={Forgot} />
+        <Route exact path='/reset/:resetToken' component={Reset} />
+
+        <>
+          {/* Navbar */}
+          <Navbar isOpen={isNavOpen} syncStatus={syncNavStatus} />
 
           {/* User util */}
+          <Route exact path='/dashboard' component={Dashboard} />
           <Route exact path='/triggers' component={Triggers} />
           <Route exact path='/stats' component={Stats} />
 
-          {/* Wildcard - Catch un-supported paths and redirect */}
-          <Route path='/*' component={Dashboard} />
+          {/* Wildcard - Catch all and redirect */}
+          <Route path='/*' component={() => <Redirect to='/dashboard' />} />
 
-        </Switch>
-      </div>
-    </Router>
+        </>
+
+      </Switch></Router>
+    </div>
   )
 }
 

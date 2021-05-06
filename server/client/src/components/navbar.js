@@ -8,7 +8,7 @@ import CachedImage from './CachedImage'
 
 //TODO rename, nav = isOpen
 const Navbar = ({ isOpen, syncStatus }) => {
-	const [path, setPath] = useState('/')
+	const [path, setPath] = useState('/dashboard')
 
 	const toggleMenu = () => {
 		syncStatus(!isOpen)
@@ -25,9 +25,6 @@ const Navbar = ({ isOpen, syncStatus }) => {
 				syncStatus(false)
 			}
 		}
-
-		/* Initiaze path state to our current directory */
-		setPath(window.location.pathname)
 
 		//TODO fix a nicer solution
 		/* Listen to resize to reset menu  */
@@ -49,9 +46,9 @@ const Navbar = ({ isOpen, syncStatus }) => {
 			<ul className={isOpen ? 'nav-links active' : 'nav-links'}>
 
 				<li className={isOpen ? 'nav-item active' : 'nav-item'}>
-					<Link to={{ pathname: '/', isOpen }}
-						onClick={() => selectLink('/')}
-						className={path === '/' ? 'nav-link selected' : 'nav-link'} >
+					<Link to={{ pathname: '/dashboard', isOpen }}
+						onClick={() => selectLink('/dashboard')}
+						className={path === '/dashboard' ? 'nav-link selected' : 'nav-link'} >
 
 						Dashboard
 					</Link>
@@ -76,7 +73,7 @@ const Navbar = ({ isOpen, syncStatus }) => {
 				</li>
 
 				<li className={isOpen ? 'nav-item active' : 'nav-item'}>
-					<Link to='/' className='nav-link' onClick={() => localStorage.removeItem('authToken')} >
+					<Link to='/login' className='nav-link' onClick={() => localStorage.removeItem('authToken')} >
 
 						Logout
 					</Link>

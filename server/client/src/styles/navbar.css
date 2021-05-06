@@ -22,7 +22,7 @@
 
 /* Hyperlinks aka nav links*/
 .nav-link:hover {
-	color: #000;
+	color: #f5c800;
 }
 
 /* Un-selected*/
@@ -81,7 +81,7 @@
 	
 	/* Selected */
 	.nav-link.selected {
-		color: #f5c800;
+		color: #6c0f2c;
 	}
 	
 	/* Menu cell - CLOSED */
