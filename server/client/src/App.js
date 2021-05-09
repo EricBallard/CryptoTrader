@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import { useState } from 'react'
 import Navbar from './components/NavBar'
@@ -28,7 +28,7 @@ import Reset from './screens/auth/Reset'
 const App = () => {
   /* Dynamic menu state - opened/closed */
   const [isNavOpen, setNavStatus] = useState(false)
-  const syncNavStatus = (index) => setNavStatus(index)
+  const syncNavStatus = (status) => setNavStatus(status)
 
   return (
     <div className='app'>
@@ -47,12 +47,15 @@ const App = () => {
           <Navbar isOpen={isNavOpen} syncStatus={syncNavStatus} />
 
           {/* User util */}
-          <Route exact path='/dashboard' component={Dashboard} />
-          <Route exact path='/triggers' component={Triggers} />
-          <Route exact path='/stats' component={Stats} />
+          <Route exact path='/dashboard'
+              render={(props) => <Dashboard {...props} isMenuOpen={isNavOpen} />} />
 
-          {/* Wildcard - Catch all and redirect */}
-          <Route path='/*' component={() => <Redirect to='/dashboard' />} />
+          <Route exact path='/triggers' 
+              render={(props) => <Triggers {...props} isMenuOpen={isNavOpen} />} />
+
+          <Route exact path='/stats'
+              render={(props) => <Stats {...props} isMenuOpen={isNavOpen} />} />
+
 
         </>
 

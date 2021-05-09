@@ -4,6 +4,8 @@ import axios from 'axios'
 /* Styles */
 import '../../styles/auth.css'
 
+import CachedImage from '../../components/CachedImage'
+
 /* Component */
 const Forgot = ({ history }) => {
     const [email, setEmail] = useState('')
@@ -29,9 +31,6 @@ const Forgot = ({ history }) => {
         <div className='auth-screen'>
 
             <div className='header'>
-                {/* Logo stored in aws s3 bucket */}
-                <img className='brand-logo' draggable='false' alt='' rel='prefetch'
-                    src={process.env.REACT_APP_CLOUDFRONT_URL + 'logo512.png'} />
 
                 {/* Name */}
                 <h1 className='brand-name'>DogeTrader</h1>
@@ -64,8 +63,8 @@ const Forgot = ({ history }) => {
                 </button>
 
                 {/* Back */}
-                <img className='form-back' draggable='false' alt='' onClick={() => history.push('/')}
-                    src={process.env.REACT_APP_CLOUDFRONT_URL + 'undo.png'}  />
+                <CachedImage name='form-back' event={() => history.push('/login')}
+                url={process.env.REACT_APP_CLOUDFRONT_URL + 'undo.png'} />
 
             </form>
         </div>

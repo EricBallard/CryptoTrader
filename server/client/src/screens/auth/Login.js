@@ -5,6 +5,7 @@ import axios from 'axios'
 /* Style */
 import '../../styles/auth.css'
 
+
 /* Component */
 const Login = ({ history }) => {
     const [email, setEmail] = useState('')
@@ -13,7 +14,7 @@ const Login = ({ history }) => {
 
     useEffect(() => {
         if (localStorage.getItem('authToken'))
-            history.push('/')
+            history.push('/dashboard')
     }, [history])
 
     const handler = async (e) => {
@@ -25,8 +26,8 @@ const Login = ({ history }) => {
                 email, password
             }, config)
 
-            localStorage.setItem('authToken', data.token)
-            history.push('/')
+            if (!localStorage.setItem('authToken', data.token))
+                history.push('/dashboard')
         } catch (error) {
             setError(error.response.data.error)
             setTimeout(() => setError(''), 5000)
@@ -37,13 +38,13 @@ const Login = ({ history }) => {
         <div className='auth-screen'>
             <div className='wrap'>
                 <div className='tri'>
-                    
+
                 </div>
             </div>
             <div className='header'>
-                {/* Logo stored in aws s3 bucket */}
-                <img className='brand-logo' draggable='false' alt='' rel='prefetch'
-                    src={process.env.REACT_APP_CLOUDFRONT_URL + 'logo512.png'} />
+                {/* Logo stored in aws s3 bucket 
+                <CachedImage name='brand-logo' url={process.env.REACT_APP_CLOUDFRONT_URL + 'logo512.png'} />
+*/}
 
                 {/* Name */}
                 <h1 className='brand-name'>DogeTrader</h1>
@@ -83,7 +84,7 @@ const Login = ({ history }) => {
                 <h5 className='form-subtext'>
                     New here? <Link to='/register'>Create an account</Link>!
                 </h5>
-                
+
             </form>
         </div>
     )

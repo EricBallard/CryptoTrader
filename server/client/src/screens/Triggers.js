@@ -5,19 +5,28 @@ import '../styles/dashboard.css'
 
 /* Component */
 const Triggers = (props) => {
-    const history = props.history;
+    /* Navigated from dynamic menu */
+    const [navFromMenu, setNav] = useState(props.history.location.fromMenu === true)
 
     useEffect(() => {
         /* Require authentication to access */
         if (!localStorage.getItem('authToken'))
-            history.push('/login')
+            props.history.push('/login')
+        else {
+            setNav(false)
+        }
 
-    }, [history])
+        /*
+        Silence empty dependency warning
+        +
+        Empty array dependencies = render only once
+        */
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <>
             {/* Body */}
-            <div className={false ? 'dashboard-body inactive' : 'dashboard-body'}>
+            <div className={props.isMenuOpen || navFromMenu ? 'dashboard-body inactive' : 'dashboard-body'}>
 
                 {/* Live graph */}
                 <div className='live-graph'>

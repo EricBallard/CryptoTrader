@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-
 /*
     Assumes 5mb on data is available in browser's local-storage
     Verified for all modern browsers (pc/mobile) [safari, chrome, firefox, opera, edge]
 */
 
 /* Downloads, caches, and serves images as encoded base64 */
-const CachedImage = ({ url, name }) => {
+const CachedImage = ({ url, name, event }) => {
     const [src, setSrc] = useState(null)
 
     useEffect(() => {
@@ -33,7 +32,7 @@ const CachedImage = ({ url, name }) => {
 
     /* Stored in aws s3 bucket, served with aws cloud front */
     return (
-        <img className={name} alt={name} src={src} draggable='false' rel='prerender' />
+        <img className={name} alt={name} src={src} draggable='false' rel='prerender' onClick={event} />
     )
 }
 

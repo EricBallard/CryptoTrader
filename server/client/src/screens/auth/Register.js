@@ -27,7 +27,7 @@ const Register = ({ history }) => {
             }, config)
 
             localStorage.setItem('authToken', data.token)
-            history.push('/')
+            history.push('/login')
         } catch (error) {
             setError(error.response.data.error)
             setTimeout(() => setError(''), 5000)
@@ -37,10 +37,6 @@ const Register = ({ history }) => {
     return (
         <div className='auth-screen'>
             <div className='header'>
-                  {/* Logo stored in aws s3 bucket */}
-                  <img className='brand-logo' draggable='false' alt='' rel='prefetch'
-                    src={process.env.REACT_APP_CLOUDFRONT_URL + 'logo512.png'} />
-                
                 {/* Name */}
                 <h1 className='brand-name'>DogeTrader</h1>
              </div>

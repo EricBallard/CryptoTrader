@@ -5,13 +5,15 @@ import axios from 'axios'
 /* Style */
 import '../../styles/auth.css'
 
+import CachedImage from '../../components/CachedImage'
+
 /* Component */
 const Reset = ({ history, match }) => {
     const [password, setPassword] = useState('')
     const [success, setSuccess] = useState('')
     const [error, setError] = useState('')
 
-    const resetHandler = async (e) => {
+    const handler = async (e) => {
         e.preventDefault()
 
         const config = { header: { 'Content-Type': 'application/json', }, }
@@ -30,14 +32,13 @@ const Reset = ({ history, match }) => {
 
             <div className='header'>
                 {/* Logo stored in aws s3 bucket */}
-                <img className='brand-logo' draggable='false' alt='' rel='prefetch'
-                    src={process.env.REACT_APP_CLOUDFRONT_URL + 'logo512.png'} />
-                
+                <CachedImage name='brand-logo' url={process.env.REACT_APP_CLOUDFRONT_URL + 'logo512.png'} />
+
                 {/* Name */}
                 <h1 className='brand-name'>DogeTrader</h1>
              </div>
 
-            <form className='auth-form' onSubmit={resetHandler}>
+            <form className='auth-form' onSubmit={handler}>
                 {/* Title */}
                 <h3 className='form-title'>Reset Password</h3>
 
@@ -63,7 +64,7 @@ const Reset = ({ history, match }) => {
                 {/* Back */}
                 <img className='form-back' draggable='false' alt='' rel='prefetch'
                     src='https://dogetrader.s3.us-east-2.amazonaws.com/undo.png'
-                    onClick={() =>  history.push('/')} />
+                    onClick={() =>  history.push('/login')} />
 
             </form>
         </div>
