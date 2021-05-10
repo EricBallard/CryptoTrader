@@ -13,6 +13,7 @@ const Triggers = (props) => {
         if (!localStorage.getItem('authToken'))
             props.history.push('/login')
         else {
+            props.history.location.fromMenu = false
             setNav(false)
         }
 

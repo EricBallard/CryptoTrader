@@ -5,6 +5,7 @@ import axios from 'axios'
 import PriceChart from '../components/PriceChart'
 
 /* Style */
+import '../styles/app.css'
 import '../styles/dashboard.css'
 
 /* Component */
@@ -44,7 +45,7 @@ const Dashboard = (props) => {
             fetchPrivateData()
         }
 
-        /*
+        /* 
         Silence empty dependency warning
         +
         Empty array dependencies = render only once
@@ -55,13 +56,27 @@ const Dashboard = (props) => {
         error ? <span className='error-message'>{error}</span> : <>
             {/* Body */}
             <div className={props.isMenuOpen || navFromMenu ? 'dashboard-body inactive' : 'dashboard-body'}>
-            
-                {/* Live graph */}
-                <div className='live-graph'>
-                    <PriceChart />
-                </div>
+                <div className='container'>
 
-                {privateData}
+                    {/* Live graph */}
+                    <div className='live-graph'>
+                        <PriceChart />
+
+                        {/* Controls */}
+                        <div className='live-graph controls'>
+                         
+                        <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1Y</button>
+                        <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>3M</button>
+                        <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1W</button>
+                        <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1D</button>
+                        <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1H</button>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
             </div>
         </>
     )

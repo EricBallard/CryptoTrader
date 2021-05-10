@@ -7,27 +7,72 @@
 .dashboard-body {
     transition: 0.9s all ease-in-out;
 
-    margin-top: 1rem;
     flex-direction:  column;
     justify-content: center;
     align-items: center;
     display: flex;
+
     
+    margin-top: 1rem;
     opacity: 1.0;
-    height: 80vh;
-    top: 80px;
+
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+
+    flex-grow: 1;
+    flex-shrink: 1;
 }
 
-.live-graph{
-    flex-grow: 1;
-
-    height: 60vh;
-    max-height: 60vh;
+.container{
+    max-height: 80vh;
+    min-height: 80vh;
     
-    width: 80vw;
-    max-width: 80vw;
+    max-width: 95vw;
+    min-width: 95vw;
 
     border-radius: 1rem;
     background-color: #707070;
     box-shadow: inset 0 0 10px #000;
+}
+
+.live-graph{
+    flex-direction:  column;
+    align-items: center;
+    display: flex;
+}
+
+.live-graph.controls {
+    justify-content: space-between;
+    align-content: center;
+    flex-direction:  row;
+    display: flex;
+
+    max-height: 7.5vh;
+    min-height: 7.5vh;
+    
+    max-width: 8B5vw;
+    min-width: 85vw;
+}
+
+.graph-btn{
+    background: #6c0f2c;
+    font-size: 1rem;
+    width: 17.5%;
+    max-width: 20%;
+}
+
+.graph-btn.selected{
+    color: #f5c800;
+    background: #000;
+    font-size: 1rem;
+    width: 17.5%;
+    max-width: 20%;
+}
+
+.graph-btn:hover{
+    background: #f5c800;
+    font-size: 1rem;
+    width: 17.5%;
+    max-width: 20%;
 }
