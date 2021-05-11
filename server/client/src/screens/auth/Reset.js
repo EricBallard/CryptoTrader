@@ -30,14 +30,6 @@ const Reset = ({ history, match }) => {
     return (
         <div className='auth-screen'>
 
-            <div className='header'>
-                {/* Logo stored in aws s3 bucket */}
-                <CachedImage name='brand-logo' url={process.env.REACT_APP_CLOUDFRONT_URL + 'logo512.png'} />
-
-                {/* Name */}
-                <h1 className='brand-name'>DogeTrader</h1>
-             </div>
-
             <form className='auth-form' onSubmit={handler}>
                 {/* Title */}
                 <h3 className='form-title'>Reset Password</h3>

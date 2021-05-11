@@ -30,11 +30,6 @@ const Forgot = ({ history }) => {
     return (
         <div className='auth-screen'>
 
-            <div className='header'>
-
-                {/* Name */}
-                <h1 className='brand-name'>DogeTrader</h1>
-            </div>
 
             <form className='auth-form' onSubmit={forgotHandler} >
 

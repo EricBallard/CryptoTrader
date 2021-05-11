@@ -1,12 +1,12 @@
-import {  useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 /* Style */
 import '../styles/dashboard.css'
 
 /* Component */
 const Stats = (props) => {
-     /* Navigated from dynamic menu */
-     const [navFromMenu, setNav] = useState(props.history.location.fromMenu === true)
+    /* Navigated from dynamic menu */
+    const [navFromMenu, setNav] = useState(props.history.location.fromMenu === true)
 
     useEffect(() => {
         /* Require authentication to access */
@@ -29,12 +29,14 @@ const Stats = (props) => {
         <>
             {/* Body */}
             <div className={props.isMenuOpen || navFromMenu ? 'dashboard-body inactive' : 'dashboard-body'}>
+                <div className='container'>
 
-                {/* Live graph */}
-                <div className='live-graph'>
-                    <p>STATS</p>
+                    {/* Live graph */}
+                    <div className='live-graph'>
+                        <p>STATS</p>
+                    </div>
+
                 </div>
-
             </div>
 
         </>

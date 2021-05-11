@@ -28,20 +28,58 @@
 }
 
 .auth-screen {
+  width: 100vw;
+  height: 100vh;
+  
   display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
+}
+
+
+/* Form elements */
+.form-group,
+.form-group label {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  border-radius: 1rem;
+}
+
+.form-group label {
+  margin-left: 1rem;
+  font-size: 0.8rem;
+}
+
+.form-group input {
+  padding: 10px 20px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background-color: #d9d9d9;
+  outline-width: 0;
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  border-bottom: 3px solid #f5c800;
 }
 
 .auth-form {
-  max-width: 400px;
-  min-height: 30vh;
-  margin-top: 2rem;
-  border-radius: 2rem;
+  margin: auto;
+
+  width: 50vw;
+  max-width: 600px;
+  min-width: 300px;
+
+  min-height: 40vh;
+
+  /* Make it a round boy */
   padding: 1.5rem;
+  border-radius: 2rem;
   background: #707070;
-  box-shadow: inset 0 0 10px #000;
+  box-shadow: rgb(56, 51, 51) 0 10px #000;
 }
 
 .form-back{

@@ -3,6 +3,7 @@ import axios from 'axios'
 
 /* Components */
 import PriceChart from '../components/PriceChart'
+import { HiLoChart } from  '../components/HiLoChart'
 
 /* Style */
 import '../styles/app.css'
@@ -57,23 +58,24 @@ const Dashboard = (props) => {
             {/* Body */}
             <div className={props.isMenuOpen || navFromMenu ? 'dashboard-body inactive' : 'dashboard-body'}>
                 <div className='container'>
+                
+                    {/* High / Low Graph */}
+                    <HiLoChart />
 
                     {/* Live graph */}
                     <div className='live-graph'>
+
                         <PriceChart />
 
                         {/* Controls */}
                         <div className='live-graph controls'>
-                         
-                        <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1Y</button>
-                        <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>3M</button>
-                        <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1W</button>
-                        <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1D</button>
-                        <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1H</button>
-
+                            <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1Y</button>
+                            <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>3M</button>
+                            <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1W</button>
+                            <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1D</button>
+                            <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1H</button>
                         </div>
                     </div>
-
 
 
                 </div>

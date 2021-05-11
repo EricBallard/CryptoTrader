@@ -28,12 +28,14 @@ const Triggers = (props) => {
         <>
             {/* Body */}
             <div className={props.isMenuOpen || navFromMenu ? 'dashboard-body inactive' : 'dashboard-body'}>
+                <div className='container'>
 
-                {/* Live graph */}
-                <div className='live-graph'>
-                    <p>TRIGGERS</p>
+                    {/* Live graph */}
+                    <div className='live-graph'>
+                        <p>TRIGGERS</p>
+                    </div>
+
                 </div>
-
             </div>
 
         </>

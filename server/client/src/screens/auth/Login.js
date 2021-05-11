@@ -36,20 +36,6 @@ const Login = ({ history }) => {
 
     return (
         <div className='auth-screen'>
-            <div className='wrap'>
-                <div className='tri'>
-
-                </div>
-            </div>
-            <div className='header'>
-                {/* Logo stored in aws s3 bucket 
-                <CachedImage name='brand-logo' url={process.env.REACT_APP_CLOUDFRONT_URL + 'logo512.png'} />
-*/}
-
-                {/* Name */}
-                <h1 className='brand-name'>DogeTrader</h1>
-            </div>
-
 
             <form className='auth-form' onSubmit={handler}>
 
