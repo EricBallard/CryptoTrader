@@ -10,13 +10,17 @@ import {
   LabelList
 } from 'recharts'
 
-const data = [{ name: 'High/Low', lo: 0.4359, hi: 0.6581, alltimehi: 0.7516 }]
+/* Graph data */
+let data = [{ name: 'HIGH / LOW', Low: 0.4359, High: 0.6581, All_Time_High: 0.7516 }]
 
-
+/* Format bar graph labels  */
 const renderCustomizedLabel = (props) => {
   const { content, ...rest } = props
-  return <Label {...rest} fontSize='12' fill='#FFFFFF' fontWeight='Bold' />
+  return <Label {...rest} fontSize='1.25rem' fill='#FFFFFF' />
 }
+
+/* Formats tool-tip datakey names, replaces _ with spaces */
+const formatter = (value, name, props) => [value, String([name]).replaceAll('_', ' '), props]
 
 export class HiLoChart extends React.Component {
   render() {
@@ -24,11 +28,11 @@ export class HiLoChart extends React.Component {
 
     return (
       <div className='hilo-chart'>
-        <ResponsiveContainer>
+        <ResponsiveContainer height='100%' width='100%'>
 
           {/* Recharts - vertical bar chart */}
           <BarChart
-           //margin={{ left: 50, right: 50 }}
+            //margin={{ left: 50, right: 50 }}
             layout='vertical'
             data={data}
             stackOffset='expand' >
@@ -36,37 +40,40 @@ export class HiLoChart extends React.Component {
             {/* Config axis, hide labels */}
             <XAxis hide type='number' />
             <YAxis hide type='category'
-              dataKey='name'
-              stroke='#000'
-              fontSize='12' />
-          
+              dataKey='name' />
+
+
             {/* Hover/tap for more info - and style*/}
-            <Tooltip placement='bottom'  cursor={false}
-              contentStyle={{ backgroundColor: '#707070', fontSize: '1.5rem' }}/>
+            <Tooltip placement='bottom' cursor={false}
+              contentStyle={{ backgroundColor: '#707070' }}
+              formatter={formatter}
+            />
 
             {/* Pretty self-explaintory, data key matches keys in data.. fill,
                 stack id allows the 3 bars to stack into one, radius rounds corners */}
-            <Bar dataKey='lo' fill='#6c0f2c' stroke='#303030' stackId='a' radius={[10, 0, 0, 10]}>
+            <Bar dataKey='Low' stackId='a' stroke='#000' fill='#6c0f2c' radius={[10, 0, 0, 10]}>
               <LabelList
-                dataKey='lo'
+                name='ass'
+                label='ass'
+                dataKey='Low'
                 position='center'
                 content={renderCustomizedLabel} />
             </Bar>
 
-            <Bar dataKey='hi' fill='#248232' stackId='a'>
+            <Bar dataKey='High' stackId='a' stroke='#000' fill='#248232'>
               <LabelList
-                dataKey='hi'
+                dataKey='High'
                 position='center'
                 content={renderCustomizedLabel} />
             </Bar>
 
-            <Bar dataKey='alltimehi' fill='#303030' stackId='a' radius={[0, 10, 10, 0]}>
+            <Bar dataKey='All_Time_High' stackId='a' stroke='#000' fill='#000' radius={[0, 10, 10, 0]}>
               <LabelList
-                dataKey='alltimehi'
+                dataKey='All_Time_High'
                 position='center'
                 content={renderCustomizedLabel} />
             </Bar>
-            
+
           </BarChart>
         </ResponsiveContainer>
       </div>

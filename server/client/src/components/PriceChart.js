@@ -116,7 +116,7 @@ export default class Example extends PureComponent {
 
     return (
       <div className='highlight-bar-charts' style={{ userSelect: 'none', width: '100%' }}>
-        <button type='button' className='btn update' onClick={this.zoomOut.bind(this)}>
+        <button type='button' className='btn graph-btn' onClick={this.zoomOut.bind(this)}>
           Zoom Out
         </button>
 

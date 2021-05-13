@@ -3,7 +3,7 @@ import axios from 'axios'
 
 /* Components */
 import PriceChart from '../components/PriceChart'
-import { HiLoChart } from  '../components/HiLoChart'
+import { HiLoChart } from '../components/HiLoChart'
 
 /* Style */
 import '../styles/app.css'
@@ -58,11 +58,18 @@ const Dashboard = (props) => {
             {/* Body */}
             <div className={props.isMenuOpen || navFromMenu ? 'dashboard-body inactive' : 'dashboard-body'}>
                 <div className='container'>
-                
-                    {/* High / Low Graph */}
-                    <HiLoChart />
 
-                    {/* Live graph */}
+                    <div className='price-breakdown'>
+                        {/* Current price */}
+                        <p className='doge-price'>
+                            DogeCoin: <t className='current-price'>0.6412</t>
+                        </p>
+
+                        {/* High / Low Graph */}
+                        <HiLoChart />
+                    </div>
+
+                    {/* Price graph */}
                     <div className='live-graph'>
 
                         <PriceChart />
