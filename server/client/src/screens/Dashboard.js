@@ -59,31 +59,22 @@ const Dashboard = (props) => {
             <div className={props.isMenuOpen || navFromMenu ? 'dashboard-body inactive' : 'dashboard-body'}>
                 <div className='container'>
 
+                
+
                     <div className='price-breakdown'>
                         {/* Current price */}
                         <p className='doge-price'>
-                            DogeCoin: <t className='current-price'>0.6412</t>
+                            DogeCoin: $<span className='current-price'>0.6412</span>
                         </p>
 
                         {/* High / Low Graph */}
                         <HiLoChart />
                     </div>
 
-                    {/* Price graph */}
                     <div className='live-graph'>
-
+                        {/* Price graph */}
                         <PriceChart />
-
-                        {/* Controls */}
-                        <div className='live-graph controls'>
-                            <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1Y</button>
-                            <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>3M</button>
-                            <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1W</button>
-                            <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1D</button>
-                            <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1H</button>
-                        </div>
                     </div>
-
 
                 </div>
             </div>

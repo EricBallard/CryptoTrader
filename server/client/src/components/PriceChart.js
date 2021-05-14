@@ -112,24 +112,22 @@ export default class Example extends PureComponent {
   }
 
   render() {
-    const { data,  left, right, refAreaLeft, refAreaRight, top, bottom, top2, bottom2 } = this.state
+    const { data, left, right, refAreaLeft, refAreaRight, top, bottom, top2, bottom2 } = this.state
+    
 
     return (
-      <div className='highlight-bar-charts' style={{ userSelect: 'none', width: '100%' }}>
-        <button type='button' className='btn graph-btn' onClick={this.zoomOut.bind(this)}>
-          Zoom Out
-        </button>
+      <div className='price-graph' style={{ userSelect: 'none', width: '99%' }}>
 
-        <ResponsiveContainer width='100%' height={400}>
+        <ResponsiveContainer width='99%' aspect={1.25}  minHeight={200} maxHeight={window.innerHeight/2}>
+        
           <LineChart
-            width={800}
-            height={400}
+            margin={{ left: -25, right: -25 }}
             data={data}
             onMouseDown={(e) => this.setState({ refAreaLeft: e.activeLabel })}
             onMouseMove={(e) => this.state.refAreaLeft && this.setState({ refAreaRight: e.activeLabel })}
             // eslint-disable-next-line react/jsx-no-bind
-            onMouseUp={this.zoom.bind(this)}
-          >
+            onMouseUp={this.zoom.bind(this)} >
+
             <CartesianGrid strokeDasharray='3 3' />
             <XAxis allowDataOverflow dataKey='name' domain={[left, right]} type='number' />
             <YAxis allowDataOverflow domain={[bottom, top]} type='number' yAxisId='1' />
@@ -143,6 +141,21 @@ export default class Example extends PureComponent {
             ) : null}
           </LineChart>
         </ResponsiveContainer>
+
+        {/* Zoom-out button */}
+        <button type='button' className='btn graph-btn zoom' onClick={this.zoomOut.bind(this)}>
+          Zoom Out
+        </button>
+
+        {/* Controls */}
+        <div className='live-graph controls'>
+          <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1Y</button>
+          <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>3M</button>
+          <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1W</button>
+          <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1D</button>
+          <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1H</button>
+        </div>
+
       </div>
     )
   }

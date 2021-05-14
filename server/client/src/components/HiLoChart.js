@@ -27,12 +27,12 @@ export class HiLoChart extends React.Component {
 
 
     return (
-      <div className='hilo-chart'>
-        <ResponsiveContainer height='100%' width='100%'>
+      <div className='hilo-graph'>
+        <ResponsiveContainer height='99%' maxWidth='50px'>
 
           {/* Recharts - vertical bar chart */}
           <BarChart
-            //margin={{ left: 50, right: 50 }}
+            //margin={{ left: 50.5, right: 7.5 }}
             layout='vertical'
             data={data}
             stackOffset='expand' >

@@ -68,6 +68,7 @@
     border: 1px solid black;
     background: #6c0f2c;
     font-size: 1rem;
+    font-weight: bold;
     width: 17.5%;
     max-width: 20%;
 }
@@ -88,6 +89,18 @@
     max-width: 20%;
 }
 
+.graph-btn.zoom{
+    border-radius: 1rem;
+    
+    max-height: 7vh;
+    text-align: center;
+    min-width: 85vw;
+    max-width: 85vw;
+
+    font-size: 1.25rem;
+    letter-spacing: 0.1rem;
+}
+
 
 .doge-price{
     text-align: center;
@@ -95,9 +108,15 @@
     font-weight: bold;
 }
 
-/* Charts */
-.hilo-chart {
-    width: 100%;
+.price-graph{
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hilo-graph {
     height: 75px;
 
     max-height: 200px;
