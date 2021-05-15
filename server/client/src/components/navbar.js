@@ -23,8 +23,11 @@ const Navbar = ({ isOpen, syncStatus }) => {
 			// Set menu to closed if screen width > 600px
 			if ({ isOpen } && window.innerWidth > 600) {
 				syncStatus(false)
+
+				console.log('resized')
 			}
 		}
+
 
 		//TODO fix a nicer solution
 		/* Listen to resize to reset menu  */

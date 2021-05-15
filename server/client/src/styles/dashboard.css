@@ -31,7 +31,7 @@
 .container{
     display:flex;
     flex-direction:  column;
-    justify-content: space-between;
+    justify-content: space-evenly;
 
     max-height: 80vh;
     min-height: 80vh;
@@ -52,7 +52,7 @@
 }
 
 .live-graph.controls {
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-content: center;
     flex-direction:  row;
     display: flex;

@@ -59,7 +59,7 @@ const Forgot = ({ history }) => {
 
                 {/* Back */}
                 <CachedImage name='form-back' event={() => history.push('/login')}
-                url={process.env.REACT_APP_CLOUDFRONT_URL + 'undo.png'} />
+                    url={process.env.REACT_APP_CLOUDFRONT_URL + 'undo.png'} />
 
             </form>
         </div>

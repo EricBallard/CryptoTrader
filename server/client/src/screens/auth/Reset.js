@@ -54,9 +54,8 @@ const Reset = ({ history, match }) => {
                 <button type='submit' className='form-btn btn btn-primary'>Reset Password</button>
 
                 {/* Back */}
-                <img className='form-back' draggable='false' alt='' rel='prefetch'
-                    src='https://dogetrader.s3.us-east-2.amazonaws.com/undo.png'
-                    onClick={() =>  history.push('/login')} />
+                <CachedImage name='form-back' event={() => history.push('/login')}
+                    url={process.env.REACT_APP_CLOUDFRONT_URL + 'undo.png'} />
 
             </form>
         </div>

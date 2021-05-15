@@ -22,61 +22,62 @@ const renderCustomizedLabel = (props) => {
 /* Formats tool-tip datakey names, replaces _ with spaces */
 const formatter = (value, name, props) => [value, String([name]).replaceAll('_', ' '), props]
 
-export class HiLoChart extends React.Component {
-  render() {
+const HiLoChart = () => {
+
+  return (
+    <div className='hilo-graph'>
+      <ResponsiveContainer maxHeight='99%'
+        width='99%' aspect={1.25} minHeight={100} maxHeight={window.screen.height/ 16}>
 
 
-    return (
-      <div className='hilo-graph'>
-        <ResponsiveContainer height='99%' maxWidth='50px'>
+        {/* Recharts - vertical bar chart */}
+        <BarChart
+          margin={{ left: 50, right: 50 }}
+          layout='vertical'
+          data={data}
+          stackOffset='expand' >
 
-          {/* Recharts - vertical bar chart */}
-          <BarChart
-            //margin={{ left: 50.5, right: 7.5 }}
-            layout='vertical'
-            data={data}
-            stackOffset='expand' >
-
-            {/* Config axis, hide labels */}
-            <XAxis hide type='number' />
-            <YAxis hide type='category'
-              dataKey='name' />
+          {/* Config axis, hide labels */}
+          <XAxis hide type='number' />
+          <YAxis hide type='category'
+            dataKey='name' />
 
 
-            {/* Hover/tap for more info - and style*/}
-            <Tooltip placement='bottom' cursor={false}
-              contentStyle={{ backgroundColor: '#707070' }}
-              formatter={formatter}
-            />
+          {/* Hover/tap for more info - and style*/}
+          <Tooltip placement='bottom' cursor={false}
+            contentStyle={{ backgroundColor: '#707070' }}
+            formatter={formatter}
+          />
 
-            {/* Pretty self-explaintory, data key matches keys in data.. fill,
-                stack id allows the 3 bars to stack into one, radius rounds corners */}
-            <Bar dataKey='Low' stackId='a' stroke='#000' fill='#6c0f2c' radius={[10, 0, 0, 10]}>
-              <LabelList
-                name='ass'
-                label='ass'
-                dataKey='Low'
-                position='center'
-                content={renderCustomizedLabel} />
-            </Bar>
+          {/* Pretty self-explaintory, data key matches keys in data.. fill,
+            stack id allows the 3 bars to stack into one, radius rounds corners */}
+          <Bar dataKey='Low' stackId='a' stroke='#000' fill='#6c0f2c' radius={[10, 0, 0, 10]}>
+            <LabelList
+              name='ass'
+              label='ass'
+              dataKey='Low'
+              position='center'
+              content={renderCustomizedLabel} />
+          </Bar>
 
-            <Bar dataKey='High' stackId='a' stroke='#000' fill='#248232'>
-              <LabelList
-                dataKey='High'
-                position='center'
-                content={renderCustomizedLabel} />
-            </Bar>
+          <Bar dataKey='High' stackId='a' stroke='#000' fill='#248232'>
+            <LabelList
+              dataKey='High'
+              position='center'
+              content={renderCustomizedLabel} />
+          </Bar>
 
-            <Bar dataKey='All_Time_High' stackId='a' stroke='#000' fill='#000' radius={[0, 10, 10, 0]}>
-              <LabelList
-                dataKey='All_Time_High'
-                position='center'
-                content={renderCustomizedLabel} />
-            </Bar>
+          <Bar dataKey='All_Time_High' stackId='a' stroke='#000' fill='#000' radius={[0, 10, 10, 0]}>
+            <LabelList
+              dataKey='All_Time_High'
+              position='center'
+              content={renderCustomizedLabel} />
+          </Bar>
 
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    )
-  }
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  )
 }
+
+export default HiLoChart

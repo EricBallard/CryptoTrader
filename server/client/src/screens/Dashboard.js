@@ -3,7 +3,7 @@ import axios from 'axios'
 
 /* Components */
 import PriceChart from '../components/PriceChart'
-import { HiLoChart } from '../components/HiLoChart'
+import HiLoChart from '../components/HiLoChart'
 
 /* Style */
 import '../styles/app.css'
