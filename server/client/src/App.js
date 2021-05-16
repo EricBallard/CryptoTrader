@@ -30,6 +30,9 @@ const App = () => {
   const [isNavOpen, setNavStatus] = useState(false)
   const syncNavStatus = (status) => setNavStatus(status)
 
+   /* Window properities - init max height */
+   const [maxHeight, setMaxHeight] = useState(window.maxHeight | window.innerHeight | window.screen.maxHeight)
+
   return (
     <div className='app'>
 
@@ -44,11 +47,11 @@ const App = () => {
 
         <>
           {/* Navbar */}
-          <Navbar isOpen={isNavOpen} syncStatus={syncNavStatus} />
+          <Navbar isOpen={isNavOpen} syncStatus={syncNavStatus} syncMaxHeight={setMaxHeight}/>
 
           {/* User util */}
           <Route exact path='/dashboard'
-              render={(props) => <Dashboard {...props} isMenuOpen={isNavOpen} />} />
+              render={(props) => <Dashboard {...props} isMenuOpen={isNavOpen} height={maxHeight} />} />
 
           <Route exact path='/triggers' 
               render={(props) => <Triggers {...props} isMenuOpen={isNavOpen} />} />

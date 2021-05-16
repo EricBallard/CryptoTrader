@@ -22,13 +22,12 @@ const renderCustomizedLabel = (props) => {
 /* Formats tool-tip datakey names, replaces _ with spaces */
 const formatter = (value, name, props) => [value, String([name]).replaceAll('_', ' '), props]
 
-const HiLoChart = () => {
+const HiLoChart = ({ maxHeight }) => {
 
   return (
     <div className='hilo-graph'>
       <ResponsiveContainer maxHeight='99%'
-        width='99%' aspect={1.25} minHeight={100} maxHeight={window.screen.height/ 16}>
-
+        width='99%' aspect={1.25} minHeight={100} maxHeight={maxHeight/16}>
 
         {/* Recharts - vertical bar chart */}
         <BarChart

@@ -8,7 +8,7 @@ import '../styles/navbar.css'
 import CachedImage from './CachedImage'
 
 //TODO rename, nav = isOpen
-const Navbar = ({ isOpen, syncStatus }) => {
+const Navbar = ({ isOpen, syncStatus, syncMaxHeight }) => {
 	const [path, setPath] = useState('/dashboard')
 
 	const toggleMenu = () => syncStatus(!isOpen)
@@ -20,21 +20,28 @@ const Navbar = ({ isOpen, syncStatus }) => {
 
 	useEffect(() => {
 		const resetMenu = () => {
+			const h = window.innerHeight,
+				w = window.innerHeight;
+
 			// Set menu to closed if screen width > 600px
-			if ({ isOpen } && window.innerWidth > 600) {
+			if (!isNaN(w) && w > 600)
 				syncStatus(false)
 
-				console.log('resized')
-			}
+			// Cache resized window's max height
+			if (!isNaN(h) && h > 0)
+				syncMaxHeight(h)
 		}
 
 
-		//TODO fix a nicer solution
-		/* Listen to resize to reset menu  */
+		/* Listen to resize  */
 		window.addEventListener('resize', resetMenu)
 		return () => window.removeEventListener('resize', resetMenu)
 
-		/* Ignore react warrning 'missing dependancy' */
+		/* 
+			Ignore react warrning 'missing dependancy'
+			Passing an empty array as we only want to run
+			once due to registering a listener
+		*/
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 

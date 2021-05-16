@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 /* Components */
-import PriceChart from '../components/PriceChart'
-import HiLoChart from '../components/HiLoChart'
+import PriceChart from '../components/charts/PriceChart'
+import HiLoChart from '../components/charts/HiLoChart'
 
 /* Style */
 import '../styles/app.css'
@@ -59,8 +59,6 @@ const Dashboard = (props) => {
             <div className={props.isMenuOpen || navFromMenu ? 'dashboard-body inactive' : 'dashboard-body'}>
                 <div className='container'>
 
-                
-
                     <div className='price-breakdown'>
                         {/* Current price */}
                         <p className='doge-price'>
@@ -68,12 +66,12 @@ const Dashboard = (props) => {
                         </p>
 
                         {/* High / Low Graph */}
-                        <HiLoChart />
+                        <HiLoChart maxHeight={props.height}/>
                     </div>
 
                     <div className='live-graph'>
                         {/* Price graph */}
-                        <PriceChart />
+                        <PriceChart  maxHeight={props.height}/>
                     </div>
 
                 </div>

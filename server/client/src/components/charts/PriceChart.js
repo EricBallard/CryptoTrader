@@ -13,7 +13,7 @@ import {
 
 
 
-const PriceChart = () => {
+const PriceChart = ({maxHeight}) => {
   const tempData = [
     { name: 1, cost: 4.11, impression: 100 },
     { name: 2, cost: 2.39, impression: 120 },
@@ -39,15 +39,17 @@ const PriceChart = () => {
 
   /* Init functional states */
   const [data, setData] = useState(tempData)
+  
   const [left, setLeft] = useState('dataMin')
   const [right, setRight] = useState('dataMax')
   const [refAreaLeft, setRefLeft] = useState('')
   const [refAreaRight, setRefRight] = useState('')
+
   const [top, setTop] = useState('dataMax+1')
   const [bottom, setBottom] = useState('dataMin-1')
+
   const [top2, setTop2] = useState('dataMax+20')
   const [bottom2, setBottom2] = useState('dataMin-20')
-  const [animation, setAnimation] = useState(true)
 
   /* Calculate axis domain */
   const getAxisYDomain = (from, to, ref, offset) => {
@@ -109,6 +111,8 @@ const PriceChart = () => {
     const [bottom, top] = getAxisYDomain(refAreaLeft, refAreaRight, 'cost', 1)
     const [bottom2, top2] = getAxisYDomain(refAreaLeft, refAreaRight, 'impression', 50)
 
+    
+
     setData(data.slice())
 
     setLeft(refAreaLeft)
@@ -122,7 +126,8 @@ const PriceChart = () => {
   return (
     <div className='price-graph' style={{ userSelect: 'none', width: '99%' }}>
 
-      <ResponsiveContainer width='99%' aspect={1.25} minHeight={200} maxHeight={window.innerHeight / 2}>
+      <ResponsiveContainer width='99%'
+        aspect={1} maxHeight={maxHeight / 2.5}>
 
         <LineChart
           margin={{ left: -25, right: -25 }}
@@ -157,7 +162,7 @@ const PriceChart = () => {
         <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>3M</button>
         <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1W</button>
         <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1D</button>
-        <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1H</button>
+        <button type='button' name='1h' className='btn graph-btn btn-primary' tabIndex={1}>1H</button>
       </div>
 
     </div >
