@@ -10,6 +10,7 @@ import '../../styles/auth.css'
 const Login = ({ history }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
     const [error, setError] = useState('')
 
     useEffect(() => {
@@ -29,20 +30,23 @@ const Login = ({ history }) => {
             if (!localStorage.setItem('authToken', data.token))
                 history.push('/dashboard')
         } catch (error) {
+            // Set error
             setError(error.response.data.error)
+
+            // Reset error after 5s
             setTimeout(() => setError(''), 5000)
         }
     }
 
     return (
         <div className='auth-screen'>
+            {/* Errors */}
+            {error && <span className='error-message'>{error}</span>}
 
-            <form className='auth-form' onSubmit={handler}>
+
+            <form className={error === '' ? 'auth-form' : 'auth-form error'} onSubmit={handler}>
 
                 <h3 className='form-title'>Login</h3>
-
-                {/* Errors */}
-                {error && <span className='error-message'>{error}</span>}
 
                 {/* Email */}
                 <div className='form-group'>
@@ -57,10 +61,16 @@ const Login = ({ history }) => {
                     <input requre='true' type='password' id='password' placeholder='Enter password'
                         value={password} onChange={(e) => setPassword(e.target.value)} tabIndex={2} />
 
+                    {/* Show password <CachedImage /> */}
+                    <button type='button' className='password show'>
+                        
+                    </button>
+
                     {/* Reset */}
                     <span className='login-reset'>
                         <Link to='/forgot'>Reset Password</Link>
                     </span>
+                    
                 </div>
 
                 {/* Submit */}

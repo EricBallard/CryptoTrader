@@ -30,22 +30,23 @@
 .auth-screen {
   width: 100vw;
   height: 100vh;
-  
   display: flex;
+  flex-direction:column;
 }
 
-
 /* Form elements */
-.form-group,
-.form-group label {
+
+.form-group, .form-group label {
   width: 100%;
   margin-bottom: 0.5rem;
+  transition: margin-bottom 1s ease-in-out;
 }
 
 .form-group input {
   width: 100%;
   margin-bottom: 0.5rem;
   border-radius: 1rem;
+  max-height: 7.5vh;
 }
 
 .form-group label {
@@ -53,8 +54,22 @@
   font-size: 0.8rem;
 }
 
+
+
+.password.show{
+  position: absolute;
+  margin-left: -2.5rem;
+  background-color: rgb(56, 51, 51, 0.0);
+
+  margin-top: 0.2rem;
+
+  min-height: 2rem;
+  min-width: 2rem;
+  transition: margin-top 1s ease-in-out;
+}
+
 .form-group input {
-  padding: 10px 20px;
+  padding: 0.5rem 1rem;
   border: none;
   border-bottom: 3px solid transparent;
   background-color: #d9d9d9;
@@ -66,15 +81,46 @@
   border-bottom: 3px solid #f5c800;
 }
 
+@keyframes swing
+{
+    15%
+    {
+        -webkit-transform: translateX(5px);
+        transform: translateX(5px);
+    }
+    30%
+    {
+        -webkit-transform: translateX(-5px);
+        transform: translateX(-5px);
+    }
+    50%
+    {
+        -webkit-transform: translateX(3px);
+        transform: translateX(3px);
+    }
+    65%
+    {
+        -webkit-transform: translateX(-3px);
+        transform: translateX(-3px);
+    }
+    80%
+    {
+        -webkit-transform: translateX(2px);
+        transform: translateX(2px);
+    }
+    100%
+    {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+
 .auth-form {
   margin: auto;
-
-  width: 50vw;
+  width: 60vw;
   max-width: 600px;
-  min-width: 300px;
-
+  min-width: 400px;
   min-height: 40vh;
-
   /* Make it a round boy */
   padding: 1.5rem;
   border-radius: 2rem;
@@ -82,7 +128,15 @@
   box-shadow: rgb(56, 51, 51) 0 10px #000;
 }
 
-.form-back{
+.auth-form.error{
+  -webkit-animation: swing 1s ease;
+  -webkit-animation-iteration-count: 1;
+  
+  animation: swing 1s ease;
+  animation-iteration-count: 1;
+}
+
+.form-back {
   display: flex;
   margin-left: auto;
   margin-right: auto;
@@ -92,12 +146,12 @@
   max-width: 32px;
   min-height: 32px;
   min-width: 32px;
-  
 }
 
 .form-title {
   text-align: center;
   margin-bottom: 1rem;
+  transition: margin-bottom 1s ease-in-out;
 }
 
 .form-subtext {
@@ -106,11 +160,13 @@
   margin-top: 1rem;
 }
 
-.form-btn{
-  margin-top: 2.5rem;
+.form-btn {
+  margin-top: 1rem;
+  transition: margin-top 1s ease-in-out;
 }
 
 /* Ala-carte */
+
 .login-reset {
   margin-left: 1rem;
   display: block;
@@ -125,4 +181,24 @@
   font-size: 1.0rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+/* If screen heigh is <= 600px */
+
+@media screen and (max-height: 600px) {
+  .form-btn, .form-subtext {
+    margin-top: 0.5rem;
+    transition: margin-top 1s ease-in-out;
+  }
+  
+  .form-group, .form-title, .form-group label {
+    margin-bottom: 0;
+    transition: margin-bottom 1s ease-in-out;
+  }
+
+  .password.show{
+    min-height: 1.5rem;
+    margin-top: 0.2rem;
+    transition: min-height 1s ease-in-out;
+  }
 }

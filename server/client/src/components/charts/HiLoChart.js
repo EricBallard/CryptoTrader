@@ -24,6 +24,19 @@ const formatter = (value, name, props) => [value, String([name]).replaceAll('_',
 
 const HiLoChart = ({ maxHeight }) => {
 
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className='hilo-graph tooltip'>
+          ass
+        </div>
+      );
+    }
+  
+    return null;
+  };
+
+  
   return (
     <div className='hilo-graph'>
       <ResponsiveContainer maxHeight='99%'
@@ -42,11 +55,10 @@ const HiLoChart = ({ maxHeight }) => {
             dataKey='name' />
 
 
-          {/* Hover/tap for more info - and style*/}
-          <Tooltip placement='bottom' cursor={false}
-            contentStyle={{ backgroundColor: '#707070' }}
-            formatter={formatter}
-          />
+          {/* Hover/tap for more info - and style */}
+          <Tooltip placement='bottom' cursor={false} 
+            wrapperStyle={{zIndex: 1}} contentStyle={{ backgroundColor: '#707070'}}
+            formatter={formatter}  /> 
 
           {/* Pretty self-explaintory, data key matches keys in data.. fill,
             stack id allows the 3 bars to stack into one, radius rounds corners */}

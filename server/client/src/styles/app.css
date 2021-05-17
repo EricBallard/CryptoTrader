@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
 }
 
 /* Hyperlinks */
@@ -24,14 +25,20 @@ body {
   line-height: 1.7;
   background: #000;
   color: #000;
+
+  overflow: hidden;
 }
 
+/* Buttons */
+
 .btn {
-  padding: 10px 20px;
+  padding: 1.5vh;
   cursor: pointer;
   width: 100%;
   font-size: 1rem;
   border: none;
+
+  transition: all 0.1s ease-in-out;
 }
 
 .btn:hover {
@@ -44,6 +51,7 @@ body {
   color: #000;
 }
 
+/* Messages */
 .error-message {
   width: 100%;
   display: inline-block;
@@ -62,4 +70,13 @@ body {
   color: #fff;
   text-align: center;
   margin: 0.5rem 0;
+}
+
+
+
+/* If screen heigh is <= 600px */
+@media screen and (max-height: 600px) {
+  .btn{
+    padding: 1vh;
+  }
 }

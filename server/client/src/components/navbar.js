@@ -21,24 +21,24 @@ const Navbar = ({ isOpen, syncStatus, syncMaxHeight }) => {
 
 	const history = useHistory()
 
+	const resize = () => {
+		const h = window.innerHeight,
+			w = window.innerHeight;
+
+		// Set menu to closed if screen width > 600px
+		if (!isNaN(w) && w > 600)
+			syncStatus(false)
+
+		// Cache resized window's max height
+		if (!isNaN(h) && h > 0)
+			syncMaxHeight(h)
+	}
+
 	useEffect(() => {
-		const resetMenu = () => {
-			const h = window.innerHeight,
-				w = window.innerHeight;
-
-			// Set menu to closed if screen width > 600px
-			if (!isNaN(w) && w > 600)
-				syncStatus(false)
-
-			// Cache resized window's max height
-			if (!isNaN(h) && h > 0)
-				syncMaxHeight(h)
-		}
-
-
 		/* Listen to resize  */
-		window.addEventListener('resize', resetMenu)
-		return () => window.removeEventListener('resize', resetMenu)
+		resize()
+		window.addEventListener('resize', resize)
+		return () => window.removeEventListener('resize', resize)
 
 		/* 
 			Ignore react warrning 'missing dependancy'

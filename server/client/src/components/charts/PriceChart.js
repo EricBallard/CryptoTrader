@@ -151,9 +151,7 @@ const PriceChart = ({maxHeight}) => {
         </LineChart>
       </ResponsiveContainer>
 
-      {/* Zoom-out button */}
-      <button type='button' className='btn graph-btn zoom' onClick={() => zoom(true)}>Zoom Out </button>
-
+    
       {/* Controls */}
       <div className='live-graph controls'>
         <button type='button' className='btn graph-btn btn-primary' tabIndex={1}>1Y</button>
@@ -163,6 +161,9 @@ const PriceChart = ({maxHeight}) => {
         <button type='button' name='1h' className='btn graph-btn btn-primary' tabIndex={1}>1H</button>
       </div>
 
+      {/* Zoom-out button */}
+      <button type='button' className='btn graph-btn zoom' onClick={() => zoom(true)}>Zoom Out </button>
+    
     </div >
   )
 }
