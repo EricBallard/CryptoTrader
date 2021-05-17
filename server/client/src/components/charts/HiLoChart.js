@@ -27,11 +27,11 @@ const HiLoChart = ({ maxHeight }) => {
   return (
     <div className='hilo-graph'>
       <ResponsiveContainer maxHeight='99%'
-        width='99%' aspect={1.25} minHeight={100} maxHeight={maxHeight/16}>
+        width='99%' maxHeight={maxHeight/16}>
 
         {/* Recharts - vertical bar chart */}
         <BarChart
-          margin={{ left: 50, right: 50 }}
+          margin={{ left: 50, right: 50, top: 0, bottom: 0 }}
           layout='vertical'
           data={data}
           stackOffset='expand' >

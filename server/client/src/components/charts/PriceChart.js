@@ -130,7 +130,7 @@ const PriceChart = ({maxHeight}) => {
         aspect={1} maxHeight={maxHeight / 2.5}>
 
         <LineChart
-          margin={{ left: -25, right: -25 }}
+          margin={{ left: -25, right: -25, top: 0 }}
           data={data}
           onMouseDown={(e) => setRefLeft(e.activeLabel)}
           onMouseMove={(e) => refAreaLeft && setRefRight(e.activeLabel)}
@@ -152,9 +152,7 @@ const PriceChart = ({maxHeight}) => {
       </ResponsiveContainer>
 
       {/* Zoom-out button */}
-      <button type='button' className='btn graph-btn zoom' onClick={() => zoom(true)}>
-        Zoom Out
-          </button>
+      <button type='button' className='btn graph-btn zoom' onClick={() => zoom(true)}>Zoom Out </button>
 
       {/* Controls */}
       <div className='live-graph controls'>

@@ -5,6 +5,10 @@
 }
 
 .dashboard-body {
+    overflow: hidden;
+    margin: auto;
+    overflow-wrap: none;
+
     transition: 0.5s all ease-in-out;
     flex-direction: column;
     /* Applies space between content horizontally */
@@ -47,12 +51,11 @@
     display: flex;
     max-height: 7.5vh;
     min-height: 7.5vh;
-    max-width: 8B5vw;
+    max-width: 85vw;
     min-width: 85vw;
 }
 
 .graph-btn {
-    overflow: hidden;
     border: 1px solid black;
     background: #6c0f2c;
 
@@ -64,14 +67,6 @@
 
     max-height: 5vh;
     transition: all 0.1s ease-in-out;
-}
-
-@media screen and (max-height: 600px) {
-    .graph-btn, .zoom {
-        max-height: 5vh;
-        min-height: 5vh;
-        transition: all 0.1s ease-in-out;
-    }
 }
 
 .graph-btn.selected {
@@ -91,27 +86,39 @@
 }
 
 .graph-btn.zoom {
+    
     border-radius: 1rem;
     max-height: 7vh;
     text-align: center;
+
     min-width: 85vw;
     max-width: 85vw;
+    
     font-size: 1.25rem;
     letter-spacing: 0.1rem;
+    transition: max-height 0.01s,
+                max-height 0.01s,
+                padding 0.3s ease-in-out,
+                font-size 0.3s ease-in-out;
 }
 
 .doge-price {
     text-align: center;
     font-size: 2rem;
     font-weight: bold;
+    transition: all 0.3s;
 }
 
 .price-graph {
-    margin-top: -1rem;
+    padding: 0 0 0 0;
+
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
+
+    margin-top: -5vh;
+    transition: all 0.1s ease-in-out;
 }
 
 .hilo-graph {
@@ -125,3 +132,23 @@
     text-align: center;
     border-radius: 1rem;
 }
+
+/* If screen heigh is <= 600px */
+@media screen and (max-height: 600px) {
+    .graph-btn, .zoom {
+        padding: 0 0 0 0;
+        font-size: 1rem;
+
+        max-height: 5vh;
+        min-height: 5vh;
+    }
+
+    .doge-price{
+        font-size: 1.5rem;
+    }
+
+    .price-graph {
+        margin-top: -10vh;
+    }
+}
+

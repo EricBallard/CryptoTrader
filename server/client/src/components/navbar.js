@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
+import { useHistory } from 'react-router-dom'
 import { FiMenu, FiX } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import '../styles/navbar.css'
@@ -17,6 +18,8 @@ const Navbar = ({ isOpen, syncStatus, syncMaxHeight }) => {
 		setPath(path)
 		toggleMenu()
 	}
+
+	const history = useHistory()
 
 	useEffect(() => {
 		const resetMenu = () => {
@@ -47,7 +50,8 @@ const Navbar = ({ isOpen, syncStatus, syncMaxHeight }) => {
 
 	return (
 		<nav className='navbar'>
-			<CachedImage name='nav-logo' url={process.env.REACT_APP_CLOUDFRONT_URL + 'dash_icon.png'} />
+			<CachedImage name='nav-logo' event={() => history.push('/dashboard')}
+				url={process.env.REACT_APP_CLOUDFRONT_URL + 'dash_icon.png'} />
 
 			<div onClick={toggleMenu} className='nav-icon'>
 				{isOpen ? <FiX /> : <FiMenu />}
