@@ -5,12 +5,15 @@ import axios from 'axios'
 /* Style */
 import '../../styles/auth.css'
 
+import CachedImage from '../../components/CachedImage'
+
 
 /* Component */
 const Login = ({ history }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const [showPass, setShowPass] = useState(false)
     const [error, setError] = useState('')
 
     useEffect(() => {
@@ -40,8 +43,8 @@ const Login = ({ history }) => {
 
     return (
         <div className='auth-screen'>
-            {/* Errors */}
-            {error && <span className='error-message'>{error}</span>}
+            {/* Error Messages */}
+           <span className={error ? 'error-message' : 'message inactive'}>{error}</span>
 
 
             <form className={error === '' ? 'auth-form' : 'auth-form error'} onSubmit={handler}>
@@ -57,20 +60,22 @@ const Login = ({ history }) => {
 
                 {/* Password */}
                 <div className='form-group'>
+
                     <label htmlFor='password'>Password:</label>
-                    <input requre='true' type='password' id='password' placeholder='Enter password'
+
+                    <input requre='true' type={showPass ? 'text' : 'password'} id='password' placeholder='Enter password'
                         value={password} onChange={(e) => setPassword(e.target.value)} tabIndex={2} />
 
-                    {/* Show password <CachedImage /> */}
-                    <button type='button' className='password show'>
-                        
-                    </button>
+        
+                    {/* Show password */}
+                    <CachedImage name={showPass ? 'show-password selected' : 'show-password'} event={() => setShowPass(!showPass)}
+                        url={process.env.REACT_APP_CLOUDFRONT_URL + 'show_password512.png'} />
 
                     {/* Reset */}
                     <span className='login-reset'>
                         <Link to='/forgot'>Reset Password</Link>
                     </span>
-                    
+
                 </div>
 
                 {/* Submit */}

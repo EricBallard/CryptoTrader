@@ -36,11 +36,12 @@ const Register = ({ history }) => {
 
     return (
         <div className='auth-screen'>
-        
+            {/* Error Messages */}
+            <span className={error ? 'error-message' : 'message inactive'}>{error}</span>
+
             <form className='auth-form' onSubmit={handler}>
 
                 <h3 className='form-title'>Register</h3>
-                {error && <span className='error-message'>{error}</span>}
 
                 {/* Email */}
                 <div className='form-group'>

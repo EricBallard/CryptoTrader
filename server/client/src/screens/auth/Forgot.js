@@ -18,7 +18,10 @@ const Forgot = ({ history }) => {
 
         try {
             const { data } = await axios.post('/api/auth/forgot', { email }, config)
+
             setSuccess(data.data)
+            setTimeout(() => setSuccess(''), 5000)
+
         } catch (error) {
             setEmail('')
 
@@ -29,15 +32,15 @@ const Forgot = ({ history }) => {
 
     return (
         <div className='auth-screen'>
+            {/* Error Messages */}
+            <span className={error ? 'error-message' : 'message inactive'}>{error}</span>
 
+            {/* Success Message */}
+            <span className={success ? 'success-message' : 'message inactive'}>{success}</span>
 
             <form className='auth-form' onSubmit={forgotHandler} >
 
                 <h3 className='form-title'>Forgot Password</h3>
-
-                {error && <span className='error-message'>{error}</span>}
-                {success && <span className='success-message'>{success}</span>}
-
 
                 <div className='form-group'>
                     <p className='forgot-info'>

@@ -30,17 +30,17 @@ const Reset = ({ history, match }) => {
     return (
         <div className='auth-screen'>
 
+        {/* Error Messages */}
+        <span className={error ? 'error-message' : 'message inactive'}>{error}</span>
+
+        {/* Success Message */}
+        <span className={success ? 'success-message' : 'message inactive'}>
+            {success} <Link to='/login'>Login</Link>
+        </span>
+
             <form className='auth-form' onSubmit={handler}>
                 {/* Title */}
                 <h3 className='form-title'>Reset Password</h3>
-
-                {/* Messages */}
-                {error && <span className='error-message'>{error} </span>}
-                {success && (
-                    <span className='success-message'>
-                        {success} <Link to='/login'>Login</Link>
-                    </span>
-                )}
 
                 <div className='form-group'>
                     {/* Password */}
