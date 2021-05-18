@@ -9,17 +9,34 @@ import CachedImage from '../../components/CachedImage'
 
 
 /* Component */
-const Login = ({ history }) => {
+const Login = (props) => {
+    {/* Redirected from history, invert enter animation direction*/}
+    const hasCacheProps = props.location.state
+    const invertEnterAnim = hasCacheProps ? props.location.state.visibility : hasCacheProps
+    
+    const [visibility, setVisibility] = useState(invertEnterAnim ? invertEnterAnim : 'auth-screen inactive')
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const [showPass, setShowPass] = useState(false)
     const [error, setError] = useState('')
 
+    const history = props.history
+
+    const navAfterAnimTo = (page) => {
+        {/* Delay redirect to allow exit animation */ }
+        setVisibility('auth-screen exit')
+        setTimeout(() => history.push(page), 600)
+    }
+
     useEffect(() => {
         if (localStorage.getItem('authToken'))
             history.push('/dashboard')
-    }, [history])
+        else
+             {/* Display enter animation */ }
+            setTimeout(() => setVisibility('auth-screen'), 100)
+    }, [])
 
     const handler = async (e) => {
         e.preventDefault()
@@ -42,10 +59,9 @@ const Login = ({ history }) => {
     }
 
     return (
-        <div className='auth-screen'>
+        <div className={visibility}>
             {/* Error Messages */}
-           <span className={error ? 'error-message' : 'message inactive'}>{error}</span>
-
+            <span className={error ? 'error-message' : 'message inactive'}>{error}</span>
 
             <form className={error === '' ? 'auth-form' : 'auth-form error'} onSubmit={handler}>
 
@@ -66,14 +82,14 @@ const Login = ({ history }) => {
                     <input requre='true' type={showPass ? 'text' : 'password'} id='password' placeholder='Enter password'
                         value={password} onChange={(e) => setPassword(e.target.value)} tabIndex={2} />
 
-        
+
                     {/* Show password */}
                     <CachedImage name={showPass ? 'show-password selected' : 'show-password'} event={() => setShowPass(!showPass)}
                         url={process.env.REACT_APP_CLOUDFRONT_URL + 'show_password512.png'} />
 
                     {/* Reset */}
                     <span className='login-reset'>
-                        <Link to='/forgot'>Reset Password</Link>
+                        <Link  onClick={() => navAfterAnimTo('/forgot')}>Reset Password</Link>
                     </span>
 
                 </div>
@@ -83,7 +99,7 @@ const Login = ({ history }) => {
 
                 {/* Create */}
                 <h5 className='form-subtext'>
-                    New here? <Link to='/register'>Create an account</Link>!
+                    New here? <Link onClick={() => navAfterAnimTo('/register')}> Create an account </Link>!
                 </h5>
 
             </form>

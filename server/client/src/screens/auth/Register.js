@@ -7,15 +7,12 @@ import '../../styles/auth.css'
 
 /* Component */
 const Register = ({ history }) => {
+    const [visibility, setVisibility] = useState('auth-screen inactive')
+
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
-
-    useEffect(() => {
-        if (localStorage.getItem('authToken'))
-            history.push('/')
-    }, [history])
 
     const handler = async (e) => {
         e.preventDefault()
@@ -34,8 +31,16 @@ const Register = ({ history }) => {
         }
     }
 
+    useEffect(() => {
+        if (localStorage.getItem('authToken'))
+            history.push('/dashboard')
+        else {/* Display enter animation */ }
+            setTimeout(() => setVisibility('auth-screen'), 100)
+    }, [])
+
     return (
-        <div className='auth-screen'>
+        <div className={visibility}>
+
             {/* Error Messages */}
             <span className={error ? 'error-message' : 'message inactive'}>{error}</span>
 
@@ -66,9 +71,13 @@ const Register = ({ history }) => {
 
                 {/* Subtext */}
                 <h5 className='form-subtext'>
-                    Already have an account? <Link to='/login'>Login</Link>
+                    Already have an account? <Link onClick={() => {
+                        {/* Delay redirect to allow exit animation */ }
+                        setVisibility('auth-screen exit')
+                        setTimeout(() => history.push('/login'), 600)
+                    }}>Login</Link>
                 </h5>
-                
+
             </form>
         </div>
     )

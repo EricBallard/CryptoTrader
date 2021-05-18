@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+
 import axios from 'axios'
 
 /* Components */
@@ -15,6 +16,7 @@ const Dashboard = (props) => {
     const [navFromMenu, setNav] = useState(props.history.location.fromMenu === true)
 
     /* Error message */
+    const [showError, setShowError] = useState(false)
     const [error, setError] = useState('')
     const [privateData, setPrivateData] = useState('')
 
@@ -27,12 +29,17 @@ const Dashboard = (props) => {
         }
 
         try {
+            /* Request data from api */
             const { data } = await axios.get('/api/private', config)
             setPrivateData(data.data)
         } catch (error) {
-            localStorage.removeItem('authToken')
+            /* Set error message, revoke auth token */
             setError('Please login before you continue.')
-            setTimeout(() => props.history.push('/login'), 5000)
+            localStorage.removeItem('authToken')
+
+            /* Animate error than redirect to login */
+            setTimeout(() => setShowError(true), 100)
+            setTimeout(() => props.history.push('/login'), 5100)
             return;
         }
     }
@@ -54,7 +61,7 @@ const Dashboard = (props) => {
     }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        error ? <span className='error-message'>{error}</span> : <>
+        error ? <span className={showError ? 'error-message' : 'message inactive'}>{error}</span> : <>
             {/* Body */}
             <div className={props.isMenuOpen || navFromMenu ? 'dashboard-body inactive' : 'dashboard-body'}>
                 <div className='container'>
@@ -66,12 +73,12 @@ const Dashboard = (props) => {
                         </p>
 
                         {/* High / Low Graph */}
-                        <HiLoChart maxHeight={props.height}/>
+                        <HiLoChart maxHeight={props.height} />
                     </div>
 
                     <div className='live-graph'>
                         {/* Price graph */}
-                        <PriceChart  maxHeight={props.height}/>
+                        <PriceChart maxHeight={props.height} />
                     </div>
 
                 </div>

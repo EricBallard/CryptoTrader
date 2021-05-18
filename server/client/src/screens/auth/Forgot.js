@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 /* Styles */
@@ -8,6 +8,8 @@ import CachedImage from '../../components/CachedImage'
 
 /* Component */
 const Forgot = ({ history }) => {
+    const [visible, setVisible] = useState(false)
+
     const [email, setEmail] = useState('')
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
@@ -30,8 +32,13 @@ const Forgot = ({ history }) => {
         }
     }
 
+    /* Animate In */
+    useEffect(() => setTimeout(() => setVisible(true), 100), [])
+
+
     return (
-        <div className='auth-screen'>
+        <div className={visible ? 'auth-screen' : 'auth-screen inactive'}>
+
             {/* Error Messages */}
             <span className={error ? 'error-message' : 'message inactive'}>{error}</span>
 
@@ -61,8 +68,17 @@ const Forgot = ({ history }) => {
                 </button>
 
                 {/* Back */}
-                <CachedImage name='form-back' event={() => history.push('/login')}
-                    url={process.env.REACT_APP_CLOUDFRONT_URL + 'undo.png'} />
+                <CachedImage url={process.env.REACT_APP_CLOUDFRONT_URL + 'undo.png'}
+                    name='form-back'
+                    event={() => {
+                        {/* Delay redirect to allow exit animation */ }
+                        setVisible(false)
+                        {/* Redirect with history push, passing prop to change anim dir */}
+                        setTimeout(() => history.push({
+                            pathname:'/login',
+                            state: { visibility:'auth-screen exit' }
+                        }), 600)
+                    }} />
 
             </form>
         </div>

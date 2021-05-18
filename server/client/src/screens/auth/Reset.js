@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
@@ -9,6 +9,8 @@ import CachedImage from '../../components/CachedImage'
 
 /* Component */
 const Reset = ({ history, match }) => {
+    const [visibility, setVisibility] = useState('auth-screen inactive')
+
     const [password, setPassword] = useState('')
     const [success, setSuccess] = useState('')
     const [error, setError] = useState('')
@@ -27,16 +29,23 @@ const Reset = ({ history, match }) => {
         }
     }
 
+    /* Animate In */
+    useEffect(() => setTimeout(() => setVisibility('auth-screen'), 100), [])
+
     return (
-        <div className='auth-screen'>
+        <div className={visibility}>
 
-        {/* Error Messages */}
-        <span className={error ? 'error-message' : 'message inactive'}>{error}</span>
+            {/* Error Messages */}
+            <span className={error ? 'error-message' : 'message inactive'}>{error}</span>
 
-        {/* Success Message */}
-        <span className={success ? 'success-message' : 'message inactive'}>
-            {success} <Link to='/login'>Login</Link>
-        </span>
+            {/* Success Message */}
+            <span className={success ? 'success-message' : 'message inactive'}>
+                {success} <Link onClick={() => {
+                    {/* Delay redirect to allow exit animation */ }
+                    setVisibility('auth-screen exit')
+                    setTimeout(() => history.push('/login'), 600)
+                }}>Login</Link>
+            </span>
 
             <form className='auth-form' onSubmit={handler}>
                 {/* Title */}
@@ -54,8 +63,16 @@ const Reset = ({ history, match }) => {
                 <button type='submit' className='form-btn btn btn-primary'>Reset Password</button>
 
                 {/* Back */}
-                <CachedImage name='form-back' event={() => history.push('/login')}
-                    url={process.env.REACT_APP_CLOUDFRONT_URL + 'undo.png'} />
+                <CachedImage url={process.env.REACT_APP_CLOUDFRONT_URL + 'undo.png'}
+                    name='form-back'
+                    event={() => {
+                        {/* Delay redirect to allow exit animation */ }
+                        setVisibility('auth-screen inactive')
+                        setTimeout(() => history.push({
+                            pathname: '/login',
+                            state: { visibility: 'auth-screen exit' }
+                        }), 600)
+                    }} />
 
             </form>
         </div>
