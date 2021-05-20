@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
 
 /* Style */
-import '../styles/dashboard.css'
+import '../styles/app.css'
+import '../styles/screens/triggers.css'
 
 /* Component */
 const Triggers = (props) => {
     /* Navigated from dynamic menu */
     const [navFromMenu, setNav] = useState(props.history.location.fromMenu === true)
+
 
     useEffect(() => {
         /* Require authentication to access */
@@ -30,9 +32,9 @@ const Triggers = (props) => {
             <div className={props.isMenuOpen || navFromMenu ? 'dashboard-body inactive' : 'dashboard-body'}>
                 <div className='container'>
 
-                    {/* Live graph */}
-                    <div className='live-graph'>
-                        <p>TRIGGERS</p>
+                    {/* User-Added Triggers */}
+                    <div className='scroll-view'>
+
                     </div>
 
                 </div>

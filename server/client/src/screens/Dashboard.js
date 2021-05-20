@@ -8,7 +8,7 @@ import HiLoChart from '../components/charts/HiLoChart'
 
 /* Style */
 import '../styles/app.css'
-import '../styles/dashboard.css'
+import '../styles/screens/dashboard.css'
 
 /* Component */
 const Dashboard = (props) => {

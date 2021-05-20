@@ -8,7 +8,7 @@ import CachedImage from '../../components/CachedImage'
 
 /* Component */
 const Forgot = ({ history }) => {
-    const [visible, setVisible] = useState(false)
+    const [visibility, setVisibility] = useState('auth-screen down')
 
     const [email, setEmail] = useState('')
     const [error, setError] = useState('')
@@ -33,11 +33,11 @@ const Forgot = ({ history }) => {
     }
 
     /* Animate In */
-    useEffect(() => setTimeout(() => setVisible(true), 100), [])
+    useEffect(() => setTimeout(() => setVisibility('auth-screen'), 100), [])
 
 
     return (
-        <div className={visible ? 'auth-screen' : 'auth-screen inactive'}>
+        <div className={visibility}>
 
             {/* Error Messages */}
             <span className={error ? 'error-message' : 'message inactive'}>{error}</span>
@@ -72,11 +72,11 @@ const Forgot = ({ history }) => {
                     name='form-back'
                     event={() => {
                         {/* Delay redirect to allow exit animation */ }
-                        setVisible(false)
+                        setVisibility('auth-screen down')
                         {/* Redirect with history push, passing prop to change anim dir */}
                         setTimeout(() => history.push({
                             pathname:'/login',
-                            state: { visibility:'auth-screen exit' }
+                            state: { visibility:'auth-screen down' }
                         }), 600)
                     }} />
 

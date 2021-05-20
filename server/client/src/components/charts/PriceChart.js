@@ -141,7 +141,7 @@ const PriceChart = ({maxHeight}) => {
           <XAxis allowDataOverflow dataKey='name' domain={[left, right]} type='number' />
           <YAxis allowDataOverflow domain={[bottom, top]} type='number' yAxisId='1' />
           <YAxis orientation='right' allowDataOverflow domain={[bottom2, top2]} type='number' yAxisId='2' />
-          <Tooltip />
+          {/*<Tooltip />*/}
           <Line yAxisId='1' type='natural' dataKey='cost' stroke='#8884d8' animationDuration={300} />
           <Line yAxisId='2' type='natural' dataKey='impression' stroke='#82ca9d' animationDuration={300} />
 

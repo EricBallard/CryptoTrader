@@ -9,7 +9,7 @@ import CachedImage from '../../components/CachedImage'
 
 /* Component */
 const Reset = ({ history, match }) => {
-    const [visibility, setVisibility] = useState('auth-screen inactive')
+    const [visibility, setVisibility] = useState('auth-screen up')
 
     const [password, setPassword] = useState('')
     const [success, setSuccess] = useState('')
@@ -67,10 +67,10 @@ const Reset = ({ history, match }) => {
                     name='form-back'
                     event={() => {
                         {/* Delay redirect to allow exit animation */ }
-                        setVisibility('auth-screen inactive')
+                        setVisibility('auth-screen up')
                         setTimeout(() => history.push({
                             pathname: '/login',
-                            state: { visibility: 'auth-screen exit' }
+                            state: { visibility: 'auth-screen up' }
                         }), 600)
                     }} />
 

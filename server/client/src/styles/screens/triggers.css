@@ -1,0 +1,29 @@
+/* User-triggers, scroll container */
+.scroll-view {
+    background-color: #000;
+
+    max-height: 30vh;
+    min-height: 30vh;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/* Scroll-bar */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+
+::-webkit-scrollbar-track {
+    background: #7070; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }

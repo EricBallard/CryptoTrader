@@ -55,10 +55,10 @@ const HiLoChart = ({ maxHeight }) => {
             dataKey='name' />
 
 
-          {/* Hover/tap for more info - and style */}
+          {/* Hover/tap for more info - and style 
           <Tooltip placement='bottom' cursor={false} 
             wrapperStyle={{zIndex: 1}} contentStyle={{ backgroundColor: '#707070'}}
-            formatter={formatter}  /> 
+            formatter={formatter}  />  */}
 
           {/* Pretty self-explaintory, data key matches keys in data.. fill,
             stack id allows the 3 bars to stack into one, radius rounds corners */}

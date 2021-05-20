@@ -14,7 +14,7 @@ const Login = (props) => {
     const hasCacheProps = props.location.state
     const invertEnterAnim = hasCacheProps ? props.location.state.visibility : hasCacheProps
     
-    const [visibility, setVisibility] = useState(invertEnterAnim ? invertEnterAnim : 'auth-screen inactive')
+    const [visibility, setVisibility] = useState(invertEnterAnim ? invertEnterAnim : 'auth-screen left')
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -24,9 +24,9 @@ const Login = (props) => {
 
     const history = props.history
 
-    const navAfterAnimTo = (page) => {
-        {/* Delay redirect to allow exit animation */ }
-        setVisibility('auth-screen exit')
+    const navAfterAnimTo = (vis, page) => {
+        {/* Reset err msg, delay redirect to allow exit animation */ }
+        setVisibility(vis)
         setTimeout(() => history.push(page), 600)
     }
 
@@ -60,6 +60,7 @@ const Login = (props) => {
 
     return (
         <div className={visibility}>
+
             {/* Error Messages */}
             <span className={error ? 'error-message' : 'message inactive'}>{error}</span>
 
@@ -89,7 +90,7 @@ const Login = (props) => {
 
                     {/* Reset */}
                     <span className='login-reset'>
-                        <Link  onClick={() => navAfterAnimTo('/forgot')}>Reset Password</Link>
+                        <Link  onClick={() => navAfterAnimTo('auth-screen down', '/forgot')}>Reset Password</Link>
                     </span>
 
                 </div>
@@ -99,7 +100,7 @@ const Login = (props) => {
 
                 {/* Create */}
                 <h5 className='form-subtext'>
-                    New here? <Link onClick={() => navAfterAnimTo('/register')}> Create an account </Link>!
+                    New here? <Link onClick={() => navAfterAnimTo('auth-screen left', '/register')}> Create an account </Link>!
                 </h5>
 
             </form>

@@ -7,7 +7,7 @@ import '../../styles/auth.css'
 
 /* Component */
 const Register = ({ history }) => {
-    const [visibility, setVisibility] = useState('auth-screen inactive')
+    const [visibility, setVisibility] = useState('auth-screen right')
 
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
@@ -73,7 +73,7 @@ const Register = ({ history }) => {
                 <h5 className='form-subtext'>
                     Already have an account? <Link onClick={() => {
                         {/* Delay redirect to allow exit animation */ }
-                        setVisibility('auth-screen exit')
+                        setVisibility('auth-screen right')
                         setTimeout(() => history.push('/login'), 600)
                     }}>Login</Link>
                 </h5>

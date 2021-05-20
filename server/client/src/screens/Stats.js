@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 /* Style */
-import '../styles/dashboard.css'
+import '../styles/screens/stats.css'
 
 /* Component */
 const Stats = (props) => {
