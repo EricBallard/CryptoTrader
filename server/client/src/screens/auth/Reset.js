@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 /* Style */
-import '../../styles/auth.css'
+import '../../styles/screens/auth.css'
 
 import CachedImage from '../../components/CachedImage'
 

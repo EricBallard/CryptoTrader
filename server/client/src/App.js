@@ -61,6 +61,7 @@ const App = () => {
           <Route exact path='/stats'
             render={(props) => <Stats {...props} isMenuOpen={isNavOpen} />} />
 
+
           {/* No match  */}
           <Redirect to='/dashboard' />
         </>

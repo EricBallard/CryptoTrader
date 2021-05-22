@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 /* Style */
-import '../../styles/auth.css'
+import '../../styles/screens/auth.css'
 
 import CachedImage from '../../components/CachedImage'
 
 
 /* Component */
 const Login = (props) => {
-    {/* Redirected from history, invert enter animation direction*/}
+    {/* Redirected from history, invert enter animation direction*/ }
     const hasCacheProps = props.location.state
     const invertEnterAnim = hasCacheProps ? props.location.state.visibility : hasCacheProps
-    
+
     const [visibility, setVisibility] = useState(invertEnterAnim ? invertEnterAnim : 'auth-screen left')
 
     const [email, setEmail] = useState('')
@@ -33,9 +33,8 @@ const Login = (props) => {
     useEffect(() => {
         if (localStorage.getItem('authToken'))
             history.push('/dashboard')
-        else
-             {/* Display enter animation */ }
-            setTimeout(() => setVisibility('auth-screen'), 100)
+        else {/* Display enter animation */ }
+        setTimeout(() => setVisibility('auth-screen'), 100)
     }, [])
 
     const handler = async (e) => {
@@ -50,8 +49,14 @@ const Login = (props) => {
             if (!localStorage.setItem('authToken', data.token))
                 history.push('/dashboard')
         } catch (error) {
+            // Doesn't work on ios safari/chrome however I can catch these events in that native app an vibrate from there
+            navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+
             // Set error
             setError(error.response.data.error)
+
+            if (navigator.vibrate)
+                navigator.vibrate(200);
 
             // Reset error after 5s
             setTimeout(() => setError(''), 5000)
@@ -90,7 +95,7 @@ const Login = (props) => {
 
                     {/* Reset */}
                     <span className='login-reset'>
-                        <Link  onClick={() => navAfterAnimTo('auth-screen down', '/forgot')}>Reset Password</Link>
+                        <Link onClick={() => navAfterAnimTo('auth-screen down', '/forgot')}>Reset Password</Link>
                     </span>
 
                 </div>

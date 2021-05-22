@@ -131,7 +131,9 @@ body {
 .container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-evenly;
+
   max-height: 80vh;
   min-height: 80vh;
   max-width: 95vw;

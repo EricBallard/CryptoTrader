@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 /* Styles */
-import '../../styles/auth.css'
+import '../../styles/screens/auth.css'
 
 import CachedImage from '../../components/CachedImage'
 
