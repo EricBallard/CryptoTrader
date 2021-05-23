@@ -37,11 +37,12 @@ const Triggers = (props) => {
             // Safe to remove - trigger removal animation
             setRemoved(id)
 
-            // Reset states after 1s
             setTimeout(() => {
+                // Remove div andr eset states after 1s
+                document.getElementById('trigger-'+id).remove()
                 setRemoved(-1)
                 setSelected(-1)
-            }, 5000)
+            }, 1000)
             return;
         }
 
@@ -81,12 +82,13 @@ const Triggers = (props) => {
 
                             {/* Map all user-defined triggers, and display */}
                             {userTriggers.map(trigger => (
+                                /* Trigger container, class for removal animation */
+                                <div id={'trigger-' + trigger.id} className={removed === trigger.id ? 'trigger-container removed' : 'trigger-container '} >
 
-                                <div className={removed === trigger.id ? 'trigger-container.removed' : 'trigger-container'} >
-
+                                    {/* Clicking the trigger's contents will "select" it and make others "inactive
+                                         should none be select they will default to defined-trigger*/}
                                     <div onClick={() => updateTrigger(false, trigger.id)}
-                                        className={selected === trigger.id ? 'defined-trigger selected'
-                                            : selected !== -1 ? 'defined-trigger inactive'
+                                        className={selected !== -1 && selected !== trigger.id ? 'defined-trigger inactive'
                                                 : 'defined-trigger'}>
 
                                         {/* Defined trigger info... */}
@@ -94,7 +96,7 @@ const Triggers = (props) => {
                                         <p className='defined-trigger condition'>{trigger.condition === true ? '>' : '<'}</p>
 
                                         {/* Indent price on selection + reveal remove text */}
-                                        <p className='defined-trigger price'>{selected === trigger.id ? 'REMOVE' : (trigger.price).toFixed(4)}</p>
+                                        <p className={selected === trigger.id ? 'defined-trigger selected' : 'defined-trigger price'}>{selected === trigger.id ? 'REMOVE' : (trigger.price).toFixed(4)}</p>
 
                                         <p className={selected === trigger.id ? 'remove-trigger active' : 'remove-trigger'}
                                             onClick={() => updateTrigger(true, trigger.id)}>
