@@ -40,12 +40,13 @@
   
   /* Font */
   color: #fff;
-  cursor: pointer;
   font-size: 1.75rem;
 }
 
+/* Indiviual defined-triggers with info */
 .trigger-container{
   border-top: 0.1rem solid #000;
+  max-height: 100%;
 }
 
 .defined-trigger{
@@ -55,6 +56,10 @@
   display: flex;
   
   user-select: none;
+
+  
+  width: 100%;
+  transition: width 0.5s ease;
 }
 
 /* Trigger type labels */
@@ -108,6 +113,41 @@
   border-left: 0.25rem solid black;
 }
 
-.defined-trigger.selected {
-  background-color: #6c0f2c;
+/* Select/Remove defined trigger */
+.remove-trigger{
+  position: relative;
+  right: 5vw;
+
+
+  opacity: 0.0;
+  opacity: opacity  0.6s ease-in-out;
+
+}
+
+.remove-trigger.active{
+  position: relative;
+  font-weight: bold;
+  cursor: pointer;
+  color: #000;
+  
+  right: 0vw;
+  opacity: 1.0;
+  opacity: opacity  0.6s ease-in-out;
+}
+
+
+.defined-trigger.inactive{
+  opacity: 0.5;
+  transition: opacity  0.6s ease-in-out;
+}
+
+.defined-trigger.selected{
+  width: 75%;
+
+  transition: width 0.6s ease;
+}
+
+.trigger-container.removed{
+  max-height: 0vh;
+  transition: max-height 1s ease;
 }
