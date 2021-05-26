@@ -15,56 +15,50 @@ const userTriggers = [
 /* Cache device touch-screen support */
 const isTouchDevice = Boolean(navigator.maxTouchPoints || 'ontouchstart' in document.documentElement)
 
-var xDown = null
-var yDown = null
-
-function handleTouchStart(e) {
-    const touch = e.touches[0]
-
-    if (touch){
-        xDown = touch.clientX
-        yDown = touch.clientY
-    }
-}
-
-function handleTouchMove(e) {
-    if (!xDown || !yDown)
-        return
-
-
-    const touch = e.touches[0]
-
-    if (!touch)
-        return
-
-    var xUp = touch.clientX
-    var yUp = touch.clientY
-
-    var xDiff = xDown - xUp
-    var yDiff = yDown - yUp
-
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {
-        if (xDiff > 10) {
-            /* left swipe */
-            console.log('left swipe: ' + xDiff)
-        } else {
-            /* right swipe */
-        }
-    } else {
-        if (yDiff > 0) {
-            /* up swipe */
-        } else {
-            /* down swipe */
-        }
-    }
-    /* reset values */
-    xDown = null
-    yDown = null
-}
+let xDown, yDown;
 
 /* Cache root container and each triggers container as dom elements
     this is used to compare their dimensions and validate swipe functions */
-let definedTrigger = undefined
+let selectedIndex = -1,
+    rootContainer = undefined,
+    cachedTriggerContainers = []
+
+const isSwipeInTrigger = (rootBounds) => {
+    /* Iterate all defined trigger containers */
+    const indexTotal = userTriggers.length
+
+    for (let index = 0; index < indexTotal; index++) {
+        let triggerContainer = cachedTriggerContainers[index]
+
+        if (!triggerContainer) {
+            /* Query, validate, and cache dom element */
+            if (!(triggerContainer = document.getElementById('trigger-' + index)))
+                return -1
+
+            cachedTriggerContainers[index] = triggerContainer
+        }
+
+        /* Compare container bounds to touch position */
+        const bounds = triggerContainer.getBoundingClientRect()
+
+        if (boundsContainsPoint(rootBounds, bounds))
+            return index
+    }
+
+    return -1
+}
+
+const boundsContainsPoint = (rootBounds, bounds) => {
+    /* Validate start of touch is within cotainer bounds (Corrects for under/over-flow) */
+    if (yDown < rootBounds.y || yDown > rootBounds.y + rootBounds.height)
+        return false
+
+    /* Calculate is within trigger's bounding client rect */
+    if (xDown >= bounds.x && xDown <= bounds.x + bounds.width)
+        if (yDown >= bounds.y && yDown <= bounds.y + bounds.height)
+            return true
+    return false
+}
 
 const DefinedTriggers = () => {
     /* Selected user-defined trigger in list */
@@ -100,29 +94,96 @@ const DefinedTriggers = () => {
             setSelected(id)
     }
 
+
+    const handleTouch = (e, down) => {
+        const touch = e.touches[0]
+
+        /* Touch down */
+        if (down) {
+            if (touch) {
+                xDown = touch.clientX
+                yDown = touch.clientY
+            }
+            return;
+        }
+
+        /* Touch move */
+        if (!xDown || !yDown)
+            return
+
+        let xDiff = xDown - touch.clientX,
+            yDiff = yDown - touch.clientY
+
+        if (Math.abs(xDiff) > Math.abs(yDiff)) {
+            /* Retrieve/cache root container bounds on valide swipes */
+            if (rootContainer == undefined) {
+                if (!(rootContainer = document.getElementById('user-triggers')))
+                    return
+            }
+
+            const rootBounds = rootContainer.getBoundingClientRect()
+
+
+            if (xDiff > 10) {
+                /* left swipe */
+                const selectedTrigger = isSwipeInTrigger(rootBounds)
+
+                if (selectedTrigger != -1) {
+                    /* Swiped inside a trigger's container */
+                    setSelected(selectedTrigger)
+                    selectedIndex = selectedTrigger
+                    console.log('Swipe found in index: ' + selectedIndex)
+                }
+            } else {
+                /* right swipe */
+                console.log('right swipe: ' + selected)
+               
+                if (selectedIndex != -1) {
+                    const triggerContainer = cachedTriggerContainers[selectedIndex]
+
+                    /* Compare container bounds to touch position */
+                    const bounds = triggerContainer.getBoundingClientRect()
+
+                    /* De-select trigger */
+                    if (boundsContainsPoint(rootBounds, bounds)) {
+                        setSelected(-1)
+                        selectedIndex = -1
+                    }
+                }
+            }
+        } else {
+            if (yDiff > 0) {
+                /* up swipe */
+            } else {
+                /* down swipe */
+            }
+        }
+
+        /* reset values */
+        xDown = undefined
+        yDown = undefined
+    }
+
     /* Register touch listener */
     useEffect(() => {
         if (isTouchDevice) {
-            window.addEventListener('touchstart', handleTouchStart, false)
-            window.addEventListener('touchmove', handleTouchMove, false)
+            window.addEventListener('touchstart', (e) => handleTouch(e, true))
+            window.addEventListener('touchmove', (e) => handleTouch(e, false))
 
-            definedTrigger = document.getElementById('trigger-0')
-            console.log('trigger: ' + definedTrigger.getBoundingClientRect().y)
- 
             return () => {
-                window.removeEventListener('touchstart', handleTouchStart)
-                window.removeEventListener('touchmove', handleTouchMove)
+                window.removeEventListener('touchstart', handleTouch)
+                window.removeEventListener('touchmove', handleTouch)
             }
         }
-    }, [])
+    }, )
 
     return (
         /* User-Added Triggers */
-        <div className='user-triggers'>
+        <div id='user-triggers' className='user-triggers'>
 
             {/* Map all user-defined triggers, and display */}
             {userTriggers.map(trigger => (
-                
+
                 /* Trigger container, class for removal animation */
                 <div id={'trigger-' + trigger.id} className={removed === trigger.id ? 'trigger-container removed' : 'trigger-container '} >
 
