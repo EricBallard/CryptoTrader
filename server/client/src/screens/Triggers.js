@@ -7,6 +7,9 @@ import '../styles/screens/triggers.css'
 /* Components */
 import DefinedTriggers from '../components/triggers/DefinedTriggers'
 
+/* Cache device touch-screen support */
+const isTouchDevice = Boolean(navigator.maxTouchPoints || 'ontouchstart' in document.documentElement)
+
 /* Screen */
 const Triggers = (props) => {
     /* Navigated from dynamic menu */
@@ -20,13 +23,7 @@ const Triggers = (props) => {
             props.history.location.fromMenu = false
             setNav(false)
         }
-
-        /*
-        Silence empty dependency warning
-        +
-        Empty array dependencies = render only once
-        */
-    }, [])// eslint-disable-line react-hooks/exhaustive-deps
+    }, [props.history, setNav])
 
     return (
         <>
@@ -35,7 +32,7 @@ const Triggers = (props) => {
                 <div className='container'>
 
                 {/* User-defined triggers */}
-                <DefinedTriggers/>
+                <DefinedTriggers {...{isTouchDevice}} />
                 
                 </div>
             </div>

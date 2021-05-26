@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import axios from 'axios'
+//import axios from 'axios'
 
 /* Components */
 import PriceChart from '../components/charts/PriceChart'
@@ -18,20 +18,22 @@ const Dashboard = (props) => {
     /* Error message */
     const [showError, setShowError] = useState(false)
     const [error, setError] = useState('')
-    const [privateData, setPrivateData] = useState('')
+   // const [privateData, setPrivateData] = useState('')
 
     const fetchPrivateData = async () => {
+        /*
         const config = {
             headers: {
                 'Content-Type': 'application/json',
                 authorization: `DOGETOKEN ${localStorage.getItem('authToken')}`,
             }
         }
+        */
 
         try {
             /* Request data from api */
-            const { data } = await axios.get('/api/private', config)
-            setPrivateData(data.data)
+            //const { data } = await axios.get('/api/private', config)
+            //setPrivateData(data.data)
         } catch (error) {
             /* Set error message, revoke auth token */
             setError('Please login before you continue.')

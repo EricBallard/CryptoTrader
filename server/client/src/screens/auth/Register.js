@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 /* Style */
-import '../../styles/screens/auth.css'
+import '../../styles/auth.css'
 
 /* Component */
 const Register = ({ history }) => {
@@ -36,7 +36,7 @@ const Register = ({ history }) => {
             history.push('/dashboard')
         else {/* Display enter animation */ }
             setTimeout(() => setVisibility('auth-screen'), 100)
-    }, [])
+    }, [history])
 
     return (
         <div className={visibility}>
@@ -71,8 +71,8 @@ const Register = ({ history }) => {
 
                 {/* Subtext */}
                 <h5 className='form-subtext'>
-                    Already have an account? <Link onClick={() => {
-                        {/* Delay redirect to allow exit animation */ }
+                    Already have an account? <Link to='#' onClick={() => {
+                        /* Delay redirect to allow exit animation */ 
                         setVisibility('auth-screen right')
                         setTimeout(() => history.push('/login'), 600)
                     }}>Login</Link>

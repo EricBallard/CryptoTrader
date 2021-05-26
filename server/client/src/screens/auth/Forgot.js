@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 /* Styles */
-import '../../styles/screens/auth.css'
+import '../../styles/auth.css'
 
 import CachedImage from '../../components/CachedImage'
 
@@ -71,9 +71,10 @@ const Forgot = ({ history }) => {
                 <CachedImage url={process.env.REACT_APP_CLOUDFRONT_URL + 'undo.png'}
                     name='form-back'
                     event={() => {
-                        {/* Delay redirect to allow exit animation */ }
+                        /* Delay redirect to allow exit animation */ 
                         setVisibility('auth-screen down')
-                        {/* Redirect with history push, passing prop to change anim dir */}
+                        
+                        /* Redirect with history push, passing prop to change anim dir */
                         setTimeout(() => history.push({
                             pathname:'/login',
                             state: { visibility:'auth-screen down' }

@@ -5,7 +5,6 @@ import {
   CartesianGrid,
   XAxis,
   YAxis,
-  Tooltip,
   ReferenceArea,
   ResponsiveContainer,
 } from 'recharts'
@@ -51,7 +50,7 @@ const PriceChart = ({maxHeight}) => {
   const [top2, setTop2] = useState('dataMax+20')
   const [bottom2, setBottom2] = useState('dataMin-20')
 
-  /* Calculate axis domain */
+  /* Calculate axis domain 
   const getAxisYDomain = (from, to, ref, offset) => {
     const refData = data.slice(from - 1, to)
 
@@ -68,7 +67,7 @@ const PriceChart = ({maxHeight}) => {
 
     return [(bottom | 0) - offset, (top | 0) + offset]
   }
-
+*/
 
   /* Zoom */
   const zoom = (out) => {
@@ -108,8 +107,8 @@ const PriceChart = ({maxHeight}) => {
 
 
     // yAxis domain
-    const [bottom, top] = getAxisYDomain(refAreaLeft, refAreaRight, 'cost', 1)
-    const [bottom2, top2] = getAxisYDomain(refAreaLeft, refAreaRight, 'impression', 50)
+    //const [bottom, top] = getAxisYDomain(refAreaLeft, refAreaRight, 'cost', 1)
+    //const [bottom2, top2] = getAxisYDomain(refAreaLeft, refAreaRight, 'impression', 50)
 
     
 

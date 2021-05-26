@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 /* Style */
 import '../../styles/screens/triggers.css'
 
+import SwipeEvent from '../SwipeEvent'
+
 /* Data */
 const userTriggers = [
     /* Type of trigger, activate if price is > else < */
@@ -12,55 +14,8 @@ const userTriggers = [
     { type: 'ALERT', price: 0.2900, condition: false, id: 3 }
 ]
 
-/* Cache device touch-screen support */
-const isTouchDevice = Boolean(navigator.maxTouchPoints || 'ontouchstart' in document.documentElement)
 
-let xDown, yDown;
-
-/* Cache root container and each triggers container as dom elements
-    this is used to compare their dimensions and validate swipe functions */
-let selectedIndex = -1,
-    rootContainer = undefined,
-    cachedTriggerContainers = []
-
-const isSwipeInTrigger = (rootBounds) => {
-    /* Iterate all defined trigger containers */
-    const indexTotal = userTriggers.length
-
-    for (let index = 0; index < indexTotal; index++) {
-        let triggerContainer = cachedTriggerContainers[index]
-
-        if (!triggerContainer) {
-            /* Query, validate, and cache dom element */
-            if (!(triggerContainer = document.getElementById('trigger-' + index)))
-                return -1
-
-            cachedTriggerContainers[index] = triggerContainer
-        }
-
-        /* Compare container bounds to touch position */
-        const bounds = triggerContainer.getBoundingClientRect()
-
-        if (boundsContainsPoint(rootBounds, bounds))
-            return index
-    }
-
-    return -1
-}
-
-const boundsContainsPoint = (rootBounds, bounds) => {
-    /* Validate start of touch is within cotainer bounds (Corrects for under/over-flow) */
-    if (yDown < rootBounds.y || yDown > rootBounds.y + rootBounds.height)
-        return false
-
-    /* Calculate is within trigger's bounding client rect */
-    if (xDown >= bounds.x && xDown <= bounds.x + bounds.width)
-        if (yDown >= bounds.y && yDown <= bounds.y + bounds.height)
-            return true
-    return false
-}
-
-const DefinedTriggers = () => {
+const DefinedTriggers = ({ isTouchDevice }) => {
     /* Selected user-defined trigger in list */
     const [selected, setSelected] = useState(-1)
     const [removed, setRemoved] = useState(-1)
@@ -94,98 +49,26 @@ const DefinedTriggers = () => {
             setSelected(id)
     }
 
-
-    const handleTouch = (e, down) => {
-        const touch = e.touches[0]
-
-        /* Touch down */
-        if (down) {
-            if (touch) {
-                xDown = touch.clientX
-                yDown = touch.clientY
-            }
-            return;
-        }
-
-        /* Touch move */
-        if (!xDown || !yDown)
-            return
-
-        let xDiff = xDown - touch.clientX,
-            yDiff = yDown - touch.clientY
-
-        if (Math.abs(xDiff) > Math.abs(yDiff)) {
-            /* Retrieve/cache root container bounds on valide swipes */
-            if (rootContainer == undefined) {
-                if (!(rootContainer = document.getElementById('user-triggers')))
-                    return
-            }
-
-            const rootBounds = rootContainer.getBoundingClientRect()
-
-
-            if (xDiff > 10) {
-                /* left swipe */
-                const selectedTrigger = isSwipeInTrigger(rootBounds)
-
-                if (selectedTrigger != -1) {
-                    /* Swiped inside a trigger's container */
-                    setSelected(selectedTrigger)
-                    selectedIndex = selectedTrigger
-                    console.log('Swipe found in index: ' + selectedIndex)
-                }
-            } else {
-                /* right swipe */
-                console.log('right swipe: ' + selected)
-               
-                if (selectedIndex != -1) {
-                    const triggerContainer = cachedTriggerContainers[selectedIndex]
-
-                    /* Compare container bounds to touch position */
-                    const bounds = triggerContainer.getBoundingClientRect()
-
-                    /* De-select trigger */
-                    if (boundsContainsPoint(rootBounds, bounds)) {
-                        setSelected(-1)
-                        selectedIndex = -1
-                    }
-                }
-            }
-        } else {
-            if (yDiff > 0) {
-                /* up swipe */
-            } else {
-                /* down swipe */
-            }
-        }
-
-        /* reset values */
-        xDown = undefined
-        yDown = undefined
-    }
-
-    /* Register touch listener */
+    /* If touch - listen to events */
     useEffect(() => {
         if (isTouchDevice) {
-            window.addEventListener('touchstart', (e) => handleTouch(e, true))
-            window.addEventListener('touchmove', (e) => handleTouch(e, false))
-
-            return () => {
-                window.removeEventListener('touchstart', handleTouch)
-                window.removeEventListener('touchmove', handleTouch)
-            }
+            window.addEventListener('touch-swipe', (e) => setSelected(e.detail.id))
+            return () =>  window.removeEventListener('touch-swipe', (e) => setSelected(e.id))
         }
-    }, )
+    })
 
     return (
         /* User-Added Triggers */
         <div id='user-triggers' className='user-triggers'>
 
+            {/* Enable touch-swipe events for supported devices */}
+            {isTouchDevice ? <SwipeEvent totalTriggers={userTriggers.length} /> : null}
+
             {/* Map all user-defined triggers, and display */}
             {userTriggers.map(trigger => (
 
                 /* Trigger container, class for removal animation */
-                <div id={'trigger-' + trigger.id} className={removed === trigger.id ? 'trigger-container removed' : 'trigger-container '} >
+                <div key={trigger.id} id={'trigger-' + trigger.id} className={removed === trigger.id ? 'trigger-container removed' : 'trigger-container '} >
 
                     {/* Clicking/Swiping the trigger's contents will "select" it and make others "inactive
                         should none be select they will default to defined-trigger*/}

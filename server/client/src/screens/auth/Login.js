@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 /* Style */
-import '../../styles/screens/auth.css'
+import '../../styles/auth.css'
 
 import CachedImage from '../../components/CachedImage'
 
 
 /* Component */
 const Login = (props) => {
-    {/* Redirected from history, invert enter animation direction*/ }
+    /* Redirected from history, invert enter animation direction*/
     const hasCacheProps = props.location.state
     const invertEnterAnim = hasCacheProps ? props.location.state.visibility : hasCacheProps
 
@@ -25,7 +25,7 @@ const Login = (props) => {
     const history = props.history
 
     const navAfterAnimTo = (vis, page) => {
-        {/* Reset err msg, delay redirect to allow exit animation */ }
+        /* Reset err msg, delay redirect to allow exit animation */
         setVisibility(vis)
         setTimeout(() => history.push(page), 600)
     }
@@ -35,7 +35,7 @@ const Login = (props) => {
             history.push('/dashboard')
         else {/* Display enter animation */ }
         setTimeout(() => setVisibility('auth-screen'), 100)
-    }, [])
+    }, [history])
 
     const handler = async (e) => {
         e.preventDefault()
@@ -95,7 +95,7 @@ const Login = (props) => {
 
                     {/* Reset */}
                     <span className='login-reset'>
-                        <Link onClick={() => navAfterAnimTo('auth-screen down', '/forgot')}>Reset Password</Link>
+                        <Link to='#' onClick={() => navAfterAnimTo('auth-screen down', '/forgot')}>Reset Password</Link>
                     </span>
 
                 </div>
@@ -105,7 +105,7 @@ const Login = (props) => {
 
                 {/* Create */}
                 <h5 className='form-subtext'>
-                    New here? <Link onClick={() => navAfterAnimTo('auth-screen left', '/register')}> Create an account </Link>!
+                    New here? <Link to='#' onClick={() => navAfterAnimTo('auth-screen left', '/register')}> Create an account </Link>!
                 </h5>
 
             </form>

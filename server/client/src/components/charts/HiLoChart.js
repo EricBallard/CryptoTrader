@@ -5,7 +5,6 @@ import {
   XAxis,
   YAxis,
   ResponsiveContainer,
-  Tooltip,
   Label,
   LabelList
 } from 'recharts'
@@ -19,28 +18,10 @@ const renderCustomizedLabel = (props) => {
   return <Label {...rest} fontSize='1.25rem' fill='#FFFFFF' />
 }
 
-/* Formats tool-tip datakey names, replaces _ with spaces */
-const formatter = (value, name, props) => [value, String([name]).replaceAll('_', ' '), props]
-
 const HiLoChart = ({ maxHeight }) => {
-
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className='hilo-graph tooltip'>
-          ass
-        </div>
-      );
-    }
-  
-    return null;
-  };
-
-  
   return (
     <div className='hilo-graph'>
-      <ResponsiveContainer maxHeight='99%'
-        width='99%' maxHeight={maxHeight/16}>
+      <ResponsiveContainer width='99%' maxHeight={maxHeight/16}>
 
         {/* Recharts - vertical bar chart */}
         <BarChart
@@ -53,12 +34,6 @@ const HiLoChart = ({ maxHeight }) => {
           <XAxis hide type='number' />
           <YAxis hide type='category'
             dataKey='name' />
-
-
-          {/* Hover/tap for more info - and style 
-          <Tooltip placement='bottom' cursor={false} 
-            wrapperStyle={{zIndex: 1}} contentStyle={{ backgroundColor: '#707070'}}
-            formatter={formatter}  />  */}
 
           {/* Pretty self-explaintory, data key matches keys in data.. fill,
             stack id allows the 3 bars to stack into one, radius rounds corners */}

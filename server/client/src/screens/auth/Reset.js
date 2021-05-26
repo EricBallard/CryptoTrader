@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 /* Style */
-import '../../styles/screens/auth.css'
+import '../../styles/auth.css'
 
 import CachedImage from '../../components/CachedImage'
 
@@ -41,7 +41,7 @@ const Reset = ({ history, match }) => {
             {/* Success Message */}
             <span className={success ? 'success-message' : 'message inactive'}>
                 {success} <Link onClick={() => {
-                    {/* Delay redirect to allow exit animation */ }
+                    /* Delay redirect to allow exit animation */
                     setVisibility('auth-screen exit')
                     setTimeout(() => history.push('/login'), 600)
                 }}>Login</Link>
@@ -66,7 +66,7 @@ const Reset = ({ history, match }) => {
                 <CachedImage url={process.env.REACT_APP_CLOUDFRONT_URL + 'undo.png'}
                     name='form-back'
                     event={() => {
-                        {/* Delay redirect to allow exit animation */ }
+                        /* Delay redirect to allow exit animation */ 
                         setVisibility('auth-screen up')
                         setTimeout(() => history.push({
                             pathname: '/login',
