@@ -52,10 +52,24 @@ const DefinedTriggers = ({ isTouchDevice }) => {
     /* If touch - listen to events */
     useEffect(() => {
         if (isTouchDevice) {
+            /** ~ NOTE ~ **
+             *
+             * This will throw a "Can't perform a React state update on an unmounted component."
+             * warning when re-mounted... although this is 'just a warning' and everything does function
+             * without issue - I have tried a slew of different things and although did fix a few bugs I
+             * can't seem to get it to not warn on remount.. dispite not having any callbacks, promises, etc??
+             * 
+             * According to some this is "normal" behavior
+             * https://stackoverflow.com/questions/56203531/how-to-fix-cant-perform-a-react-state-update-on-an-unmounted-component-error
+             * 
+             */
             window.addEventListener('touch-swipe', (e) => setSelected(e.detail.id))
-            return () =>  window.removeEventListener('touch-swipe', (e) => setSelected(e.id))
+
+            return () => {
+                window.removeEventListener('touch-swipe', (e) => setSelected(e.detail.id))
+            }
         }
-    })
+    }, [isTouchDevice])
 
     return (
         /* User-Added Triggers */
