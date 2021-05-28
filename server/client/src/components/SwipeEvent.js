@@ -99,6 +99,9 @@ const handleTouch = (e, down, totalTriggers) => {
                 /* Dispatch custom event */
                 swipeEvent.detail.id = selectedTrigger
                 window.dispatchEvent(swipeEvent)
+
+                /* Prevent scrolling on trigger list */
+                e.preventDefault()
             }
         } else {
             /* right swipe */
@@ -113,6 +116,9 @@ const handleTouch = (e, down, totalTriggers) => {
                     /* Dispatch custom event */
                     swipeEvent.detail.id = -1
                     window.dispatchEvent(swipeEvent)
+
+                    /* Prevent scrolling on trigger list */
+                    e.preventDefault()
                 }
             }
         }
@@ -134,8 +140,8 @@ const SwipEvent = ({ totalTriggers }) => {
 
     /* Register touch listeners */
     useEffect(() => {
-        window.addEventListener('touchstart', (e) => handleTouch(e, true, totalTriggers))
-        window.addEventListener('touchmove', (e) => handleTouch(e, false, totalTriggers))
+        window.addEventListener('touchstart', (e) => handleTouch(e, true, totalTriggers), { passive: false })
+        window.addEventListener('touchmove', (e) => handleTouch(e, false, totalTriggers), { passive: false })
 
         return () => {
             /* Reset variables and remove listeners on functional un-mount */
@@ -146,8 +152,8 @@ const SwipEvent = ({ totalTriggers }) => {
             rootContainer = undefined
             cachedTriggerContainers = []
             
-            window.removeEventListener('touchstart', (e) => handleTouch(e, true, totalTriggers))
-            window.removeEventListener('touchmove', (e) => handleTouch(e, false, totalTriggers))
+            window.removeEventListener('touchstart', (e) => handleTouch(e, true, totalTriggers), { passive: false })
+            window.removeEventListener('touchmove', (e) => handleTouch(e, false, totalTriggers), { passive: false })
         }
     }, [totalTriggers])
 

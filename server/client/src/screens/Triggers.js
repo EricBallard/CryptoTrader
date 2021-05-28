@@ -6,6 +6,7 @@ import '../styles/screens/triggers.css'
 
 /* Components */
 import DefinedTriggers from '../components/triggers/DefinedTriggers'
+import CreateTrigger from '../components/triggers/CreateTrigger'
 
 /* Cache device touch-screen support */
 const isTouchDevice = Boolean(navigator.maxTouchPoints || 'ontouchstart' in document.documentElement)
@@ -31,12 +32,13 @@ const Triggers = (props) => {
             <div className={props.isMenuOpen || navFromMenu ? 'dashboard-body inactive' : 'dashboard-body'}>
                 <div className='container'>
 
-                {/* User-defined triggers */}
-                <DefinedTriggers {...{isTouchDevice}} />
-                
+                    {/* User-defined triggers */}
+                    <DefinedTriggers {...{ isTouchDevice }} />
+
+                    {/* Define/Create new trigger */}
+                    <CreateTrigger />
                 </div>
             </div>
-
         </>
     )
 }

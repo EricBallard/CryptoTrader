@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 /* Style */
 import '../../styles/screens/triggers.css'
 
+/* Touch events */
 import SwipeEvent from '../SwipeEvent'
 
 /* Data */
@@ -64,52 +65,53 @@ const DefinedTriggers = ({ isTouchDevice }) => {
              * 
              */
             window.addEventListener('touch-swipe', (e) => setSelected(e.detail.id))
-
-            return () => {
-                window.removeEventListener('touch-swipe', (e) => setSelected(e.detail.id))
-            }
+            return () => window.removeEventListener('touch-swipe', (e) => setSelected(e.detail.id))
         }
     }, [isTouchDevice])
 
     return (
-        /* User-Added Triggers */
-        <div id='user-triggers' className='user-triggers'>
+        <div className='definedTriggers'>
 
-            {/* Enable touch-swipe events for supported devices */}
-            {isTouchDevice ? <SwipeEvent totalTriggers={userTriggers.length} /> : null}
+            {/* Title */}
+            <h1 className='triggers-title'>My Triggers</h1>
 
-            {/* Map all user-defined triggers, and display */}
-            {userTriggers.map(trigger => (
+            {/* User-Added Triggers */}
+            <div id='user-triggers' className='user-triggers'>
 
-                /* Trigger container, class for removal animation */
-                <div key={trigger.id} id={'trigger-' + trigger.id} className={removed === trigger.id ? 'trigger-container removed' : 'trigger-container '} >
+                {/* Enable touch-swipe events for supported devices */}
+                {isTouchDevice ? <SwipeEvent totalTriggers={userTriggers.length} /> : null}
 
-                    {/* Clicking/Swiping the trigger's contents will "select" it and make others "inactive
+                {/* Map all user-defined triggers, and display */}
+                {userTriggers.map(trigger => (
+
+                    /* Trigger container, class for removal animation */
+                    <div key={trigger.id} id={'trigger-' + trigger.id} className={removed === trigger.id ? 'trigger-container removed' : 'trigger-container '} >
+
+                        {/* Clicking/Swiping the trigger's contents will "select" it and make others "inactive
                         should none be select they will default to defined-trigger*/}
-                    <div onClick={() => isTouchDevice ? false : updateTrigger(false, trigger.id)}
-                        className={selected !== -1 && selected !== trigger.id ? 'defined-trigger inactive'
-                            : 'defined-trigger'}>
+                        <div onClick={() => isTouchDevice ? false : updateTrigger(false, trigger.id)}
+                            className={selected !== -1 && selected !== trigger.id ? 'defined-trigger inactive'
+                                : 'defined-trigger'}>
 
-                        {/* Defined trigger info... */}
-                        <p className={'defined-trigger ' + trigger.type}>{trigger.type}</p>
-                        <p className='defined-trigger condition'>{trigger.condition === true ? '>' : '<'}</p>
+                            {/* Defined trigger info... */}
+                            <p className={'defined-trigger ' + trigger.type}>{trigger.type}</p>
+                            <p className='defined-trigger condition'>{trigger.condition === true ? '>' : '<'}</p>
 
-                        {/* Indent price on selection + reveal remove text */}
-                        <p className={selected === trigger.id ? 'defined-trigger selected' : 'defined-trigger price'}>{selected === trigger.id ? 'REMOVE' : (trigger.price).toFixed(4)}</p>
+                            {/* Indent price on selection + reveal remove text */}
+                            <p className={selected === trigger.id ? 'defined-trigger selected' : 'defined-trigger price'}>{selected === trigger.id ? 'REMOVE' : (trigger.price).toFixed(4)}</p>
 
-                        {/* Remove/Delete defined-trigger */}
-                        <p className={selected === trigger.id ? 'remove-trigger active' : 'remove-trigger'}
-                            onClick={() => {
-                                //if (window.confirm('Delete this ' + trigger.type.toLowerCase() + ' trigger?'))
-                                updateTrigger(true, trigger.id)
-                            }}>
-                            X
-                        </p>
-
+                            {/* Remove/Delete defined-trigger */}
+                            <p className={selected === trigger.id ? 'remove-trigger active' : 'remove-trigger'}
+                                onClick={() => {
+                                    //if (window.confirm('Delete this ' + trigger.type.toLowerCase() + ' trigger?'))
+                                    updateTrigger(true, trigger.id)
+                                }}>
+                                X
+                            </p>
+                        </div>
                     </div>
-                </div>
-            ))}
-
+                ))}
+            </div>
         </div>
     )
 }
