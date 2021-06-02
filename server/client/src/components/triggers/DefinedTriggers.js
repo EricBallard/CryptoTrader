@@ -76,7 +76,7 @@ const DefinedTriggers = ({ isTouchDevice }) => {
             <h1 className='triggers-title'>My Triggers</h1>
 
             {/* User-Added Triggers */}
-            <div id='user-triggers' className='user-triggers'>
+            <div id='user-triggers' className='root-container'>
 
                 {/* Enable touch-swipe events for supported devices */}
                 {isTouchDevice ? <SwipeEvent totalTriggers={userTriggers.length} /> : null}
