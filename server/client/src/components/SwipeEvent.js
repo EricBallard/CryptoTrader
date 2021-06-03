@@ -88,7 +88,7 @@ const handleTouch = (e, down, totalTriggers) => {
         if (!rootBounds)
             return
 
-        if (xDiff > 10) {
+        if (xDiff > 0) {
             /* left swipe */
             const selectedTrigger = isSwipeInTrigger(rootBounds, totalTriggers)
 

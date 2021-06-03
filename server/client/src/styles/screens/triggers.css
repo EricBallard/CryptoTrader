@@ -11,14 +11,14 @@
   border-radius: 1rem;
 }
 
-::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb:hover {
+  background: #f5c800;
+}
+
+.root-container::-webkit-scrollbar-thumb {
   background: #f5c800;
   border: 0.2rem solid #000;
   border-radius: 1rem;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #f5c800;
 }
 
 .root-container {
@@ -28,8 +28,8 @@
   
   width: 90vw;
 
-  min-height: 15vh;
-  max-height: 25vh;
+  min-height: 20vh;
+  max-height: 40vh;
   border-radius: 1rem;
 
   background-color: #707070;
@@ -43,7 +43,7 @@
 
 .trigger-container {
   margin-bottom: 15px;
-  max-height: 100%;
+  height: 100%;
   width: 95%;
 }
 
@@ -157,76 +157,80 @@
   margin-bottom: 1rem;
 }
 
-/*  Create New Trigger */
+/* 
+ Create New Trigger 
+*/
 
-/* Container */
-
-.create-trigger {
-  overflow-y: scroll;
-  overflow-x: hidden;
-
-  width: 90vw;
-  height: 25vh;
-  border-radius: 1rem;
-  background-color: #707070;
-  border: 0.2rem solid #000;
-  /* Font */
-  color: #fff;
-  font-size: 1.75rem;
+.create-container::-webkit-scrollbar-thumb {
+  /* On scroll anim, overflow is breifly scrollable, 
+  on mobile the thumb is hidden, but on desktop we'll
+  set the color to black so its not shown for createTrigger */
+  background: #000;
 }
 
 /* Verify logic text */
-
 .trigger-verify {
+  position: relative;
+  user-select: none;
+  z-index: 1;
+
   height: 20%;
+  background-color: #707070;
   border-bottom: 0.2rem solid #000;
 }
 
 .trigger-verify.text {
   text-align: center;
   overflow: hidden;
-  font-size: 1rem;
   height: 100%;
   opacity: 1;
-  background-color: #000;
+
+  
+  font-size: 1.15rem;
+  color: #000;
+  text-shadow: 1px 1px #303030;
 }
-
-.create-controls {
-  height: 55%;
-  width: 95%;
-}
-
-/* Create trigger */
-
-.create-new {}
 
 .create-btn {
+  position: relative;
+  z-index: 1;
+
   height: 25%;
   width: 100%;
   
-  border-radius: 0 0 0.75rem 0.75rem;
+  border-radius: 0 0 0 0;
   border-top: 0.2rem solid #000;
 
   font-weight: bold;
   font-size: 1rem;
 }
 
-.dummy-trigger {
-  position: relative;
-  top: 30%;
-  opacity: 1;
-}
-
-.dummy-trigger.inactive {
-  position: relative;
-  top: 30%;
-  opacity: 1;
-}
-
-.dummy-price{
+.create-price{
+  /* Style input to look like defined-trigger price */
   background-color: #707070;
   
   color: #fff;
   font-size: 1.75rem;
   text-align: center;
+}
+
+.create-trigger {
+  /* Scroll to center... */
+  position: relative;
+  height: 10vh;
+
+  top: 3vh;
+  transition: top 0.5s ease;
+}
+
+.create-trigger.top {
+  /* No transition - instantly set to top position */
+  top: -14vh;
+  transition: top 0s;
+}
+
+.create-trigger.bottom {
+  /* Scroll to bottom... */
+  top: 14vh;
+  transition: top 0.5s ease;
 }
