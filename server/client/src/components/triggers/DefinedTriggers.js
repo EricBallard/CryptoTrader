@@ -21,7 +21,7 @@ const DefinedTriggers = ({ isTouchDevice }) => {
     const [selected, setSelected] = useState(-1)
     const [removed, setRemoved] = useState(-1)
 
-    const updateTrigger = (remove, id) => {
+    const handler = (remove, id) => {
         if (remove) {
             // Remove
 
@@ -89,12 +89,13 @@ const DefinedTriggers = ({ isTouchDevice }) => {
 
                         {/* Clicking/Swiping the trigger's contents will "select" it and make others "inactive
                         should none be select they will default to defined-trigger*/}
-                        <div onClick={() => isTouchDevice ? false : updateTrigger(false, trigger.id)}
+                        <div onClick={() => isTouchDevice ? false : handler(false, trigger.id)}
                             className={selected !== -1 && selected !== trigger.id ? 'defined-trigger inactive'
                                 : 'defined-trigger'}>
 
                             {/* Defined trigger info... */}
                             <p className={'defined-trigger ' + trigger.type}>{trigger.type}</p>
+
                             <p className='defined-trigger condition'>{trigger.condition === true ? '>' : '<'}</p>
 
                             {/* Indent price on selection + reveal remove text */}
@@ -104,7 +105,7 @@ const DefinedTriggers = ({ isTouchDevice }) => {
                             <p className={selected === trigger.id ? 'remove-trigger active' : 'remove-trigger'}
                                 onClick={() => {
                                     //if (window.confirm('Delete this ' + trigger.type.toLowerCase() + ' trigger?'))
-                                    updateTrigger(true, trigger.id)
+                                    handler(true, trigger.id)
                                 }}>
                                 X
                             </p>

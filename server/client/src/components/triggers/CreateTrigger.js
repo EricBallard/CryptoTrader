@@ -6,11 +6,39 @@ import '../../styles/screens/triggers.css'
 
 
 const CreateTrigger = () => {
-    /* Scroll index of trigger creation - type */
-    const [createIndex, setCreateIndex] = useState('BUY')
+    /* Scroll index of trigger creation - Type/Condition */
+    const [typeIndex, setTypeIndex] = useState('BUY')
+    const [conIndex, setConIndex] = useState('<')
 
-    /* Animation index of scroll | */
-    const [anim, setAnim] = useState('')
+    /* Animation index for create trigger - Type/Condition */
+    const [typeAnim, setType] = useState('')
+    const [conAnim, setCon] = useState('>')
+
+    /* Handles index cycling/animation states for create-trigger scrolling */
+    const handler = (isType) => {
+        /* Init scroll animation and wait... */
+        if (isType)
+            setType('bottom')
+        else
+            setCon('bottom')
+
+        /* Reset position to top - no transition is "instant" */
+        setTimeout(() => isType ? setType('top') : setCon('top'), 250)
+
+        setTimeout(() => {
+            /* Update trigger type index */
+            const index = isType ? typeIndex : conIndex
+
+            /* Reset anim position, transition scrolls to center */
+            if (isType) {
+                setTypeIndex(index === 'BUY' ? 'SELL' : index === 'SELL' ? 'ALERT' : 'BUY')
+                setType('')
+            } else {
+                setConIndex(index === '>' ? '<' : '>')
+                setCon('')
+            }
+        }, 500)
+    }
 
     return (
         <div className='createTrigger'>
@@ -27,33 +55,22 @@ const CreateTrigger = () => {
                 </div>
 
                 {/* Customize new trigger - using modular css :) */}
-                <div className={'trigger-container create-trigger ' + anim}>
+                <div className='trigger-container create-container'>
                     <div className='defined-trigger'>
 
                         {/* Defined trigger info... */}
+
                         {/* Trigger type */}
-                        <p className={'defined-trigger ' + createIndex} onClick={() => {
-                            /* Init scroll animation and wait... */
-                            setAnim('bottom')
+                        <p className={'defined-trigger ' + typeIndex + ' create-trigger ' + typeAnim} onClick={() => handler(true)}>
+                            {typeIndex}
+                        </p>
 
+                        {/* Condition >/< */}
+                        <p className={'defined-trigger condition create-trigger ' + conAnim} onClick={() => handler(false)}>
+                            {conIndex}
+                        </p>
 
-                            /* Reset position to top */
-                            setTimeout(() => setAnim('top'), 250)
-
-                            setTimeout(() => {
-
-                                /* Update trigger type index */
-                                const index = createIndex
-                                setCreateIndex(index === 'BUY' ? 'SELL' : index === 'SELL' ? 'ALERT' : 'BUY')
-
-                                /* Reset anim position, scrolls to center */
-                                setAnim('')
-                            }, 500)
-                        }}>{createIndex}</p>
-
-                        <p className='defined-trigger condition'>{true === true ? '>' : '<'}</p>
-
-                        {/* Indent price on selection + reveal remove text */}
+                        {/* Configure price */}
                         <input type='text' className='defined-trigger price create-price' placeholder='0.1324' />
 
                         {/* THIS IS NOT USED BUT REQUIRED TO RETAIN SAME DIMENSION AS DEFINED-TRIGGER*/}
