@@ -4,6 +4,16 @@ import { useState } from 'react'
 /* Style */
 import '../../styles/screens/triggers.css'
 
+/* Validate entered price for new trigger */
+const getValue = (str) => {
+    /* Entered string contains characters that are non-numerical*/
+    if (str.match(/^[0-9]+$/) != null)
+        return -1
+
+    /* Parse to float and validate */
+    const float = parseFloat(str)
+    return !isNaN(float) ? float : -1
+}
 
 const CreateTrigger = () => {
     /* Scroll index of trigger creation - Type/Condition */
@@ -13,6 +23,13 @@ const CreateTrigger = () => {
     /* Animation index for create trigger - Type/Condition */
     const [typeAnim, setType] = useState('')
     const [conAnim, setCon] = useState('>')
+
+    /* Cache verify-message DOM element */
+    const createPrice = document.getElementById('create-price'),
+        verifyPrice = document.getElementById('verify-price'),
+        verifyCon = document.getElementById('verify-condition'),
+        verifyType = document.getElementById('verify-type')
+
 
     /* Handles index cycling/animation states for create-trigger scrolling */
     const handler = (isType) => {
@@ -31,14 +48,48 @@ const CreateTrigger = () => {
 
             /* Reset anim position, transition scrolls to center */
             if (isType) {
-                setTypeIndex(index === 'BUY' ? 'SELL' : index === 'SELL' ? 'ALERT' : 'BUY')
+                const newType = index === 'BUY' ? 'SELL' : index === 'SELL' ? 'ALERT' : 'BUY'
+                
+                verifyType.textContent = (newType.substring(0, 1) + newType.substring(1).toLowerCase())
+                setTypeIndex(newType)
                 setType('')
             } else {
+                verifyCon.textContent = (index === '>' ? 'more than' : 'less than')
                 setConIndex(index === '>' ? '<' : '>')
                 setCon('')
             }
         }, 500)
     }
+
+    /* Validate defined price for new trigger */
+    const validateInput = (e) => {
+        /* User entered value */
+        let value = String(getValue(e.target.value))
+
+        /* Validate as float*/
+        if (value < 0 || value > 9 || !value.includes('.')) {
+            /* Not valid... prevent event, clear input */
+            verifyPrice.textContent = ''
+            return
+        } else {
+            const decimalValues = value.split('.')
+
+            /* Require at least 1 decimal place - prevent specifying past 6 */
+            if (decimalValues.length < 1 || [...decimalValues[1]].length > 6) {
+                value = value.slice(0, 8)
+                createPrice.value = value
+            }
+        }
+
+        /* Update verify message price on input change */
+        verifyPrice.textContent = '$' + value
+    }
+
+    /* Register verify message handler 
+    useEffect(() => {
+
+    }, [])
+*/
 
     return (
         <div className='createTrigger'>
@@ -50,8 +101,10 @@ const CreateTrigger = () => {
             <div className='root-container create-container'>
 
                 {/* Verify logic message */}
-                <div className='trigger-verify'>
-                    <h3 className='trigger-verify text'>Alert me when Dogecoin is less than $0.2999</h3>
+                <div id='trigger-verify' className='trigger-verify'>
+                    <p>
+                        <span id='verify-type'>Alert me</span> when Dogecoin is <span id='verify-condition'>less than</span> <span id='verify-price'>$0.2999</span>
+                    </p>
                 </div>
 
                 {/* Customize new trigger - using modular css :) */}
@@ -71,7 +124,8 @@ const CreateTrigger = () => {
                         </p>
 
                         {/* Configure price */}
-                        <input type='text' className='defined-trigger price create-price' placeholder='0.1324' />
+                        <input type='text' className='defined-trigger price create-price' placeholder='0.1324'
+                            id='create-price' onInput={(e) => validateInput(e)} />
 
                         {/* THIS IS NOT USED BUT REQUIRED TO RETAIN SAME DIMENSION AS DEFINED-TRIGGER*/}
                         <p className={'remove-trigger'}>X</p>

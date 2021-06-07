@@ -182,20 +182,11 @@
   z-index: 1;
 
   height: 20%;
+  color: #000;
+  font-size: 1.15rem;
+  text-align: center;
   background-color: #707070;
   border-bottom: 0.2rem solid #000;
-}
-
-.trigger-verify.text {
-  text-align: center;
-  overflow: hidden;
-  height: 100%;
-  opacity: 1;
-
-  
-  font-size: 1.15rem;
-  color: #000;
-  text-shadow: 1px 1px #303030;
 }
 
 .create-btn {
