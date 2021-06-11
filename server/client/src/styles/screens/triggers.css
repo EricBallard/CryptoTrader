@@ -148,7 +148,7 @@
 .defined-trigger.selected {
   border-bottom: 0.2rem solid #000;
   border-radius: 0 1rem 0 0;
-  width: 90%;
+
 
   cursor: default;
   letter-spacing: 0.2rem;

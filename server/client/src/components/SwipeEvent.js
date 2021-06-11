@@ -34,6 +34,7 @@ const boundsContainsPoint = (rootBounds, bounds) => {
 }
 
 const isSwipeInTrigger = (rootBounds, totalTriggers) => {
+
     /* Iterate all defined trigger containers */
     for (let index = 0; index < totalTriggers; index++) {
         let triggerContainer = cachedTriggerContainers[index]
@@ -136,10 +137,16 @@ const handleTouch = (e, down, totalTriggers) => {
 }
 
 /* Stateless component - monitors touch actions and registers swipes as events */
-const SwipEvent = ({ totalTriggers }) => {
+const SwipEvent = ({ totalTriggers }) => {   
 
     /* Register touch listeners */
     useEffect(() => {
+        if (totalTriggers < 1)
+            return
+
+            console.log('tots: ' + totalTriggers)
+
+
         window.addEventListener('touchstart', (e) => handleTouch(e, true, totalTriggers), { passive: false })
         window.addEventListener('touchmove', (e) => handleTouch(e, false, totalTriggers), { passive: false })
 

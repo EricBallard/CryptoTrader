@@ -8,6 +8,9 @@ import '../styles/screens/triggers.css'
 import DefinedTriggers from '../components/triggers/DefinedTriggers'
 import CreateTrigger from '../components/triggers/CreateTrigger'
 
+/* Touch events */
+import SwipeEvent from '../components/SwipeEvent'
+
 /* Cache device touch-screen support */
 const isTouchDevice = Boolean(navigator.maxTouchPoints || 'ontouchstart' in document.documentElement)
 
@@ -15,6 +18,9 @@ const isTouchDevice = Boolean(navigator.maxTouchPoints || 'ontouchstart' in docu
 const Triggers = (props) => {
     /* Navigated from dynamic menu */
     const [navFromMenu, setNav] = useState(props.history.location.fromMenu === true)
+
+    /* Total number of defined-triggers */
+    const[totalTriggers, setTotalTriggers] = useState(0)
 
     useEffect(() => {
         /* Require authentication to access */
@@ -31,12 +37,16 @@ const Triggers = (props) => {
             {/* Body */}
             <div className={props.isMenuOpen || navFromMenu ? 'dashboard-body inactive' : 'dashboard-body'}>
                 <div className='container'>
-
+                
                     {/* User-defined triggers */}
-                    <DefinedTriggers {...{ isTouchDevice }} />
+                    <DefinedTriggers {...{ isTouchDevice, setTotalTriggers }} />
 
                     {/* Define/Create new trigger */}
-                    <CreateTrigger />
+                    <CreateTrigger {...{ isTouchDevice }} />
+                    
+                    {/* Enable touch-swipe events for supported devices    userTriggers.length */}
+                    {isTouchDevice ? <SwipeEvent {...{ totalTriggers }}  /> : null}
+
                 </div>
             </div>
         </>

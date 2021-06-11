@@ -3,11 +3,8 @@ import { useEffect, useState } from 'react'
 /* Style */
 import '../../styles/screens/triggers.css'
 
-/* Touch events */
-import SwipeEvent from '../SwipeEvent'
-
 /* Data */
-const userTriggers = [
+let userTriggers = [
     /* Type of trigger, activate if price is > else < */
     { type: 'BUY', price: 0.3000, condition: false, id: 0 },
     { type: 'SELL', price: 0.2990, condition: false, id: 1 },
@@ -16,7 +13,7 @@ const userTriggers = [
 ]
 
 
-const DefinedTriggers = ({ isTouchDevice }) => {
+const DefinedTriggers = ({ isTouchDevice, setTotalTriggers }) => {
     /* Selected user-defined trigger in list */
     const [selected, setSelected] = useState(-1)
     const [removed, setRemoved] = useState(-1)
@@ -34,12 +31,44 @@ const DefinedTriggers = ({ isTouchDevice }) => {
             // Safe to remove - trigger removal animation
             setRemoved(id)
 
-            setTimeout(() => {
-                // Remove div andr eset states after 1s
-                document.getElementById('trigger-' + id).remove()
+
+            setTimeout(() => { 
+                
+
+                  // Remove div and reset states after 1s
+                  const node = document.getElementById('trigger-' + id)
+                
+                  if (node)
+                      node.remove()
+  
+
+                // Update data
+                const newTriggers = []
+                let index = 0
+
+                userTriggers.forEach(t => {
+                    // Do not add deleted trigger
+                    if (t.id !== id) {
+                        console.log('retain: ' + t.id + ' | ' + index )
+
+                        // Adjust index/id
+                        t.id = index
+                        newTriggers.push(t)
+
+                        index++
+                    }
+                })
+
+                userTriggers = newTriggers
+
+                // Informs swipe event to re-query
+                
                 setRemoved(-1)
                 setSelected(-1)
+                setTotalTriggers(-1)
+
             }, 1000)
+
             return
         }
 
@@ -52,6 +81,9 @@ const DefinedTriggers = ({ isTouchDevice }) => {
 
     /* If touch - listen to events */
     useEffect(() => {
+        // Init defined trigger total
+        setTotalTriggers(userTriggers.length)
+
         if (isTouchDevice) {
             /** ~ NOTE ~ **
              *
@@ -67,7 +99,7 @@ const DefinedTriggers = ({ isTouchDevice }) => {
             window.addEventListener('touch-swipe', (e) => setSelected(e.detail.id))
             return () => window.removeEventListener('touch-swipe', (e) => setSelected(e.detail.id))
         }
-    }, [isTouchDevice])
+    }, [isTouchDevice, setTotalTriggers])
 
     return (
         <div className='definedTriggers'>
@@ -78,9 +110,6 @@ const DefinedTriggers = ({ isTouchDevice }) => {
             {/* User-Added Triggers */}
             <div id='user-triggers' className='root-container'>
 
-                {/* Enable touch-swipe events for supported devices */}
-                {isTouchDevice ? <SwipeEvent totalTriggers={userTriggers.length} /> : null}
-
                 {/* Map all user-defined triggers, and display */}
                 {userTriggers.map(trigger => (
 
@@ -90,8 +119,7 @@ const DefinedTriggers = ({ isTouchDevice }) => {
                         {/* Clicking/Swiping the trigger's contents will "select" it and make others "inactive
                         should none be select they will default to defined-trigger*/}
                         <div onClick={() => isTouchDevice ? false : handler(false, trigger.id)}
-                            className={selected !== -1 && selected !== trigger.id ? 'defined-trigger inactive'
-                                : 'defined-trigger'}>
+                            className={'defined-trigger'}>
 
                             {/* Defined trigger info... */}
                             <p className={'defined-trigger ' + trigger.type}>{trigger.type}</p>

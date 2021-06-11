@@ -15,13 +15,13 @@ const getValue = (str) => {
     return !isNaN(float) ? float : -1
 }
 
-const CreateTrigger = () => {
+const CreateTrigger = ({ isTouchDevice }) => {
     /* Scroll index of trigger creation - Type/Condition */
     const [typeIndex, setTypeIndex] = useState('BUY')
     const [conIndex, setConIndex] = useState('<')
 
     /* Animation index for create trigger - Type/Condition */
-    const [typeAnim, setType] = useState('')
+    const [typeAnim, setType] = useState('BUY')
     const [conAnim, setCon] = useState('>')
 
     /* Cache verify-message DOM element */
@@ -49,13 +49,15 @@ const CreateTrigger = () => {
             /* Reset anim position, transition scrolls to center */
             if (isType) {
                 const newType = index === 'BUY' ? 'SELL' : index === 'SELL' ? 'ALERT' : 'BUY'
-                
+
                 verifyType.textContent = (newType.substring(0, 1) + newType.substring(1).toLowerCase())
                 setTypeIndex(newType)
                 setType('')
             } else {
-                verifyCon.textContent = (index === '>' ? 'more than' : 'less than')
-                setConIndex(index === '>' ? '<' : '>')
+                const newCon = index === '>' ? '<' : '>'
+
+                verifyCon.textContent = (newCon === '>' ? 'more than' : 'less than')
+                setConIndex(newCon)
                 setCon('')
             }
         }, 500)
@@ -85,12 +87,6 @@ const CreateTrigger = () => {
         verifyPrice.textContent = '$' + value
     }
 
-    /* Register verify message handler 
-    useEffect(() => {
-
-    }, [])
-*/
-
     return (
         <div className='createTrigger'>
 
@@ -103,7 +99,7 @@ const CreateTrigger = () => {
                 {/* Verify logic message */}
                 <div id='trigger-verify' className='trigger-verify'>
                     <p>
-                        <span id='verify-type'>Alert me</span> when Dogecoin is <span id='verify-condition'>less than</span> <span id='verify-price'>$0.2999</span>
+                        <span id='verify-type'>Alert me</span> when Dogecoin is <span id='verify-condition'>less than</span> <span id='verify-price' />
                     </p>
                 </div>
 
@@ -114,18 +110,26 @@ const CreateTrigger = () => {
                         {/* Defined trigger info... */}
 
                         {/* Trigger type */}
-                        <p className={'defined-trigger ' + typeIndex + ' create-trigger ' + typeAnim} onClick={() => handler(true)}>
+                        <p className={'defined-trigger ' + typeIndex + ' create-trigger ' + typeAnim} onClick={() => isTouchDevice ? false : handler(true)}>
                             {typeIndex}
                         </p>
 
                         {/* Condition >/< */}
-                        <p className={'defined-trigger condition create-trigger ' + conAnim} onClick={() => handler(false)}>
+                        <p className={'defined-trigger condition create-trigger ' + conAnim} onClick={() => isTouchDevice ? false : handler(false)}>
                             {conIndex}
                         </p>
 
                         {/* Configure price */}
                         <input type='text' className='defined-trigger price create-price' placeholder='0.1324'
-                            id='create-price' onInput={(e) => validateInput(e)} />
+                            id='create-price' onInput={(e) => validateInput(e)} onKeyDown={(e) => {
+                                const pressed = e.key
+
+                                /* Prevent entering non-numerical characters, allow back-space and 1 decimal */
+                                if (pressed !== 'Backspace' && (createPrice.value.includes('.') || pressed !== '.')) {
+                                    if (!(/^\d+$/.test(pressed)))
+                                        e.preventDefault()
+                                }
+                            }} />
 
                         {/* THIS IS NOT USED BUT REQUIRED TO RETAIN SAME DIMENSION AS DEFINED-TRIGGER*/}
                         <p className={'remove-trigger'}>X</p>
