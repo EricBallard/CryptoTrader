@@ -12,14 +12,15 @@ const swipeEvent = new CustomEvent('touch-swipe', {
 })
 
 let xDown = undefined,
-    yDown = undefined;
+    yDown = undefined
 
 /* Cache root container and each triggers container as dom elements
     this is used to compare their dimensions and validate swipe functions */
 let selectedIndex = -1,
-    rootContainer = undefined,
     cachedTriggerContainers = []
 
+let listContainer = undefined,
+    createContainer = undefined
 
 const boundsContainsPoint = (rootBounds, bounds) => {
     /* Validate start of touch is within cotainer bounds (Corrects for under/over-flow) */
@@ -49,6 +50,7 @@ const isSwipeInTrigger = (rootBounds, totalTriggers) => {
 
         /* Compare container bounds to touch position */
         const bounds = triggerContainer.getBoundingClientRect()
+        console.log('i: ' + index + ' | ' + bounds)
 
         if (boundsContainsPoint(rootBounds, bounds))
             return index
@@ -57,7 +59,47 @@ const isSwipeInTrigger = (rootBounds, totalTriggers) => {
     return -1
 }
 
-const handleTouch = (e, down, totalTriggers) => {
+const getSwipeType = (xDiff, yDiff) => {
+    /* Detect swipe direction */
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        return xDiff > 0 ? 'LEFT' : 'RIGHT'
+    } else {
+        return yDiff > 0 ? 'UP' : 'DOWN'
+    }
+}
+
+const rightSwipe = (rootBounds) => {
+    if (selectedIndex !== -1) {
+        const triggerContainer = cachedTriggerContainers[selectedIndex]
+
+        /* Compare container bounds to touch position */
+        const bounds = triggerContainer.getBoundingClientRect()
+
+        /* De-select trigger */
+        if (boundsContainsPoint(rootBounds, bounds)) {
+            /* Dispatch custom event */
+            swipeEvent.detail.id = -1
+            window.dispatchEvent(swipeEvent)
+        }
+    }
+}
+
+const leftSwipe = (rootBounds, totalTriggers) => {
+    const selectedTrigger = isSwipeInTrigger(rootBounds, totalTriggers)
+
+    console.log('yasss: ' + selectedTrigger)
+
+    if (selectedTrigger !== -1) {
+        /* Swiped inside a trigger's container */
+        selectedIndex = selectedTrigger
+
+        /* Dispatch custom event */
+        swipeEvent.detail.id = selectedTrigger
+        window.dispatchEvent(swipeEvent)
+    }
+}
+
+const detectSwipe = (e, down, totalTriggers) => {
     const touch = e.touches[0]
 
     /* Touch down */
@@ -66,89 +108,82 @@ const handleTouch = (e, down, totalTriggers) => {
             xDown = touch.clientX
             yDown = touch.clientY
         }
-        return;
+        return
     }
 
     /* Touch move */
     if (!xDown || !yDown)
         return
 
+    /* Detect swipe gestures based on coordinates */
     let xDiff = xDown - touch.clientX,
         yDiff = yDown - touch.clientY
 
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {
-        /* Retrieve/cache root container bounds on valide swipes */
-        if (rootContainer === undefined) {
-            if (!(rootContainer = document.getElementById('user-triggers')))
-                return
-        }
+    const swipeType = getSwipeType(xDiff, yDiff)
 
-        const rootBounds = rootContainer.getBoundingClientRect()
-
-        /* null check */
-        if (!rootBounds)
-            return
-
-        if (xDiff > 0) {
-            /* left swipe */
-            const selectedTrigger = isSwipeInTrigger(rootBounds, totalTriggers)
-
-            if (selectedTrigger !== -1) {
-                /* Swiped inside a trigger's container */
-                selectedIndex = selectedTrigger
-
-                /* Dispatch custom event */
-                swipeEvent.detail.id = selectedTrigger
-                window.dispatchEvent(swipeEvent)
-
-                /* Prevent scrolling on trigger list */
-                e.preventDefault()
-            }
-        } else {
-            /* right swipe */
-            if (selectedIndex !== -1) {
-                const triggerContainer = cachedTriggerContainers[selectedIndex]
-
-                /* Compare container bounds to touch position */
-                const bounds = triggerContainer.getBoundingClientRect()
-
-                /* De-select trigger */
-                if (boundsContainsPoint(rootBounds, bounds)) {
-                    /* Dispatch custom event */
-                    swipeEvent.detail.id = -1
-                    window.dispatchEvent(swipeEvent)
-
-                    /* Prevent scrolling on trigger list */
-                    e.preventDefault()
-                }
-            }
-        }
-    } else {
-        if (yDiff > 0) {
-            /* up swipe */
-        } else {
-            /* down swipe */
-        }
-    }
-
-    /* reset values */
+    /* reset values - null check */
     xDown = undefined
     yDown = undefined
+
+    if (swipeType === null)
+        return
+
+    /* Retrieve/cache root container bounds on valide swipes */
+    const isListSwipe = (swipeType === 'LEFT' || swipeType === 'RIGHT')
+    let rootContainer = (isListSwipe ? listContainer : createContainer)
+    let rootBounds = undefined
+
+    if (rootContainer === undefined) {
+        /* Query/cache */
+        if ((rootContainer = document.getElementById(isListSwipe ? 'user-triggers' : 'create-triggers')) === undefined)
+            return
+
+        if (isListSwipe) {
+            listContainer = rootContainer
+            rootBounds = listContainer.getBoundingClientRect()
+        } else {
+            createContainer = rootContainer
+            rootBounds = createContainer.getBoundingClientRect()
+        }
+    } else {
+        rootBounds = rootContainer.getBoundingClientRect()
+    }
+
+    /* null check */
+    if (!rootBounds)
+        return
+
+    /* Handle swipe functionality */
+    //e.preventDefault()
+
+    switch (swipeType) {
+        case 'LEFT':
+            leftSwipe(rootBounds, totalTriggers)
+            break
+        case 'RIGHT':
+            rightSwipe(rootBounds)
+            break
+        case 'UP':
+
+            break
+        case 'DOWN':
+
+            break
+        default:
+            break
+    }
 }
 
-/* Stateless component - monitors touch actions and registers swipes as events */
-const SwipEvent = ({ totalTriggers }) => {   
+/* Monitors touch actions and registers swipes as events */
+const SwipEvent = ({ totalTriggers }) => {
 
     /* Register touch listeners */
     useEffect(() => {
         if (totalTriggers < 1)
             return
 
-            console.log('tots: ' + totalTriggers)
-
-
-        window.addEventListener('touchstart', (e) => handleTouch(e, true, totalTriggers), { passive: false })
-        window.addEventListener('touchmove', (e) => handleTouch(e, false, totalTriggers), { passive: false })
+        window.addEventListener('touchstart', (e) => detectSwipe(e, true, totalTriggers), { passive: false })
+        window.addEventListener('touchmove', (e) => detectSwipe(e, false, totalTriggers), { passive: false })
 
         return () => {
             /* Reset variables and remove listeners on functional un-mount */
@@ -156,11 +191,12 @@ const SwipEvent = ({ totalTriggers }) => {
             yDown = undefined
 
             selectedIndex = -1
-            rootContainer = undefined
+            listContainer = undefined
+            createContainer = undefined
             cachedTriggerContainers = []
-            
-            window.removeEventListener('touchstart', (e) => handleTouch(e, true, totalTriggers), { passive: false })
-            window.removeEventListener('touchmove', (e) => handleTouch(e, false, totalTriggers), { passive: false })
+
+            window.removeEventListener('touchstart', (e) => detectSwipe(e, true, totalTriggers), { passive: false })
+            window.removeEventListener('touchmove', (e) => detectSwipe(e, false, totalTriggers), { passive: false })
         }
     }, [totalTriggers])
 

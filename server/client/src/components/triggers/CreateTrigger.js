@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 /* Style */
 import '../../styles/screens/triggers.css'
@@ -87,6 +87,15 @@ const CreateTrigger = ({ isTouchDevice }) => {
         verifyPrice.textContent = '$' + value
     }
 
+    /* If touch - listen to events */
+    useEffect(() => {
+        if (isTouchDevice) {
+           // window.addEventListener('touch-swipe', (e) => setSelected(e.detail.id))
+           // return () => window.removeEventListener('touch-swipe', (e) => setSelected(e.detail.id))
+        }
+    }, [isTouchDevice])
+
+
     return (
         <div className='createTrigger'>
 
@@ -104,7 +113,7 @@ const CreateTrigger = ({ isTouchDevice }) => {
                 </div>
 
                 {/* Customize new trigger - using modular css :) */}
-                <div className='trigger-container create-container'>
+                <div id='create-triggers' className='trigger-container create-container'>
                     <div className='defined-trigger'>
 
                         {/* Defined trigger info... */}

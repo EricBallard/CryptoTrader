@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 
 /* Style */
 import '../../styles/screens/triggers.css'
@@ -30,43 +30,16 @@ const DefinedTriggers = ({ isTouchDevice, setTotalTriggers }) => {
 
             // Safe to remove - trigger removal animation
             setRemoved(id)
+            setSelected(-1)
 
+            setTimeout(() => {
+                // Remove dom element
+                document.getElementById('trigger-' + id).remove()
 
-            setTimeout(() => { 
-                
+                //TODO: remove from database ?
 
-                  // Remove div and reset states after 1s
-                  const node = document.getElementById('trigger-' + id)
-                
-                  if (node)
-                      node.remove()
-  
-
-                // Update data
-                const newTriggers = []
-                let index = 0
-
-                userTriggers.forEach(t => {
-                    // Do not add deleted trigger
-                    if (t.id !== id) {
-                        console.log('retain: ' + t.id + ' | ' + index )
-
-                        // Adjust index/id
-                        t.id = index
-                        newTriggers.push(t)
-
-                        index++
-                    }
-                })
-
-                userTriggers = newTriggers
-
-                // Informs swipe event to re-query
-                
+                // Reset states
                 setRemoved(-1)
-                setSelected(-1)
-                setTotalTriggers(-1)
-
             }, 1000)
 
             return
@@ -111,35 +84,36 @@ const DefinedTriggers = ({ isTouchDevice, setTotalTriggers }) => {
             <div id='user-triggers' className='root-container'>
 
                 {/* Map all user-defined triggers, and display */}
-                {userTriggers.map(trigger => (
+                {userTriggers.map(trigger => {
+                    return (
+                        /* Trigger container, class for removal animation */
+                        <div key={trigger.id} id={'trigger-' + trigger.id} className={removed === trigger.id ? 'trigger-container removed' : 'trigger-container '} >
 
-                    /* Trigger container, class for removal animation */
-                    <div key={trigger.id} id={'trigger-' + trigger.id} className={removed === trigger.id ? 'trigger-container removed' : 'trigger-container '} >
+                            {/* Clicking/Swiping the trigger's contents will "select" it and make others "inactive
+                                 should none be select they will default to defined-trigger*/}
+                            <div onClick={() => isTouchDevice ? false : handler(false, trigger.id)}
+                                className={'defined-trigger'}>
 
-                        {/* Clicking/Swiping the trigger's contents will "select" it and make others "inactive
-                        should none be select they will default to defined-trigger*/}
-                        <div onClick={() => isTouchDevice ? false : handler(false, trigger.id)}
-                            className={'defined-trigger'}>
+                                {/* Defined trigger info... */}
+                                <p className={'defined-trigger ' + trigger.type}>{trigger.type}</p>
 
-                            {/* Defined trigger info... */}
-                            <p className={'defined-trigger ' + trigger.type}>{trigger.type}</p>
+                                <p className='defined-trigger condition'>{trigger.condition === true ? '>' : '<'}</p>
 
-                            <p className='defined-trigger condition'>{trigger.condition === true ? '>' : '<'}</p>
+                                {/* Indent price on selection + reveal remove text */}
+                                <p className={selected === trigger.id ? 'defined-trigger selected' : 'defined-trigger price'}>{selected === trigger.id ? 'REMOVE' : (trigger.price).toFixed(4)}</p>
 
-                            {/* Indent price on selection + reveal remove text */}
-                            <p className={selected === trigger.id ? 'defined-trigger selected' : 'defined-trigger price'}>{selected === trigger.id ? 'REMOVE' : (trigger.price).toFixed(4)}</p>
-
-                            {/* Remove/Delete defined-trigger */}
-                            <p className={selected === trigger.id ? 'remove-trigger active' : 'remove-trigger'}
-                                onClick={() => {
-                                    //if (window.confirm('Delete this ' + trigger.type.toLowerCase() + ' trigger?'))
-                                    handler(true, trigger.id)
-                                }}>
-                                X
-                            </p>
-                        </div>
-                    </div>
-                ))}
+                                {/* Remove/Delete defined-trigger */}
+                                <p className={selected === trigger.id ? 'remove-trigger active' : 'remove-trigger'}
+                                    onClick={() => {
+                                        //if (window.confirm('Delete this ' + trigger.type.toLowerCase() + ' trigger?'))
+                                        handler(true, trigger.id)
+                                    }}>
+                                    X
+                                </p>
+                            </div>
+                        </div>)
+                }
+                )}
             </div>
         </div>
     )
