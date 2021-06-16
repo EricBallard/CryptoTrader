@@ -7,7 +7,10 @@ const swipeEvent = new CustomEvent('touch-swipe', {
     cancelable: true,
     composed: false,
     detail: {
-        id: -1
+        id: -1,
+        create: false,
+        isType: false,
+        type: undefined
     }
 })
 
@@ -20,22 +23,19 @@ let selectedIndex = -1,
     cachedTriggerContainers = []
 
 let listContainer = undefined,
-    createContainer = undefined
+    createContainer = undefined,
+    createTypeBounds = undefined
 
-const boundsContainsPoint = (rootBounds, bounds) => {
-    /* Validate start of touch is within cotainer bounds (Corrects for under/over-flow) */
-    if (yDown < rootBounds.y || yDown > rootBounds.y + rootBounds.height)
-        return false
-
+const boundsContainsPoint = (bounds) => {
     /* Calculate is within trigger's bounding client rect */
     if (xDown >= bounds.x && xDown <= bounds.x + bounds.width)
         if (yDown >= bounds.y && yDown <= bounds.y + bounds.height)
             return true
+
     return false
 }
 
-const isSwipeInTrigger = (rootBounds, totalTriggers) => {
-
+const isSwipeInTrigger = (totalTriggers) => {
     /* Iterate all defined trigger containers */
     for (let index = 0; index < totalTriggers; index++) {
         let triggerContainer = cachedTriggerContainers[index]
@@ -50,9 +50,8 @@ const isSwipeInTrigger = (rootBounds, totalTriggers) => {
 
         /* Compare container bounds to touch position */
         const bounds = triggerContainer.getBoundingClientRect()
-        console.log('i: ' + index + ' | ' + bounds)
 
-        if (boundsContainsPoint(rootBounds, bounds))
+        if (boundsContainsPoint(bounds))
             return index
     }
 
@@ -79,15 +78,18 @@ const rightSwipe = (rootBounds) => {
         if (boundsContainsPoint(rootBounds, bounds)) {
             /* Dispatch custom event */
             swipeEvent.detail.id = -1
+            swipeEvent.detail.create = false
             window.dispatchEvent(swipeEvent)
         }
     }
 }
 
 const leftSwipe = (rootBounds, totalTriggers) => {
-    const selectedTrigger = isSwipeInTrigger(rootBounds, totalTriggers)
+    /* Validate start of touch is within cotainer bounds (Corrects for under/over-flow) */
+    if (!boundsContainsPoint(rootBounds))
+        return
 
-    console.log('yasss: ' + selectedTrigger)
+    const selectedTrigger = isSwipeInTrigger( totalTriggers)
 
     if (selectedTrigger !== -1) {
         /* Swiped inside a trigger's container */
@@ -95,8 +97,35 @@ const leftSwipe = (rootBounds, totalTriggers) => {
 
         /* Dispatch custom event */
         swipeEvent.detail.id = selectedTrigger
+        swipeEvent.detail.create = false
         window.dispatchEvent(swipeEvent)
     }
+}
+
+const upDownSwipe = (rootBounds, type) => {
+    /* Validate start of touch is within cotainer bounds */
+    if (!boundsContainsPoint(rootBounds))
+        return
+
+    /* Query/cache bounds */
+    if (!createTypeBounds) {
+        const de = document.getElementById('create-type')
+
+        if (!de || (createTypeBounds = de.getBoundingClientRect()) == undefined) {
+            console.warn('Failed to obtain create-trigger element or bounds (' + de + ')')
+            return
+        }
+    }
+
+    /* Determine if swipe is meant to control trigger type or condition */
+    let changeTriggerType = boundsContainsPoint(createTypeBounds)
+
+    /* Dispatch custom event */
+    swipeEvent.detail.create = true
+    swipeEvent.detail.type = type
+    swipeEvent.detail.isType = changeTriggerType
+
+    window.dispatchEvent(swipeEvent)
 }
 
 const detectSwipe = (e, down, totalTriggers) => {
@@ -120,10 +149,6 @@ const detectSwipe = (e, down, totalTriggers) => {
         yDiff = yDown - touch.clientY
 
     const swipeType = getSwipeType(xDiff, yDiff)
-
-    /* reset values - null check */
-    xDown = undefined
-    yDown = undefined
 
     if (swipeType === null)
         return
@@ -154,24 +179,26 @@ const detectSwipe = (e, down, totalTriggers) => {
         return
 
     /* Handle swipe functionality */
-    //e.preventDefault()
+    e.preventDefault()
 
     switch (swipeType) {
+        case 'UP':
+        case 'DOWN':
+            upDownSwipe(rootBounds, swipeType)
         case 'LEFT':
             leftSwipe(rootBounds, totalTriggers)
             break
         case 'RIGHT':
             rightSwipe(rootBounds)
             break
-        case 'UP':
-
-            break
-        case 'DOWN':
-
-            break
         default:
             break
     }
+
+
+    /* reset values - null check */
+    xDown = undefined
+    yDown = undefined
 }
 
 /* Monitors touch actions and registers swipes as events */

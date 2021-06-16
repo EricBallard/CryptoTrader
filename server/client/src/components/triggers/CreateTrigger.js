@@ -15,6 +15,9 @@ const getValue = (str) => {
     return !isNaN(float) ? float : -1
 }
 
+/* Cache verify-message DOM element */
+let createPrice, verifyPrice, verifyCon, verifyType
+
 const CreateTrigger = ({ isTouchDevice }) => {
     /* Scroll index of trigger creation - Type/Condition */
     const [typeIndex, setTypeIndex] = useState('BUY')
@@ -24,23 +27,18 @@ const CreateTrigger = ({ isTouchDevice }) => {
     const [typeAnim, setType] = useState('BUY')
     const [conAnim, setCon] = useState('>')
 
-    /* Cache verify-message DOM element */
-    const createPrice = document.getElementById('create-price'),
-        verifyPrice = document.getElementById('verify-price'),
-        verifyCon = document.getElementById('verify-condition'),
-        verifyType = document.getElementById('verify-type')
-
-
     /* Handles index cycling/animation states for create-trigger scrolling */
-    const handler = (isType) => {
+    const handler = (isType, scrollDown) => {
         /* Init scroll animation and wait... */
+        const down = (scrollDown && scrollDown === true)
+
         if (isType)
-            setType('bottom')
+            setType(down ? 'top' : 'bottom')
         else
-            setCon('bottom')
+            setCon(down ? 'top' : 'bottom')
 
         /* Reset position to top - no transition is "instant" */
-        setTimeout(() => isType ? setType('top') : setCon('top'), 250)
+        setTimeout(() => isType ? setType(down ? 'bottom-instant' : 'top-instant') : setCon(down ? 'bottom-instant' : 'top-instant'), 250)
 
         setTimeout(() => {
             /* Update trigger type index */
@@ -49,14 +47,17 @@ const CreateTrigger = ({ isTouchDevice }) => {
             /* Reset anim position, transition scrolls to center */
             if (isType) {
                 const newType = index === 'BUY' ? 'SELL' : index === 'SELL' ? 'ALERT' : 'BUY'
-
                 verifyType.textContent = (newType.substring(0, 1) + newType.substring(1).toLowerCase())
+
+                console.log(index + ' new type: ' + newType)
+
                 setTypeIndex(newType)
                 setType('')
+                
             } else {
                 const newCon = index === '>' ? '<' : '>'
-
                 verifyCon.textContent = (newCon === '>' ? 'more than' : 'less than')
+
                 setConIndex(newCon)
                 setCon('')
             }
@@ -87,14 +88,23 @@ const CreateTrigger = ({ isTouchDevice }) => {
         verifyPrice.textContent = '$' + value
     }
 
+    const handleTouch = (e) => {
+        if (e.detail.create)
+            handler(e.detail.isType, e.detail.type === 'UP')
+    }
+
     /* If touch - listen to events */
     useEffect(() => {
+        createPrice = document.getElementById('create-price')
+        verifyPrice = document.getElementById('verify-price')
+        verifyCon = document.getElementById('verify-condition')
+        verifyType = document.getElementById('verify-type')
+
         if (isTouchDevice) {
-           // window.addEventListener('touch-swipe', (e) => setSelected(e.detail.id))
-           // return () => window.removeEventListener('touch-swipe', (e) => setSelected(e.detail.id))
+            window.addEventListener('touch-swipe', (e) => handleTouch(e))
+            return () => window.removeEventListener('touch-swipe', (e) => handleTouch(e))
         }
     }, [isTouchDevice])
-
 
     return (
         <div className='createTrigger'>
@@ -119,7 +129,7 @@ const CreateTrigger = ({ isTouchDevice }) => {
                         {/* Defined trigger info... */}
 
                         {/* Trigger type */}
-                        <p className={'defined-trigger ' + typeIndex + ' create-trigger ' + typeAnim} onClick={() => isTouchDevice ? false : handler(true)}>
+                        <p id='create-type' className={'defined-trigger ' + typeIndex + ' create-trigger ' + typeAnim} onClick={() => isTouchDevice ? false : handler(true)}>
                             {typeIndex}
                         </p>
 

@@ -230,14 +230,26 @@
   transition: top 0.5s ease;
 }
 
-.create-trigger.top {
+.create-trigger.top-instant {
   /* No transition - instantly set to top position */
   top: -14vh;
   transition: top 0s;
+}
+
+.create-trigger.top {
+  /* Scroll to top... */
+  top: -14vh;
+  transition: top 0.5s ease;
 }
 
 .create-trigger.bottom {
   /* Scroll to bottom... */
   top: 14vh;
   transition: top 0.5s ease;
+}
+
+.create-trigger.bottom-instant {
+  /* No transition - instantly set to top bottom */
+  top: 14vh;
+  transition: top 0s ease;
 }

@@ -69,8 +69,8 @@ const DefinedTriggers = ({ isTouchDevice, setTotalTriggers }) => {
              * https://stackoverflow.com/questions/56203531/how-to-fix-cant-perform-a-react-state-update-on-an-unmounted-component-error
              * 
              */
-            window.addEventListener('touch-swipe', (e) => setSelected(e.detail.id))
-            return () => window.removeEventListener('touch-swipe', (e) => setSelected(e.detail.id))
+            window.addEventListener('touch-swipe', (e) => e.detail.create ? false : setSelected(e.detail.id))
+            return () => window.removeEventListener('touch-swipe', (e) => e.detail.create ? false : setSelected(e.detail.id))
         }
     }, [isTouchDevice, setTotalTriggers])
 
