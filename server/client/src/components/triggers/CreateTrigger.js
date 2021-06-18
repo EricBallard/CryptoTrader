@@ -16,15 +16,16 @@ const getValue = (str) => {
 }
 
 /* Cache verify-message DOM element */
+let cachedDomElements = false
 let createPrice, verifyPrice, verifyCon, verifyType
 
-const CreateTrigger = ({ isTouchDevice }) => {
+const CreateTrigger = ({ isTouchDevice, createTrigger }) => {
     /* Scroll index of trigger creation - Type/Condition */
-    const [typeIndex, setTypeIndex] = useState('BUY')
+    const [typeIndex, setTypeIndex] = useState('ALERT')
     const [conIndex, setConIndex] = useState('<')
 
     /* Animation index for create trigger - Type/Condition */
-    const [typeAnim, setType] = useState('BUY')
+    const [typeAnim, setType] = useState('ALERT')
     const [conAnim, setCon] = useState('>')
 
     /* Handles index cycling/animation states for create-trigger scrolling */
@@ -49,11 +50,9 @@ const CreateTrigger = ({ isTouchDevice }) => {
                 const newType = index === 'BUY' ? 'SELL' : index === 'SELL' ? 'ALERT' : 'BUY'
                 verifyType.textContent = (newType.substring(0, 1) + newType.substring(1).toLowerCase())
 
-                console.log(index + ' new type: ' + newType)
-
                 setTypeIndex(newType)
                 setType('')
-                
+
             } else {
                 const newCon = index === '>' ? '<' : '>'
                 verifyCon.textContent = (newCon === '>' ? 'more than' : 'less than')
@@ -88,23 +87,27 @@ const CreateTrigger = ({ isTouchDevice }) => {
         verifyPrice.textContent = '$' + value
     }
 
-    const handleTouch = (e) => {
-        if (e.detail.create)
-            handler(e.detail.isType, e.detail.type === 'UP')
-    }
-
-    /* If touch - listen to events */
     useEffect(() => {
-        createPrice = document.getElementById('create-price')
-        verifyPrice = document.getElementById('verify-price')
-        verifyCon = document.getElementById('verify-condition')
-        verifyType = document.getElementById('verify-type')
+        /* Listen for info sent from touch-events, apply data*/
+        if (createTrigger.type)
+            handler(createTrigger.isType, createTrigger.type === 'UP')
+        else
+            cachedDomElements = false // Set to false onComponentMount()
 
-        if (isTouchDevice) {
-            window.addEventListener('touch-swipe', (e) => handleTouch(e))
-            return () => window.removeEventListener('touch-swipe', (e) => handleTouch(e))
+        /* Cache DOM elements */
+        if (!cachedDomElements) {
+            createPrice = document.getElementById('create-price')
+            verifyPrice = document.getElementById('verify-price')
+            verifyCon = document.getElementById('verify-condition')
+            verifyType = document.getElementById('verify-type')
+
+            console.log('Cached Create-Trigger DOM elements!')
+            cachedDomElements = true
         }
-    }, [isTouchDevice])
+
+        // Silence 'missing dependecy' warning for handler refrence
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [createTrigger])
 
     return (
         <div className='createTrigger'>

@@ -75,7 +75,7 @@ const rightSwipe = (rootBounds) => {
         const bounds = triggerContainer.getBoundingClientRect()
 
         /* De-select trigger */
-        if (boundsContainsPoint(rootBounds, bounds)) {
+        if (boundsContainsPoint(bounds)) {
             /* Dispatch custom event */
             swipeEvent.detail.id = -1
             swipeEvent.detail.create = false
@@ -111,7 +111,7 @@ const upDownSwipe = (rootBounds, type) => {
     if (!createTypeBounds) {
         const de = document.getElementById('create-type')
 
-        if (!de || (createTypeBounds = de.getBoundingClientRect()) == undefined) {
+        if (!de || (createTypeBounds = de.getBoundingClientRect()) === undefined) {
             console.warn('Failed to obtain create-trigger element or bounds (' + de + ')')
             return
         }
@@ -158,7 +158,7 @@ const detectSwipe = (e, down, totalTriggers) => {
     let rootContainer = (isListSwipe ? listContainer : createContainer)
     let rootBounds = undefined
 
-    if (rootContainer === undefined) {
+    if (!rootContainer) {
         /* Query/cache */
         if ((rootContainer = document.getElementById(isListSwipe ? 'user-triggers' : 'create-triggers')) === undefined)
             return
@@ -185,6 +185,7 @@ const detectSwipe = (e, down, totalTriggers) => {
         case 'UP':
         case 'DOWN':
             upDownSwipe(rootBounds, swipeType)
+            break
         case 'LEFT':
             leftSwipe(rootBounds, totalTriggers)
             break
