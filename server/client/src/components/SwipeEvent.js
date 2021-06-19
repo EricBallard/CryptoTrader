@@ -89,7 +89,7 @@ const leftSwipe = (rootBounds, totalTriggers) => {
     if (!boundsContainsPoint(rootBounds))
         return
 
-    const selectedTrigger = isSwipeInTrigger( totalTriggers)
+    const selectedTrigger = isSwipeInTrigger(totalTriggers)
 
     if (selectedTrigger !== -1) {
         /* Swiped inside a trigger's container */
@@ -118,7 +118,7 @@ const upDownSwipe = (rootBounds, type) => {
     }
 
     /* Determine if swipe is meant to control trigger type or condition */
-    let changeTriggerType = boundsContainsPoint(createTypeBounds)
+    let changeTriggerType = (xDown <= createTypeBounds.x + createTypeBounds.width)
 
     /* Dispatch custom event */
     swipeEvent.detail.create = true

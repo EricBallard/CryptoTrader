@@ -23,13 +23,16 @@
 
 .root-container {
   /* Container */
+  position: relative;
+  z-index: 1;
+
   overflow-y: scroll;
   overflow-x: hidden;
   
   width: 90vw;
 
   min-height: 20vh;
-  max-height: 40vh;
+  max-height: 30vh;
   border-radius: 1rem;
 
   background-color: #707070;
@@ -172,14 +175,14 @@
 }
 
 .create-container{
-  min-height: 10vh;
+  min-height: 15vh;
 }
 
 /* Verify logic text */
 .trigger-verify {
   position: relative;
   user-select: none;
-  z-index: 1;
+  z-index: 8;
 
   height: 20%;
   color: #000;
@@ -191,7 +194,7 @@
 
 .create-btn {
   position: relative;
-  z-index: 1;
+  z-index: 9;
 
   height: 25%;
   width: 100%;
@@ -216,7 +219,7 @@
   text-align: center;
 
   position: relative;
-  top: 3vh;
+  top: 6vh;
 
   cursor: text;
 }
@@ -224,32 +227,33 @@
 .create-trigger {
   /* Scroll to center... */
   position: relative;
+  z-index: 2;
   height: 10vh;
 
-  top: 3vh;
-  transition: top 0.5s ease;
+  top: 6vh;
+  transition: top 0.25s ease;
 }
 
 .create-trigger.top-instant {
   /* No transition - instantly set to top position */
-  top: -14vh;
+  top: -6vh;
   transition: top 0s;
 }
 
 .create-trigger.top {
   /* Scroll to top... */
-  top: -14vh;
-  transition: top 0.5s ease;
+  top: -6vh;
+  transition: top 0.25s ease;
 }
 
 .create-trigger.bottom {
   /* Scroll to bottom... */
-  top: 14vh;
-  transition: top 0.5s ease;
+  top: 18vh;
+  transition: top 0.25s ease;
 }
 
 .create-trigger.bottom-instant {
   /* No transition - instantly set to top bottom */
-  top: 14vh;
+  top: 18vh;
   transition: top 0s ease;
 }

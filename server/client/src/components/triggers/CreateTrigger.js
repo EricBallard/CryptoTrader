@@ -15,6 +15,24 @@ const getValue = (str) => {
     return !isNaN(float) ? float : -1
 }
 
+/* Returns the next/previous index of type/condition for configuration */
+const getNext = (isType, current, scrollDown) => {
+    if (isType) {
+        /* Trigger Type */
+        switch (current) {
+            case 'BUY':
+                return scrollDown ? 'SELL' : 'ALERT'
+            case 'SELL':
+                return scrollDown ? 'ALERT' : 'BUY'
+            case 'ALERT':
+                return scrollDown ? 'BUY' : 'SELL'
+        }
+    } else {
+        /* Trigger Condition */
+        return current === '>' ? '<' : '>'
+    }
+}
+
 /* Cache verify-message DOM element */
 let cachedDomElements = false
 let createPrice, verifyPrice, verifyCon, verifyType
@@ -44,20 +62,16 @@ const CreateTrigger = ({ isTouchDevice, createTrigger }) => {
         setTimeout(() => {
             /* Update trigger type index */
             const index = isType ? typeIndex : conIndex
+            const newIndex = getNext(isType, index, scrollDown)
 
             /* Reset anim position, transition scrolls to center */
             if (isType) {
-                const newType = index === 'BUY' ? 'SELL' : index === 'SELL' ? 'ALERT' : 'BUY'
-                verifyType.textContent = (newType.substring(0, 1) + newType.substring(1).toLowerCase())
-
-                setTypeIndex(newType)
+                verifyType.textContent = (newIndex.substring(0, 1) + newIndex.substring(1).toLowerCase())
+                setTypeIndex(newIndex)
                 setType('')
-
             } else {
-                const newCon = index === '>' ? '<' : '>'
-                verifyCon.textContent = (newCon === '>' ? 'more than' : 'less than')
-
-                setConIndex(newCon)
+                verifyCon.textContent = (newIndex === '>' ? 'more than' : 'less than')
+                setConIndex(newIndex)
                 setCon('')
             }
         }, 500)

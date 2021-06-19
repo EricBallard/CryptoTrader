@@ -19,32 +19,30 @@ const DefinedTriggers = ({ isTouchDevice, selected, setSelected, setTotalTrigger
 
     const handler = (remove, id) => {
         if (remove) {
-            // Remove
-
             if (removed !== -1) {
-                // Waiting for state to update, other in process of removing
+                /* Waiting for state to update, other in process of removing */
                 alert('Please try again in a moment!')
                 return
             }
 
-            // Safe to remove - trigger removal animation
+            /* Safe to remove - trigger removal animation */
             setRemoved(id)
             setSelected(-1)
 
             setTimeout(() => {
-                // Remove dom element
+                /* Remove dom element
                 document.getElementById('trigger-' + id).remove()
 
-                //TODO: remove from database ?
+                //TODO: remove from database ? 
 
-                // Reset states
+                /* Reset states */
                 setRemoved(-1)
             }, 1000)
 
             return
         }
 
-        // De/Select
+        /* De/Select */
         if (selected === id)
             setSelected(-1)
         else
