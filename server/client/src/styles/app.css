@@ -106,10 +106,10 @@ body {
 .dashboard-body.inactive {
   pointer-events: none;
   position: relative;
-  top: 15vh;
+  top: 20vh;
 
   opacity: 0.25;
-  transform: scale(0.5);
+  transform: scale(0.6);
 }
 
 .dashboard-body {

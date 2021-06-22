@@ -30,7 +30,7 @@ const DefinedTriggers = ({ isTouchDevice, selected, setSelected, setTotalTrigger
             setSelected(-1)
 
             setTimeout(() => {
-                /* Remove dom element
+                /* Remove dom element */
                 document.getElementById('trigger-' + id).remove()
 
                 //TODO: remove from database ? 

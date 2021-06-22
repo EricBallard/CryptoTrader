@@ -32,7 +32,7 @@
   width: 90vw;
 
   min-height: 20vh;
-  max-height: 30vh;
+  max-height: 40vh;
   border-radius: 1rem;
 
   background-color: #707070;
@@ -163,7 +163,8 @@
 
 .triggers-title {
   text-align: center;
-  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 /* 
@@ -199,7 +200,7 @@
   position: relative;
   z-index: 9;
 
-  height: 25%;
+  height: 7vh;
   width: 100%;
   
   border-radius: 0 0 0 0;
@@ -251,12 +252,16 @@
 
 .create-trigger.bottom {
   /* Scroll to bottom... */
-  top: 20vh;
+  top: 17vh;
   transition: top 0.25s ease;
 }
 
 .create-trigger.bottom-instant {
   /* No transition - instantly set to top bottom */
-  top: 20vh;
+  top: 17vh;
   transition: top 0s ease;
+}
+
+.verify-type, .verify-condition {
+  font-weight: bold;
 }

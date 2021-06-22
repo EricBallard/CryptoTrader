@@ -19,9 +19,9 @@ const Triggers = (props) => {
     /* Navigated from dynamic menu */
     const [navFromMenu, setNav] = useState(props.history.location.fromMenu === true)
 
-    /* Defined-Triggers state - passes info from touch-event listener to component */
-    const [selected, setSelected] = useState(-1)
+    /* Defined-Triggers states - passes info from touch-event listener to component */
     const [totalTriggers, setTotalTriggers] = useState(0)
+    const [selected, setSelected] = useState(-1)
 
     /* Create-Trigger state - passes info from touch-event listener to component */
     const [createTrigger, setCreate] = useState({})
@@ -44,6 +44,7 @@ const Triggers = (props) => {
             return
         }
 
+        /* Reset intro animation from dynamic menu */
         props.history.location.fromMenu = false
         setNav(false)
 

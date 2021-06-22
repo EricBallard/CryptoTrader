@@ -15,7 +15,7 @@ const getValue = (str) => {
     return !isNaN(float) ? float : -1
 }
 
-/* Returns the next/previous index of type/condition for configuration */
+/* Returns the chronological index of type/condition for configuration */
 const getNext = (isType, current, scrollDown) => {
     if (isType) {
         /* Trigger Type */
@@ -24,7 +24,7 @@ const getNext = (isType, current, scrollDown) => {
                 return scrollDown ? 'SELL' : 'ALERT'
             case 'SELL':
                 return scrollDown ? 'ALERT' : 'BUY'
-            case 'ALERT':
+            default:
                 return scrollDown ? 'BUY' : 'SELL'
         }
     } else {

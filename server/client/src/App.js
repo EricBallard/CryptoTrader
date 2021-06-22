@@ -28,7 +28,6 @@ const App = () => {
 
   /* Dynamic menu state - opened/closed */
   const [isNavOpen, setNavStatus] = useState(false)
-  const syncNavStatus = (status) => setNavStatus(status)
 
   /* Window properities - init max height */
   const [maxHeight, setMaxHeight] = useState(window.maxHeight | window.innerHeight | window.screen.maxHeight)
@@ -40,16 +39,16 @@ const App = () => {
       {/* React v5 router */}
       <Router><Switch>
 
-          {/* User authentication* */}
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/register' component={Register} />
+        {/* User authentication* */}
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/register' component={Register} />
 
-          <Route exact path='/forgot' component={Forgot} />
-          <Route exact path='/reset/:resetToken' component={Reset} />
+        <Route exact path='/forgot' component={Forgot} />
+        <Route exact path='/reset/:resetToken' component={Reset} />
 
         <>
           {/* Navbar */}
-          <Navbar isOpen={isNavOpen} syncStatus={syncNavStatus} syncMaxHeight={setMaxHeight} />
+          <Navbar {...{ isNavOpen, setNavStatus, setMaxHeight }} />
 
           {/* User util */}
           <Route exact path='/dashboard'
