@@ -13,7 +13,7 @@ let userTriggers = [
 ]
 
 
-const DefinedTriggers = ({ isTouchDevice, selected, setSelected, setTotalTriggers }) => {
+const DefinedTriggers = ({ isTouchDevice, selected, setSelected, setTotalTriggers, toAdd, setToAdd }) => {
     /* Trigger set to be removed, animated */
     const [removed, setRemoved] = useState(-1)
 
@@ -51,9 +51,29 @@ const DefinedTriggers = ({ isTouchDevice, selected, setSelected, setTotalTrigger
 
     /* If touch - listen to events */
     useEffect(() => {
-        if (isTouchDevice) 
-            setTotalTriggers(userTriggers.length)
-    }, [setTotalTriggers, isTouchDevice])
+        /* Listen to changes in 'toAdd' dependency state - animate addition to list */
+        if (toAdd.type) {
+            console.log('new trigger added!')
+            
+            const newTotal = userTriggers.length
+
+            userTriggers.push({
+                type: toAdd.type,
+                price: Number(toAdd.price),
+                condition: toAdd.condition === '>',
+                id: newTotal
+             })
+
+             setTotalTriggers(newTotal + 1)
+            /* Success - reset state */
+            setToAdd({})
+        } else {
+            /* Init call - functional onComponentDidMount() */
+            if (isTouchDevice)
+                setTotalTriggers(userTriggers.length)
+
+        }
+    }, [toAdd, setToAdd, isTouchDevice, setTotalTriggers])
 
     return (
         <div className='definedTriggers'>

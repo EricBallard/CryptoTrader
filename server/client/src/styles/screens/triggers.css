@@ -25,16 +25,12 @@
   /* Container */
   position: relative;
   z-index: 1;
-
   overflow-y: scroll;
   overflow-x: hidden;
-  
   width: 90vw;
-
   min-height: 20vh;
   max-height: 40vh;
   border-radius: 1rem;
-
   background-color: #707070;
   border: 0.2rem solid #000;
   /* Font */
@@ -69,17 +65,14 @@
   transition: all 0.3s ease-in-out;
 }
 
-
 /* Trigger type labels */
 
 .defined-trigger.BUY {
   width: 40%;
   height: 100%;
-
   color: #000;
   text-decoration: underline;
   background-color: #248232;
-
   border-radius: 1rem 0 0 1rem;
   border-bottom: 0.2rem solid #000;
 }
@@ -87,11 +80,9 @@
 .defined-trigger.SELL {
   width: 40%;
   height: 100%;
-
   color: #000;
   text-decoration: underline;
   background-color: #6c0f2c;
-
   border-radius: 1rem 0 0 1rem;
   border-bottom: 0.2rem solid #000;
 }
@@ -118,7 +109,6 @@
 .defined-trigger.price {
   max-width: 40%;
   height: 100%;
-
   border-bottom: 0.2rem solid #000;
   border-radius: 0 1rem 0 0;
 }
@@ -154,8 +144,6 @@
   max-width: 80%;
   border-bottom: 0.2rem solid #000;
   border-radius: 0 1rem 0 0;
-
-
   cursor: default;
   letter-spacing: 0.2rem;
   transition: all 0.3s ease-in-out;
@@ -178,16 +166,16 @@
   background: #000;
 }
 
-.create-container{
+.create-container {
   min-height: 15vh;
 }
 
 /* Verify logic text */
+
 .trigger-verify {
   position: relative;
   user-select: none;
   z-index: 8;
-
   height: 20%;
   color: #000;
   font-size: 1.15rem;
@@ -202,39 +190,53 @@
 
   height: 7vh;
   width: 100%;
-  
-  border-radius: 0 0 0 0;
-  border-top: 0.2rem solid #000;
 
   font-weight: bold;
   font-size: 1rem;
+  color: #000;
+
+  border-radius: 0 0 0 0;
+  border-top: 0.2rem solid #000;
+  
+  transition: all 0.5s ease;
 }
 
-.create-price{
+.create-btn:disabled {
   /* Style input to look like defined-trigger price */
-  border-bottom: 0.2rem solid #000;
-  border-radius: 0 1rem 0 0;
+  opacity: 1;
+  color: #505050;
+  background-color: #757575;
+}
 
-  background-color: #707070;
-  border:none;
-
-  color: #fff;
-  font-size: 1.75rem;
-  text-align: center;
-
+.create-price {
   position: relative;
   top: 6vh;
-
+  
+  text-align: center;
   cursor: text;
+
+  font-size: 1.75rem;
+  color: #fff;
+
+  background-color: #707070;
+  border-bottom: 0.2rem solid #000;
+  border-radius: 0 1rem 0 0;
+  border: none;
+
+}
+
+.create-price:focus {
+  outline: none;
 }
 
 .create-trigger {
   /* Scroll to center... */
   position: relative;
   z-index: 2;
-  height: 10vh;
 
+  height: 10vh;
   top: 6vh;
+  
   transition: top 0.25s ease;
 }
 
@@ -260,8 +262,4 @@
   /* No transition - instantly set to top bottom */
   top: 17vh;
   transition: top 0s ease;
-}
-
-.verify-type, .verify-condition {
-  font-weight: bold;
 }

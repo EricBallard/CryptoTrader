@@ -34,20 +34,27 @@ const getNext = (isType, current, scrollDown) => {
 }
 
 /* Cache verify-message DOM element */
-let cachedDomElements = false
 let createPrice, verifyPrice, verifyCon, verifyType
 
-const CreateTrigger = ({ isTouchDevice, createTrigger }) => {
+let verifiedPriced = undefined
+let cachedDomElements = false
+
+const CreateTrigger = ({ isTouchDevice, createTrigger, setToAdd }) => {
+    const [animating, setAnimating] = useState(false)
+
     /* Scroll index of trigger creation - Type/Condition */
     const [typeIndex, setTypeIndex] = useState('ALERT')
     const [conIndex, setConIndex] = useState('<')
 
     /* Animation index for create trigger - Type/Condition */
     const [typeAnim, setType] = useState('ALERT')
-    const [conAnim, setCon] = useState('>')
+    const [conAnim, setCon] = useState('<')
+
+    /* Add new trigger button - enabled state */
+    const [canAdd, setCanAdd] = useState(false)
 
     /* Handles index cycling/animation states for create-trigger scrolling */
-    const handler = (isType, scrollDown) => {
+    const handler = (isType, scrollDown, keepIndex) => {
         /* Init scroll animation and wait... */
         const down = (scrollDown && scrollDown === true)
 
@@ -62,7 +69,7 @@ const CreateTrigger = ({ isTouchDevice, createTrigger }) => {
         setTimeout(() => {
             /* Update trigger type index */
             const index = isType ? typeIndex : conIndex
-            const newIndex = getNext(isType, index, scrollDown)
+            const newIndex = keepIndex ? index : getNext(isType, index, scrollDown)
 
             /* Reset anim position, transition scrolls to center */
             if (isType) {
@@ -75,6 +82,9 @@ const CreateTrigger = ({ isTouchDevice, createTrigger }) => {
                 setCon('')
             }
         }, 500)
+
+        /* Validate trigger config - dis/enable add button */
+
     }
 
     /* Validate defined price for new trigger */
@@ -86,6 +96,8 @@ const CreateTrigger = ({ isTouchDevice, createTrigger }) => {
         if (value < 0 || value > 9 || !value.includes('.')) {
             /* Not valid... prevent event, clear input */
             verifyPrice.textContent = ''
+            verifiedPriced = undefined
+            setCanAdd(false)
             return
         } else {
             const decimalValues = value.split('.')
@@ -99,6 +111,44 @@ const CreateTrigger = ({ isTouchDevice, createTrigger }) => {
 
         /* Update verify message price on input change */
         verifyPrice.textContent = '$' + value
+        verifiedPriced = value
+        setCanAdd(true)
+    }
+
+    /* Add new trigger to Defined-Trigger from created configuration */
+    const addNew = () => {
+        setAnimating(true)
+        setCanAdd(false)
+
+        let type, condition, price
+
+        if (verifiedPriced) {
+            /* User-defined */
+            type = verifyType.textContent
+            condition = verifyCon.textContent
+            price = verifiedPriced
+
+            /* Animate up */
+            handler(true, true, true)
+            handler(false, true, true)
+
+            /* Reset input configuration */
+            verifyPrice.textContent = ''
+            createPrice.value = ''
+
+            verifiedPriced = undefined
+        }
+
+        setTimeout(() => {
+            /* Disable add new button */
+            setAnimating(false)
+
+            if (!type || !condition || !price)
+                return
+
+            /* Init Defined-Triggers add new - animation */
+            setToAdd({ type, condition, price })
+        }, 1000)
     }
 
     useEffect(() => {
@@ -124,7 +174,7 @@ const CreateTrigger = ({ isTouchDevice, createTrigger }) => {
     }, [createTrigger])
 
     return (
-        <div className='createTrigger'>
+        <div className='createTrigger' disabled={animating}>
 
             {/* Title */}
             <h1 className='triggers-title'>Create New</h1>
@@ -141,9 +191,9 @@ const CreateTrigger = ({ isTouchDevice, createTrigger }) => {
 
                 {/* Customize new trigger - using modular css :) */}
                 <div id='create-triggers' className='trigger-container create-container'>
-                    <div className='defined-trigger'>
 
-                        {/* Defined trigger info... */}
+                    {/* Create trigger info... */}
+                    <div className='defined-trigger'>
 
                         {/* Trigger type */}
                         <p id='create-type' className={'defined-trigger ' + typeIndex + ' create-trigger ' + typeAnim} onClick={() => isTouchDevice ? false : handler(true)}>
@@ -156,7 +206,7 @@ const CreateTrigger = ({ isTouchDevice, createTrigger }) => {
                         </p>
 
                         {/* Configure price */}
-                        <input type='text' className='defined-trigger price create-price' placeholder='0.1324'
+                        <input type='text' className={'defined-trigger price create-price' + (animating ? (conAnim === '>' || conAnim === '<' ? '' : ' create-trigger ' + conAnim) : '')} placeholder='0.1324'
                             id='create-price' onInput={(e) => validateInput(e)} onKeyDown={(e) => {
                                 const pressed = e.key
 
@@ -167,14 +217,14 @@ const CreateTrigger = ({ isTouchDevice, createTrigger }) => {
                                 }
                             }} />
 
-                        {/* THIS IS NOT USED BUT REQUIRED TO RETAIN SAME DIMENSION AS DEFINED-TRIGGER*/}
+                        {/* THIS IS NOT SHOWN/USED BUT REQUIRED TO RETAIN SAME DIMENSIONS AS DEFINED-TRIGGER! */}
                         <p className={'remove-trigger'}>X</p>
 
                     </div>
                 </div>
 
                 {/* Add*/}
-                <button className='btn btn-primary create-btn'>ADD TO TRIGGERS</button>
+                <button className='btn btn-primary create-btn' disabled={!canAdd} onClick={() => addNew()}>ADD TO TRIGGERS</button>
 
             </div>
         </div>

@@ -24,6 +24,7 @@ const Triggers = (props) => {
     const [selected, setSelected] = useState(-1)
 
     /* Create-Trigger state - passes info from touch-event listener to component */
+    const [toAdd, setToAdd] = useState({})
     const [createTrigger, setCreate] = useState({})
 
     /* Update refrenced state, child component's useEffect() listens for change and applies data */
@@ -73,10 +74,10 @@ const Triggers = (props) => {
                 <div className='container'>
 
                     {/* User-defined triggers */}
-                    <DefinedTriggers {...{ isTouchDevice, selected, setSelected, setTotalTriggers }} />
+                    <DefinedTriggers {...{ isTouchDevice, selected, setSelected, setTotalTriggers, toAdd, setToAdd }} />
 
                     {/* Define/Create new trigger */}
-                    <CreateTrigger {...{ isTouchDevice, createTrigger }} />
+                    <CreateTrigger {...{ isTouchDevice, createTrigger, setToAdd }} />
 
                     {/* Enable touch-swipe events for supported devices    userTriggers.length */}
                     {isTouchDevice ? <SwipeEvent {...{ totalTriggers }}/> : null}
