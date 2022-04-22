@@ -51,7 +51,7 @@ const NavBar = ({ isNavOpen, setNavStatus, setMaxHeight }) => {
 	return (
 		<nav className='navbar'>
 			<CachedImage name='nav-logo' event={() => history.push('/dashboard')}
-				url={process.env.REACT_APP_CLOUDFRONT_URL + 'dash_icon.png'} />
+				url={'https://storage.googleapis.com/cryptotrader_bucket/logo64.png'} />
 
 			<div onClick={toggleMenu} className='nav-icon'>
 				{isNavOpen ? <FiX /> : <FiMenu />}

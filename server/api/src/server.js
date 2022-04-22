@@ -1,4 +1,4 @@
-require('dotenv').config({ path: './config/.env' })
+require('dotenv').config({ path: './src/config/.env' })
 const ErrorHandler = require('./middleware/error-handler')
 
 const connect = require('./config/db')

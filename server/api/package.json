@@ -4,7 +4,7 @@
   "description": "Backend API for DogeTrader data",
   "main": "server.js",
   "scripts": {
-    "api": "node server.js",
+    "api": "node src/server.js",
     "dev": "nodemon server.js"
   },
   "keywords": [],
