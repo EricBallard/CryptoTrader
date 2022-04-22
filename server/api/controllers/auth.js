@@ -3,8 +3,8 @@
  * https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
  */
 
-const ErrorResponse = require('../utils/ErrorResponse')
-const User = require('../models/User')
+const ErrorResponse = require('../utils/error-response')
+const User = require('../models/user')
 const send = require('../utils/email')
 
 exports.register = async (req, res, next) => {

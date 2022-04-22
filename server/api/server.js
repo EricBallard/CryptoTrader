@@ -1,5 +1,5 @@
 require('dotenv').config({ path: './config/.env' })
-const ErrorHandler = require('./middleware/ErrorHandler')
+const ErrorHandler = require('./middleware/error-handler')
 
 const connect = require('./config/db')
 const express = require('express')

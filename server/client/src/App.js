@@ -4,14 +4,15 @@ import { useState } from 'react'
 import NavBar from './components/nav-bar'
 
 /* Screens */
-import Dashboard from './screens/Dashboard'
-import Triggers from './screens/Triggers'
-import Stats from './screens/Stats'
+import Dashboard from './screens/dashboard'
+import Triggers from './screens/triggers'
+import Stats from './screens/stats'
 
-import Login from './screens/auth/Login'
-import Register from './screens/auth/Register'
-import Forgot from './screens/auth/Forgot'
-import Reset from './screens/auth/Reset'
+import Login from './screens/auth/login'
+import Register from './screens/auth/register'
+import Forgot from './screens/auth/forgot'
+import Reset from './screens/auth/reset'
+
 
 /*
     TODO
