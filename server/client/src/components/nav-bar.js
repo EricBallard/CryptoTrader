@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom'
 import '../styles/navbar.css'
 
 /* Components */
-import CachedImage from './CachedImage'
+import CachedImage from './cached-image'
 
 //TODO rename, nav = isNavOpen
-const Navbar = ({ isNavOpen, setNavStatus, setMaxHeight }) => {
+const NavBar = ({ isNavOpen, setNavStatus, setMaxHeight }) => {
 	const [path, setPath] = useState('/dashboard')
 
 	const toggleMenu = () => setNavStatus(!isNavOpen)
@@ -104,4 +104,4 @@ const Navbar = ({ isNavOpen, setNavStatus, setMaxHeight }) => {
 	)
 }
 
-export default Navbar
+export default NavBar

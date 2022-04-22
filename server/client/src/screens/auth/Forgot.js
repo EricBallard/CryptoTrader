@@ -4,7 +4,7 @@ import axios from 'axios'
 /* Styles */
 import '../../styles/auth.css'
 
-import CachedImage from '../../components/CachedImage'
+import CachedImage from '../../components/cached-image'
 
 /* Component */
 const Forgot = ({ history }) => {

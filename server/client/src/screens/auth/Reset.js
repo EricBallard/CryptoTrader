@@ -5,7 +5,7 @@ import axios from 'axios'
 /* Style */
 import '../../styles/auth.css'
 
-import CachedImage from '../../components/CachedImage'
+import CachedImage from '../../components/cached-image'
 
 /* Component */
 const Reset = ({ history, match }) => {

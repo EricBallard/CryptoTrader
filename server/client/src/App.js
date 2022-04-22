@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
 import { useState } from 'react'
-import Navbar from './components/NavBar'
+import NavBar from './components/nav-bar'
 
 /* Screens */
 import Dashboard from './screens/Dashboard'
@@ -48,7 +48,7 @@ const App = () => {
 
         <>
           {/* Navbar */}
-          <Navbar {...{ isNavOpen, setNavStatus, setMaxHeight }} />
+          <NavBar {...{ isNavOpen, setNavStatus, setMaxHeight }} />
 
           {/* User util */}
           <Route exact path='/dashboard'

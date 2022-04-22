@@ -5,11 +5,11 @@ import '../styles/app.css'
 import '../styles/screens/triggers.css'
 
 /* Components */
-import DefinedTriggers from '../components/triggers/DefinedTriggers'
-import CreateTrigger from '../components/triggers/CreateTrigger'
+import DefinedTriggers from '../components/triggers/defined-triggers'
+import CreateTrigger from '../components/triggers/create-trigger'
 
 /* Touch events */
-import SwipeEvent from '../components/SwipeEvent'
+import SwipeEvent from '../components/swipe-event'
 
 /* Cache device touch-screen support */
 const isTouchDevice = Boolean(navigator.maxTouchPoints || 'ontouchstart' in document.documentElement)

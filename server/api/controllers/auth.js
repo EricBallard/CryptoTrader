@@ -3,7 +3,7 @@
  * https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
  */
 
-const ErrorResponse = require('../utils/errorResponse')
+const ErrorResponse = require('../utils/ErrorResponse')
 const User = require('../models/User')
 const send = require('../utils/email')
 

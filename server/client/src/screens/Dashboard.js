@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react'
 //import axios from 'axios'
 
 /* Components */
-import PriceChart from '../components/charts/PriceChart'
-import HiLoChart from '../components/charts/HiLoChart'
+import PriceChart from '../components/charts/price-chart'
+import HiLoChart from '../components/charts/hi-lo-chart'
 
 /* Style */
 import '../styles/app.css'
