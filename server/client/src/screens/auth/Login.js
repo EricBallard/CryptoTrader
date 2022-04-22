@@ -106,7 +106,7 @@ const Login = props => {
           <CachedImage
             name={showPass ? 'show-password selected' : 'show-password'}
             event={() => setShowPass(!showPass)}
-            url={'https://www.storage.googleapis.com/cryptotrader_bucket/show_password512.png'}
+            url={'https://storage.googleapis.com/cryptotrader_bucket/show_password512.png'}
           />
 
           {/* Reset */}

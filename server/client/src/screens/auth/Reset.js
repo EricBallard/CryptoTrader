@@ -63,7 +63,7 @@ const Reset = ({ history, match }) => {
                 <button type='submit' className='form-btn btn btn-primary'>Reset Password</button>
 
                 {/* Back */}
-                <CachedImage url={process.env.REACT_APP_CLOUDFRONT_URL + 'undo.png'}
+                <CachedImage url={'https://storage.googleapis.com/cryptotrader_bucket/back.png'}
                     name='form-back'
                     event={() => {
                         /* Delay redirect to allow exit animation */ 
