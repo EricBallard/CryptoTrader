@@ -71,6 +71,12 @@ const Login = props => {
       {/* Error Messages */}
       <span className={error ? 'error-message' : 'message inactive'}>{error}</span>
 
+      {/* Page Tile */}
+      <div className='content'>
+        <h2 className='text' data-text='CryptoTrader'>CryptoTrader</h2>
+      </div>
+
+      {/* Form */}
       <form className={error === '' ? 'auth-form' : 'auth-form error'} onSubmit={handler}>
         <h3 className='form-title'>Login</h3>
 

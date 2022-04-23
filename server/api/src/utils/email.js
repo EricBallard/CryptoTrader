@@ -11,7 +11,7 @@ const send = (options) => {
 
     const mailOptions = {
         from: process.env.EMAIL_FROM,
-        to: 'eballer48@gmail.com',//options.to,
+        to: options.to,
         subject: options.subject,
         html: options.text
     }

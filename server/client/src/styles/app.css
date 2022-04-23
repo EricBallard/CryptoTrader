@@ -17,12 +17,11 @@ a {
   color: #fff;
 }
 
-/* Import font from google - Thanks Daniel Johnson, cool font :) */
-@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Fira+Mono:400');
 
 /* Body */
 body {
-  font-family: 'Didact Gothic', sans-serif;
+  font-family: 'Fira Mono', monospace;
   line-height: 1.7;
   background: #000;
   color: #000;
